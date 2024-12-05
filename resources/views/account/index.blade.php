@@ -26,13 +26,13 @@
             let cropper;
 
             // Event listener untuk upload file
-            document.getElementById('upload').addEventListener('change', function(event) {
+            $('#upload').on('change', function(event) {
                 const files = event.target.files;
 
                 if (files && files.length > 0) {
                     const reader = new FileReader();
                     reader.onload = function(e) {
-                        const imagePreview = document.getElementById('imagePreview');
+                        const imagePreview = $('#imagePreview')[0];
                         imagePreview.src = e.target.result; // Tampilkan gambar di modal
                         $('#cropModal').modal('show'); // Tampilkan modal crop
                     };
@@ -43,7 +43,7 @@
             // Inisialisasi cropper saat modal ditampilkan
             $('#cropModal')
                 .on('shown.bs.modal', function() {
-                    const image = document.getElementById('imagePreview');
+                    const image = $('#imagePreview')[0];
 
                     cropper = new Cropper(image, {
                         aspectRatio: 1, // Ratio 1:1, sesuaikan sesuai kebutuhan
@@ -61,71 +61,107 @@
                 });
 
             // Event listener untuk tombol crop
-            document.getElementById('cropButton').addEventListener('click', function() {
-                const accountForm = document.getElementById('AccountForm');
-
-                // Validasi form
-                if (!accountForm) {
-                    console.error('Form dengan ID "AccountForm" tidak ditemukan.');
-                    alert('Form tidak valid. Silakan periksa kembali.');
-                    return;
-                }
+            $('#cropButton').on('click', function() {
+                const accountForm = $('#AccountForm')[0];
 
                 if (cropper) {
                     const canvas = cropper.getCroppedCanvas({
-                        width: 400,
-                        height: 400,
+                        width: 200, // Ukuran crop (opsional)
+                        height: 200,
                     });
 
+                    if (!canvas) {
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'Gagal membuat canvas dari gambar.',
+                            icon: 'error',
+                            confirmButtonText: 'OK',
+                            background: isDarkMode ? '#2b2c40' : '#fff',
+                            color: isDarkMode ? '#b2b2c4' : '#000',
+                        });
+                        return;
+                    }
+
                     canvas.toBlob((blob) => {
-                        const formData = new FormData();
-
-                        // Tambahkan foto hasil crop ke formData
-                        formData.append('photo', blob, 'photo.png');
-
-                        // Tambahkan data form lainnya
-                        const accountFormData = new FormData(accountForm);
-                        for (const [key, value] of accountFormData.entries()) {
-                            if (key !== 'photo') {
-                                formData.append(key, value);
-                            }
+                        if (!blob) {
+                            Swal.fire({
+                                title: 'Error',
+                                text: 'Gagal menghasilkan blob dari canvas.',
+                                icon: 'error',
+                                confirmButtonText: 'OK',
+                                background: isDarkMode ? '#2b2c40' : '#fff',
+                                color: isDarkMode ? '#b2b2c4' : '#000',
+                            });
+                            return;
                         }
 
-                        // Kirim data dengan fetch
-                        fetch(accountForm.action, {
-                                method: 'POST',
-                                headers: {
-                                    'X-CSRF-TOKEN': document.querySelector(
-                                        'meta[name="csrf-token"]').getAttribute('content'),
-                                },
-                                body: formData,
-                            })
-                            .then((response) => {
-                                if (response.ok) {
-                                    window.location.href = '{{ route('account.index') }}';
-                                } else {
+                        const reader = new FileReader();
+                        reader.onloadend = () => {
+                            const base64data = reader.result;
+
+                            // Buat FormData baru
+                            const formData = new FormData();
+                            const accountFormData = new FormData(accountForm);
+
+                            // Tambahkan base64 ke FormData
+                            formData.append('photo', base64data);
+
+                            // Tambahkan data form lainnya
+                            for (const [key, value] of accountFormData.entries()) {
+                                if (key !== 'photo') {
+                                    formData.append(key, value);
+                                }
+                            }
+
+                            // Kirim data ke backend menggunakan fetch
+                            fetch(accountForm.action, {
+                                    method: 'POST', // Ubah jika butuh method lain (PUT/POST)
+                                    headers: {
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                            'content'),
+                                    },
+                                    body: formData,
+                                })
+                                .then((response) => {
+                                    if (response.ok) {
+                                        Swal.fire({
+                                            title: 'Berhasil',
+                                            text: 'Foto berhasil diunggah!',
+                                            icon: 'success',
+                                            confirmButtonText: 'OK',
+                                            background: isDarkMode ? '#2b2c40' : '#fff',
+                                            color: isDarkMode ? '#b2b2c4' : '#000',
+                                        }).then(() => {
+                                            window.location.href =
+                                                '{{ route('account.index') }}';
+                                        });
+                                    } else {
+                                        response.text().then((text) => {
+                                            console.error('Response Error:', text);
+                                            Swal.fire({
+                                                title: 'Gagal',
+                                                text: 'Terjadi kesalahan saat mengunggah foto.',
+                                                icon: 'error',
+                                                confirmButtonText: 'OK',
+                                                background: isDarkMode ? '#2b2c40' : '#fff',
+                                                color: isDarkMode ? '#b2b2c4' : '#000',
+                                            });
+                                        });
+                                    }
+                                })
+                                .catch((error) => {
+                                    console.error('Fetch Error:', error);
                                     Swal.fire({
-                                        title: 'Upload Gagal',
-                                        text: 'Terjadi kesalahan saat mengupload file.',
+                                        title: 'Gagal',
+                                        text: 'Terjadi kesalahan saat mengunggah foto.',
                                         icon: 'error',
-                                        confirmButtonText: 'Ya',
-                                        confirmButtonColor: 'var(--bs-primary)',
+                                        confirmButtonText: 'OK',
                                         background: isDarkMode ? '#2b2c40' : '#fff',
                                         color: isDarkMode ? '#b2b2c4' : '#000',
-                                    })
-                                }
-                            })
-                            .catch((error) => {
-                                Swal.fire({
-                                    title: 'Upload Gagal',
-                                    text: 'Terjadi kesalahan saat mengupload file.',
-                                    icon: 'error',
-                                    confirmButtonText: 'Ya',
-                                    confirmButtonColor: 'var(--bs-primary)',
-                                    background: isDarkMode ? '#2b2c40' : '#fff',
-                                    color: isDarkMode ? '#b2b2c4' : '#000',
-                                })
-                            });
+                                    });
+                                });
+                        };
+                        reader.readAsDataURL(blob);
                     });
                 }
             });
@@ -344,40 +380,40 @@
                                     <div class="row g-6">
                                         <div class="col-md-6 fv-plugins-icon-container">
                                             <label for="name" class="form-label">Nama</label>
-                                            <input class="form-control" type="text" id="name" placeholder="-" name="name"
-                                                value="{{ $user->Teacher->name ?? '' }}">
+                                            <input class="form-control" type="text" id="name" placeholder="-"
+                                                name="name" value="{{ $user->Teacher->name ?? '' }}">
                                             <div
                                                 class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
                                             </div>
                                         </div>
                                         <div class="col-md-6 fv-plugins-icon-container">
                                             <label for="ktp" class="form-label">KTP</label>
-                                            <input class="form-control" type="text" id="ktp" placeholder="-" name="ktp"
-                                                value="{{ $user->Teacher->ktp ?? '' }}">
+                                            <input class="form-control" type="text" id="ktp" placeholder="-"
+                                                name="ktp" value="{{ $user->Teacher->ktp ?? '' }}">
                                             <div
                                                 class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
                                             </div>
                                         </div>
                                         <div class="col-md-6 fv-plugins-icon-container">
                                             <label for="birthdate" class="form-label">Tanggal Lahir</label>
-                                            <input class="form-control" type="date" id="birthdate" placeholder="-" name="birthdate"
-                                                value="{{ $user->Teacher->birthdate ?? '' }}">
+                                            <input class="form-control" type="date" id="birthdate" placeholder="-"
+                                                name="birthdate" value="{{ $user->Teacher->birthdate ?? '' }}">
                                             <div
                                                 class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
                                             </div>
                                         </div>
                                         <div class="col-md-6 fv-plugins-icon-container">
                                             <label for="birthplace" class="form-label">Tempat Lahir</label>
-                                            <input class="form-control" type="text" id="birthplace" placeholder="-" name="birthplace"
-                                                value="{{ $user->Teacher->birthplace ?? '' }}">
+                                            <input class="form-control" type="text" id="birthplace" placeholder="-"
+                                                name="birthplace" value="{{ $user->Teacher->birthplace ?? '' }}">
                                             <div
                                                 class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
                                             </div>
                                         </div>
                                         <div class="col-md-6 fv-plugins-icon-container">
                                             <label for="phone" class="form-label">No. Telp</label>
-                                            <input class="form-control" type="text" id="phone" placeholder="-" name="phone"
-                                                value="{{ $user->Teacher->phone ?? '' }}">
+                                            <input class="form-control" type="text" id="phone" placeholder="-"
+                                                name="phone" value="{{ $user->Teacher->phone ?? '' }}">
                                             <div
                                                 class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
                                             </div>
