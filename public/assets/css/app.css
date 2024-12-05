@@ -1,0 +1,164 @@
+
+a {
+    text-decoration: none
+}
+
+/* ----------------------------------------------
+FONT FACE
+-------------------------------------------------*/
+
+@font-face {
+    font-family: "apercu";
+    src: url("https://assets.awwwards.com/assets/fonts/apercu/apercu-light-pro.woff2") format("woff2");
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap
+}
+
+@font-face {
+    font-family: "apercu";
+    src: url("https://assets.awwwards.com/assets/fonts/apercu/apercu-light-italic-pro.woff2") format("woff2");
+    font-weight: 300;
+    font-style: italic;
+    font-display: swap
+}
+
+@font-face {
+    font-family: "apercu";
+    src: url("https://assets.awwwards.com/assets/fonts/apercu/apercu-regular-pro.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap
+}
+
+@font-face {
+    font-family: "apercu";
+    src: url("https://assets.awwwards.com/assets/fonts/apercu/apercu-medium-pro.woff2") format("woff2");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap
+}
+
+@font-face {
+    font-family: "apercu";
+    src: url("https://assets.awwwards.com/assets/fonts/apercu/apercu-bold-pro.woff2") format("woff2");
+    font-weight: 600;
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap
+}
+
+@font-face {
+    font-family: "apercu";
+    src: url("https://assets.awwwards.com/assets/fonts/apercu/apercu-black-pro.woff2") format("woff2");
+    font-weight: 800;
+    font-style: normal;
+    font-display: swap
+}
+
+
+
+
+:root {
+    --font-1: apercu, sans-serif;
+    --color-primary: #222;
+    --color-primary-rgb: 34, 34, 34;
+    --color-link: #222;
+    --color-white: #fff;
+    --color-white-rgb: 255, 255, 255;
+    --color-orange: #FA5D29;
+    --color-errors: #FA5D29;
+    --color-blue: #49B3FC;
+    --color-featured: #f8f0ee;
+    --color-underlined: var(--color-primary-rgb);
+    --color-connect: #FF602C;
+    --color-connect-2: #FFAE94;
+    --color-connect-3: #FFC5B1;
+    --color-inspire: #AAEEC4;
+    --color-inspire-2: #C8E4D3;
+    --color-inspire-3: #E2F4E9;
+    --color-awards: #502bd8;
+    --color-awards-2: #6749d1;
+    --color-awards-3: #917eda;
+    --color-read: #c0ab3c;
+    --color-read-2: #CDC38B;
+    --color-read-3: #DBD6C0;
+    --color-learn: #FFF083;
+    --color-learn-2: #FFF9D0;
+    --color-learn-3: #fffbe2;
+    --color-jobs: #74bcff;
+    --color-jobs-2: #99ccfc;
+    --color-jobs-3: #b4d7f8;
+    --text-size-small: 12px;
+    --text-size-primary: 16px;
+    --text-size-medium: 18px;
+    --text-size-large: 24px;
+    --border-gray: #ededed;
+    --color-dotteds-rgb: 34, 34, 34;
+    --bg-primary: #F8F8F8;
+    --bg-primary-rgb: 248, 248, 248;
+
+    --bg-secondary: #333;
+    --bg-3rd: #ededed;
+    --bg-4rd: #f8f8f8;
+    --bg-white: white;
+    --innerWidth: 1816px;
+    --header-height: 71px;
+    --gutter: 20px;
+    --pad-inner: 52px;
+    --color-odd-rows: #f8f8f8;
+    --avatar-bg: #F8F8F8;
+    --border-table: #222;
+    --border-thin: 0.5px;
+    --alert-green: #e0f4d9;
+    --alert-green-rgb: 224, 244, 217;
+    --alert-yellow: #FFF083;
+    --alert-yellow-rgb: 255, 240, 131;
+    --modal-alpha: 0.7;
+    --rounded-small: 4px;
+    --rounded-normal: 8px;
+    --rounded-large: 1rem;
+    --img-resizing-site: 16 / 12;
+    --img-resizing-paronamic: 2 / 1;
+    --img-resizing-desktop: 19 / 10
+}
+
+
+html {
+    scroll-behavior: smooth;
+    font-family: 'apercu';
+}
+
+img {
+    max-width: 100%
+}
+
+*::-webkit-scrollbar {
+    height: 10px;
+    width: 5px;
+  }
+  *::-webkit-scrollbar-track {
+    border-radius: 5px;
+    background-color: transparent;
+  }
+  
+  *::-webkit-scrollbar-track:hover {
+    background-color: #bbbbbb;
+  }
+  
+  *::-webkit-scrollbar-track:active {
+    background-color: #B8C0C2;
+  }
+  
+  *::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: rgba(var(--color-primary-rgb), 0.3);
+  }
+  
+  *::-webkit-scrollbar-thumb:hover {
+    background-color: #62A34B;
+  }
+  
+  *::-webkit-scrollbar-thumb:active {
+    background-color: #62A34B;
+  }
