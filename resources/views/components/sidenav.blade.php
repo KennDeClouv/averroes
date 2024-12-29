@@ -26,21 +26,31 @@
         <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Menu</span>
         </li>
-        @switch(Auth::user()->Role->code)
-            @case('admin')
-                @include('components.sidebar.admin')
-            @break
-
-            @case('student')
-                @include('components.sidebar.student')
-            @break
-
-            @case('teacher')
-                @include('components.sidebar.teacher')
-            @break
-
-            @default
-        @endswitch
+        {{--
+        /**
+         * Auto Sidebar Include Documentation
+         *
+         * This section of the code dynamically includes the sidebar
+         * based on the user's role. The sidebar is constructed using
+         * Blade components, which allows for a modular and maintainable
+         * approach to rendering the navigation menu.
+         *
+         * The sidebar is included using the following line:
+         * @include('components.sidebar.' . Auth::user()->Role->code)
+         *
+         * The 'Role' of the authenticated user determines which sidebar
+         * component is loaded. The available sidebar components are:
+         *
+         * - components.sidebar.superadmin
+         * - components.sidebar.administration_admin
+         * - components.sidebar.student
+         * - components.sidebar.teacher
+         *
+         * This approach ensures that users only see the menu items
+         * relevant to their permissions and roles within the application.
+         */
+        --}}
+        @include('components.sidebar.' . Auth::user()->Role->code)
 
         <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Profile</span>

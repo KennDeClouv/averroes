@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Models\Role;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
@@ -22,15 +22,29 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Carbon::setLocale('id');
         Blade::directive('errorFeedback', function ($field) {
             return "<?php if(\$errors->has($field)): ?>
                         <div class='invalid-feedback'>{{ \$errors->first($field) }}</div>
                     <?php endif; ?>";
         });
-        foreach (Role::all() as $role) {
-            Gate::define("$role->code", function ($user) use ($role) {
-                return $user->Role->code === $role->code;
-            });
-        }
+        Gate::define('isSuperAdmin', function ($user) {
+            return $user->Role->code === 'super_admin';
+        });
+
+        Gate::define('isAdministrationAdmin', function ($user) {
+            return $user->Role->code === 'administration_admin';
+        });
+
+        Gate::define('isTeacher', function ($user) {
+            return $user->Role->code === 'teacher';
+        });
+
+        Gate::define('isStudent', function ($user) {
+            return $user->Role->code === 'student';
+        });
+        Gate::define('isStudentRegistrant', function ($user) {
+            return $user->Role->code === 'student_registrant';
+        });
     }
 }

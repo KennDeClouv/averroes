@@ -27,9 +27,9 @@
                     <div class="card-body pb-4">
                         <span class="d-block fw-medium mb-4">Pengumuman</span>
                         @forelse ($announcements as $announcement)
-                            <div class="alert alert-{{ $announcement->status == 'active' ? 'success' : 'danger' }} alert-dismissible fade show" role="alert">
+                            <div class="alert alert-{{ $announcement->status == 'active' ? 'success' : 'danger' }} fade show"
+                                role="alert">
                                 <p class="mb-0">{{ $announcement->title }}</p>
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                 <p class="mb-0 opacity-50 small">{{ \Carbon\Carbon::parse($announcement->date)->format('d F Y') }}</p>
                             </div>
                         @empty
@@ -38,7 +38,6 @@
                             </div>
                         @endforelse
                     </div>
-                    <div id="chartImamAktif" class="pb-3"></div>
                 </div>
             </div>
         </div>

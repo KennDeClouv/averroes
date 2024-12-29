@@ -9,12 +9,12 @@
 @endsection
 
 @section('content')
-    <form action="{{ route('teacher.student-permit.update', $studentPermit->id) }}" method="POST">
+    <form action="{{ route('teacher.studentpermit.update', $studentPermit->id) }}" method="POST">
         @csrf
         @method('PUT')
         <div class="container-xxl flex-grow-1 container-p-y">
             <h5 class="fw-bold py-3 mb-4">
-                <span class="text-muted fw-light"><a href="{{ route('teacher.student-permit.index') }}">Daftar Ijin Santri</a>
+                <span class="text-muted fw-light"><a href="{{ route('teacher.studentpermit.index') }}">Daftar Ijin Santri</a>
                     /
                 </span>
                 Edit Ijin Santri

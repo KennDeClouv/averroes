@@ -3,12 +3,13 @@
 @endphp
 <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
     id="layout-navbar">
-    <div class="layout-menu-toggle navbar-nav align-items-xl-center me-4 me-xl-0 d-xl-none">
-        <a class="nav-item nav-link px-0 me-xl-6" href="javascript:void(0)">
-            <i class="fa-solid fa-grid-2"></i>
-        </a>
-    </div>
-
+    @if (!$user->StudentRegistrant)
+        <div class="layout-menu-toggle navbar-nav align-items-xl-center me-4 me-xl-0 d-xl-none">
+            <a class="nav-item nav-link px-0 me-xl-6" href="javascript:void(0)">
+                <i class="fa-solid fa-grid-2"></i>
+            </a>
+        </div>
+    @endif
     <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
         <div class="sk-fold sk-primary d-none d-lg-block m-2">
             <div class="sk-fold-cube"></div>
@@ -51,7 +52,8 @@
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
                     <li>
-                        <a class="dropdown-item" href="{{ route('account.index') }}">
+                        <a class="dropdown-item"
+                            href="{{ $user?->StudentRegistrant ? route('studentregistrant.home') : route('account.index') }}">
                             <div class="d-flex">
                                 <div class="flex-shrink-0 me-3">
                                     <div class="avatar avatar-online">
@@ -69,7 +71,8 @@
                         <div class="dropdown-divider my-1"></div>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="{{ route('account.index') }}">
+                        <a class="dropdown-item"
+                            href="{{ $user?->StudentRegistrant ? route('studentregistrant.home') : route('account.index') }}">
                             <i class="fa-solid fa-address-card fa-lg me-3"></i><span>My Profile</span>
                         </a>
                     </li>

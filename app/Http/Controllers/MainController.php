@@ -10,6 +10,6 @@ class MainController extends Controller
     public function index()
     {
         $role = Auth::user()->Role->code;
-        return redirect()->route("$role.home");
+        return redirect()->route(str_replace('_', '', $role) . ".home");
     }
 }

@@ -23,7 +23,7 @@
             </div>
             <div class="card-body pb-0 pt-4">
                 <div class="d-flex justify-content-end">
-                    <a href="{{ route('teacher.student-permit.create') }}" class="btn btn-primary mb-3"
+                    <a href="{{ route('teacher.studentpermit.create') }}" class="btn btn-primary mb-3"
                         data-bs-toggle="tooltip" data-bs-placement="top" title="Tambah Ijin Santri">Tambah Ijin
                         Santri</a>
                 </div>
@@ -54,14 +54,14 @@
                                         class="badge bg-{{ $studentPermit->status == 'pending' ? 'warning' : ($studentPermit->status == 'approved' ? 'success' : 'danger') }}">{{ $studentPermit->status }}</span>
                                 </td>
                                 <td>
-                                    <a href="{{ route('teacher.student-permit.show', $studentPermit->id) }}"
+                                    <a href="{{ route('teacher.studentpermit.show', $studentPermit->id) }}"
                                         data-bs-toggle="tooltip" data-bs-placement="top" title="Detail Ijin Santri"
                                         class="btn btn-info"><i class="fa-solid fa-eye"></i></a>
-                                    <a href="{{ route('teacher.student-permit.edit', $studentPermit->id) }}"
+                                    <a href="{{ route('teacher.studentpermit.edit', $studentPermit->id) }}"
                                         data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Ijin Santri"
                                         class="btn btn-warning"><i class="fa-solid fa-edit"></i></a>
                                     @if ($studentPermit->status == 'pending')
-                                        <form action="{{ route('teacher.student-permit.approve', $studentPermit->id) }}"
+                                        <form action="{{ route('teacher.studentpermit.approve', $studentPermit->id) }}"
                                             method="POST" style="display:inline;">
                                             @csrf
                                             @method('PUT')
@@ -102,7 +102,7 @@
                                             </div>
                                         </form>
                                     @endif
-                                    <x-delete :route="route('teacher.student-permit.destroy', $studentPermit->id)" :message="'Apakah anda yakin ingin menghapus ijin santri ini?'" :title="'Hapus Ijin Santri'" />
+                                    <x-delete :route="route('teacher.studentpermit.destroy', $studentPermit->id)" :message="'Apakah anda yakin ingin menghapus ijin santri ini?'" :title="'Hapus Ijin Santri'" />
                                 </td>
                             </tr>
                         @endforeach

@@ -9,11 +9,11 @@
 @endsection
 
 @section('content')
-    <form action="{{ route('teacher.student-permit.store') }}" method="POST">
+    <form action="{{ route('teacher.studentpermit.store') }}" method="POST">
         @csrf
         <div class="container-xxl flex-grow-1 container-p-y">
             <h5 class="fw-bold py-3 mb-4">
-                <span class="text-muted fw-light"><a href="{{ route('teacher.student-permit.index') }}">Daftar Ijin Santri</a>
+                <span class="text-muted fw-light"><a href="{{ route('teacher.studentpermit.index') }}">Daftar Ijin Santri</a>
                     / </span>
                 Tambah Ijin Santri
             </h5>

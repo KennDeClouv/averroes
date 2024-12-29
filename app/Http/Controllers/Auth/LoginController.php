@@ -25,7 +25,7 @@ class LoginController extends Controller
 
         if ($user && !$user->is_active) {
             return back()->withErrors([
-                'error' => 'Akun Anda tidak aktif. Silakan hubungi admin.',
+                'error' => 'Akun Anda tidak aktif. Silakan hubungi administrationadmin.',
             ])->withInput($request->except('password'));
         }
 

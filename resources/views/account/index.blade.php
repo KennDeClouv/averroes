@@ -279,7 +279,7 @@
                                             name="photo" accept="photo/*">
                                     </label>
 
-                                    <div>Diizinkan JPG, JPEG, GIF atau PNG. Ukuran maksimum 5 Mb</div>
+                                    <div>Diizinkan JPG, JPEG, atau PNG. Ukuran maksimum 5 Mb</div>
                                 </div>
                             </div>
                         </div>

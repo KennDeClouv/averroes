@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
             'username' => 'admin',
             'email' => 'admin@example.com',
             'password' => 'admin',
-            'role_id' => 1,
+            'role_id' => 2,
         ]);
         // Room
         $rooms = [
@@ -71,17 +71,35 @@ class DatabaseSeeder extends Seeder
                 'username' => $name,
                 'email' => $name . '@example.com',
                 'password' => 'password',
-                'role_id' => 3,
+                'role_id' => 4,
             ]);
             Student::create([
                 'name' => $student,
+                'full_name' => $student,
                 'nisn' => fake()->unique()->numberBetween(1000000000, 9999999999),
                 'user_id' => $user->id,
-                'gender' => 'Laki-laki',
-                'birthdate' => fake()->date(),
-                'birthplace' => fake()->city(),
+                'gender' => 'male',
+                'birth_date' => fake()->date(),
+                'birth_place' => fake()->city(),
                 'phone' => fake()->phoneNumber(),
                 'address' => fake()->address(),
+                'education_sd' => fake()->word(),
+                'education_smp' => fake()->word(),
+                'sibling_info' => fake()->sentence(),
+                'quran_memorization' => fake()->numberBetween(1, 30),
+                'achievements' => fake()->sentence(),
+                'school_motivation' => fake()->sentence(),
+                'major' => fake()->randomElement(['RPL', 'DKV']),
+                'medical_history' => fake()->sentence(),
+                'father_name' => fake()->name(),
+                'father_occupation' => fake()->word(),
+                'father_income' => fake()->numberBetween(1000000, 10000000),
+                'mother_name' => fake()->name(),
+                'mother_occupation' => fake()->word(),
+                'mother_income' => fake()->numberBetween(1000000, 10000000),
+                'parent_whatsapp' => fake()->phoneNumber(),
+                'quran_record_link' => fake()->url(),
+                'student_status' => fake()->randomElement(['Yatim Piatu', 'Yatim', 'Piatu', 'Non Yatim Piatu']),
             ]);
         }
         // Teacher
@@ -99,7 +117,7 @@ class DatabaseSeeder extends Seeder
                 'username' => $name,
                 'email' => $name . '@example.com',
                 'password' => 'password',
-                'role_id' => 2,
+                'role_id' => 3,
             ]);
             Teacher::create([
                 'name' => $teacher,
