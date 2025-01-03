@@ -24,9 +24,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         /**
-        * Mengubah bahasa Carbon menjadi bahasa yang sesuai dengan APP_LOCALE di env
-        */
-        Carbon::setLocale(env('APP_LOCALE'));
+         * Mengubah bahasa Carbon menjadi bahasa yang sesuai dengan APP_LOCALE di env
+         */
+        Carbon::setLocale(env('APP_LOCALE', 'id'));
         /**
          * Dokumentasi Penggunaan Direktif Blade @errorFeedback
          *
@@ -51,8 +51,8 @@ class AppServiceProvider extends ServiceProvider
          */
         Blade::directive('errorFeedback', function ($field) {
             return "<?php if(\$errors->has($field)): ?>
-                        <div class='invalid-feedback'>{{ \$errors->first($field) }}</div>
-                    <?php endif; ?>";
+                <div class='invalid-feedback'>{{ \$errors->first($field) }}</div>
+            <?php endif; ?>";
         });
         /**
          * Dokumentasi Gate Otomatis
