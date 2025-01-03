@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
-use App\Models\Role;
 use Carbon\Carbon;
+use App\Models\Role;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
@@ -71,11 +73,13 @@ class AppServiceProvider extends ServiceProvider
          * Penggunaan gate ini memungkinkan pengembang untuk dengan mudah mengelola izin akses
          * di seluruh aplikasi dengan cara yang terstruktur dan terorganisir.
          */
-        foreach (Role::all() as $role) {
-            $gateName = 'is' . str_replace(' ', '', ucwords(str_replace('_', ' ', $role->code)));
-            Gate::define($gateName, function ($user) use ($role) {
-                return $user->Role->code === $role->code;
-            });
+        if (!App::runningInConsole() && Schema::hasTable('roles')) {
+            foreach (Role::all() as $role) {
+                $gateName = 'is' . str_replace(' ', '', ucwords(str_replace('_', ' ', $role->code)));
+                Gate::define($gateName, function ($user) use ($role) {
+                    return $user->role->code === $role->code;
+                });
+            }
         }
     }
 }
