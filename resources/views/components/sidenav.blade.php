@@ -2,11 +2,11 @@
     <div class="app-brand demo" style="padding-left: 22px">
         <a href="{{ route(str_replace('_', '', Auth::user()->Role->code) . '.home') }}" class="app-brand-link">
             <span class="app-brand-logo demo">
-                {{-- <img src="{{ asset(env('APP_LOGO')) }}" alt="{{ env('APP_NAME') . ' logo' }}"
+                {{-- <img src="{{ asset(env('APP_LOGO')) }}" alt="{{ config('app.name') . ' logo' }}"
                     style="max-width:40px; border-radius:5px"> --}}
                 <i class="icon-averroes fs-2 text-primary"></i>
             </span>
-            <span class="app-brand-text demo menu-text text-primary fw-semibold ms-2">{{ env('APP_NAME') }}</span>
+            <span class="app-brand-text demo menu-text text-primary fw-semibold ms-2">{{ ucfirst(config('app.name')) }}</span>
         </a>
 
         <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">

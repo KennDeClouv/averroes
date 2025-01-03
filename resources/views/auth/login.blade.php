@@ -34,7 +34,7 @@
                         </div>
                         <!-- /Logo -->
                         <h4 class="mb-1">Selamat datang di
-                            {{ ucwords(str_replace('_', ' ', env('APP_NAME')) ?? '-') }} 👋</h4>
+                            {{ ucwords(str_replace('_', ' ', config('app.name')) ?? '-') }} 👋</h4>
                         <p class="mb-6">Silahkan masuk menggunakan akun anda</p>
                         @include('components.alert')
                         <form id="formAuthentication" class="mb-6" action="{{ route('login') }}" method="POST">

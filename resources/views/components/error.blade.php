@@ -7,7 +7,7 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 
-    <title>@yield('title') | {{ ucwords(str_replace('_', ' ', env('APP_NAME'))) }}</title>
+    <title>@yield('title') | {{ ucwords(str_replace('_', ' ', config('app.name'))) }}</title>
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon/favicon.ico') }}">
 
     @include('components._partials.seo')

@@ -9,7 +9,7 @@
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title') | {{ ucwords(str_replace('_', ' ', env('APP_NAME'))) }}</title>
+    <title>@yield('title') | {{ ucwords(str_replace('_', ' ', config('app.name'))) }}</title>
     <link rel="icon" type="image/x-icon" href="{{ asset('averroes.svg') }}">
 
     <!-- SEO -->
