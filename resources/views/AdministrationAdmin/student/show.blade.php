@@ -128,7 +128,7 @@
                         <strong>Penghasilan Ayah</strong>
                     </div>
                     <div class="col-md-8">
-                        : {{ $student->father_income ?? '-' }}
+                        : {{ indonesianCurrency($student->father_income) ?? '-' }}
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -152,7 +152,7 @@
                         <strong>Penghasilan Ibu</strong>
                     </div>
                     <div class="col-md-8">
-                        : {{ $student->mother_income ?? '-' }}
+                        : {{ indonesianCurrency($student->mother_income) ?? '-' }}
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -173,14 +173,6 @@
                 </div>
                 <div class="row mb-3">
                     <div class="col-md-4">
-                        <strong>Motivasi Sekolah</strong>
-                    </div>
-                    <div class="col-md-8">
-                        : {{ $student->school_motivation ?? '-' }}
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <div class="col-md-4">
                         <strong>Prestasi</strong>
                     </div>
                     <div class="col-md-8">
@@ -189,12 +181,42 @@
                 </div>
                 <div class="row mb-3">
                     <div class="col-md-4">
-                        <strong>Memorization Quran</strong>
+                        <strong>Juz yang dihafal</strong>
                     </div>
                     <div class="col-md-8">
                         : {{ $student->quran_memorization ?? '-' }}
                     </div>
                 </div>
+                @if ($student->attachment_family_register)
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <strong>File KK</strong>
+                        </div>
+                        <div class="col-md-8">
+                            : <a href="{{ $student->attachment_family_register }}" target="_blank">klik untuk melihat</a>
+                        </div>
+                    </div>
+                @endif
+                @if ($student->attachment_birth_certificate)
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <strong>File Akta kelahiran</strong>
+                        </div>
+                        <div class="col-md-8">
+                            : <a href="{{ $student->attachment_birth_certificate }}" target="_blank">klik untuk melihat</a>
+                        </div>
+                    </div>
+                @endif
+                @if ($student->attachment_diploma)
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <strong>File Ijazah</strong>
+                        </div>
+                        <div class="col-md-8">
+                            : <a href="{{ $student->attachment_diploma }}" target="_blank">klik untuk melihat</a>
+                        </div>
+                    </div>
+                @endif
                 <div class="row">
                     <div class="col-md-12 text-end">
                         <a href="{{ route('administrationadmin.student.index') }}" class="btn btn-secondary"

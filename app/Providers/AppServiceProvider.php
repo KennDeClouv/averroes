@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Role;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
@@ -22,29 +23,59 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Carbon::setLocale('id');
+        /**
+        * Mengubah bahasa Carbon menjadi bahasa yang sesuai dengan APP_LOCALE di env
+        */
+        Carbon::setLocale(env('APP_LOCALE'));
+        /**
+         * Dokumentasi Penggunaan Direktif Blade @errorFeedback
+         *
+         * Direktif ini digunakan untuk menampilkan umpan balik kesalahan
+         * pada form input. Jika ada kesalahan validasi untuk field tertentu,
+         * direktif ini akan menampilkan pesan kesalahan di bawah input.
+         *
+         * Cara menggunakan:
+         * 1. Pastikan Anda telah menambahkan validasi pada controller
+         *    sebelum mengembalikan tampilan.
+         * 2. Di dalam file Blade Anda, gunakan direktif ini dengan
+         *    menyertakan nama field yang ingin Anda periksa.
+         *
+         * Contoh penggunaan:
+         *
+         * <input type="text" name="username" class="form-control @error('username') is-invalid @enderror">
+         * @errorFeedback('username')
+         *
+         * Dalam contoh di atas, jika ada kesalahan validasi untuk field
+         * 'username', maka pesan kesalahan akan ditampilkan di bawah input
+         * dengan kelas 'invalid-feedback'.
+         */
         Blade::directive('errorFeedback', function ($field) {
             return "<?php if(\$errors->has($field)): ?>
                         <div class='invalid-feedback'>{{ \$errors->first($field) }}</div>
                     <?php endif; ?>";
         });
-        Gate::define('isSuperAdmin', function ($user) {
-            return $user->Role->code === 'super_admin';
-        });
-
-        Gate::define('isAdministrationAdmin', function ($user) {
-            return $user->Role->code === 'administration_admin';
-        });
-
-        Gate::define('isTeacher', function ($user) {
-            return $user->Role->code === 'teacher';
-        });
-
-        Gate::define('isStudent', function ($user) {
-            return $user->Role->code === 'student';
-        });
-        Gate::define('isStudentRegistrant', function ($user) {
-            return $user->Role->code === 'student_registrant';
-        });
+        /**
+         * Dokumentasi Gate Otomatis
+         *
+         * Bagian kode ini mendefinisikan gate otomatis untuk setiap peran yang ada dalam aplikasi.
+         * Gate digunakan untuk mengelola izin akses pengguna berdasarkan peran mereka.
+         *
+         * Setiap gate dinamai dengan format 'is' diikuti oleh nama peran yang ditulis dalam format CamelCase.
+         * Contoh: untuk peran 'administration_admin', gate akan dinamai 'isAdministrationAdmin'.
+         * Pastikan penulisan code role menggunakan snake case
+         *
+         * Fungsi gate ini memeriksa apakah pengguna yang terautentikasi memiliki peran yang sesuai
+         * dengan gate yang sedang diperiksa. Jika kode peran pengguna sama dengan kode peran yang
+         * didefinisikan dalam gate, maka akses akan diberikan.
+         *
+         * Penggunaan gate ini memungkinkan pengembang untuk dengan mudah mengelola izin akses
+         * di seluruh aplikasi dengan cara yang terstruktur dan terorganisir.
+         */
+        foreach (Role::all() as $role) {
+            $gateName = 'is' . str_replace(' ', '', ucwords(str_replace('_', ' ', $role->code)));
+            Gate::define($gateName, function ($user) use ($role) {
+                return $user->Role->code === $role->code;
+            });
+        }
     }
 }

@@ -51,7 +51,7 @@
                                 <td>{{ Str::limit($studentPermit->reason, 20) }}</td>
                                 <td>
                                     <span
-                                        class="badge bg-{{ $studentPermit->status == 'pending' ? 'warning' : ($studentPermit->status == 'approved' ? 'success' : 'danger') }}">{{ $studentPermit->status }}</span>
+                                        class="badge bg-{{ $studentPermit->status == 'pending' ? 'warning' : ($studentPermit->status == 'approved' ? 'success' : 'danger') }}">{{ getStatusLabel($studentPermit->status, 'approval') }}</span>
                                 </td>
                                 <td>
                                     <a href="{{ route('administrationadmin.studentpermit.show', $studentPermit->id) }}"

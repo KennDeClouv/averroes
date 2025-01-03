@@ -32,7 +32,7 @@
                         <strong>Dari</strong>
                     </div>
                     <div class="col-md-8">
-                        : {{ \Carbon\Carbon::parse($studentPermit->from)->format('d-m-Y H:i') }}
+                        : {{ formatDate($studentPermit->from, 'd F Y H:i') }}
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -40,7 +40,7 @@
                         <strong>Sampai</strong>
                     </div>
                     <div class="col-md-8">
-                        : {{ \Carbon\Carbon::parse($studentPermit->to)->format('d-m-Y H:i') }}
+                        : {{ formatDate($studentPermit->to, 'd F Y H:i') }}
                     </div>
                 </div>
                 <div class="row mb-3">

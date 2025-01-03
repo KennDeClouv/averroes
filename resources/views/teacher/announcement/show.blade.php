@@ -4,7 +4,8 @@
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
         <h5 class="fw-bold py-3 mb-4">
-            <span class="text-muted fw-light"><a href="{{ route('teacher.announcement.index') }}">Daftar Pengumuman</a> / </span>
+            <span class="text-muted fw-light"><a href="{{ route('teacher.announcement.index') }}">Daftar Pengumuman</a> /
+            </span>
             Detail Pengumuman Santri
         </h5>
         <div class="card">
@@ -39,7 +40,7 @@
                         <strong>Tanggal</strong>
                     </div>
                     <div class="col-md-8">
-                        : {{ \Carbon\Carbon::parse($announcement->date)->format('d-m-Y') }}
+                        : {{ formatDate($announcement->date) }}
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -47,13 +48,15 @@
                         <strong>Status</strong>
                     </div>
                     <div class="col-md-8">
-                        : <span class="badge bg-{{ $announcement->status == 'active' ? 'success' : 'danger' }}">{{ $announcement->status }}</span>
+                        : <span
+                            class="badge bg-{{ $announcement->status == 'active' ? 'success' : 'danger' }}">{{ getStatusLabel($announcement->status, 'activation') }}</span>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12 text-end">
-                        <a href="{{ route('teacher.announcement.index') }}" class="btn btn-secondary" data-bs-toggle="tooltip"
-                            data-bs-placement="top" title="Kembali"><i class="fa-solid fa-arrow-left"></i></a>
+                        <a href="{{ route('teacher.announcement.index') }}" class="btn btn-secondary"
+                            data-bs-toggle="tooltip" data-bs-placement="top" title="Kembali"><i
+                                class="fa-solid fa-arrow-left"></i></a>
                         <a href="{{ route('teacher.announcement.edit', $announcement->id) }}" class="btn btn-warning"
                             data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Pengumuman"><i
                                 class="fa-solid fa-edit"></i></a>

@@ -11,12 +11,24 @@
         </div>
     @endif
     <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-        <div class="sk-fold sk-primary d-none d-lg-block m-2">
+        {{-- <div class="sk-fold sk-primary d-none d-lg-block m-2">
             <div class="sk-fold-cube"></div>
             <div class="sk-fold-cube"></div>
             <div class="sk-fold-cube"></div>
             <div class="sk-fold-cube"></div>
-        </div>
+        </div> --}}
+        <div class="sk-grid sk-primary d-none d-lg-block m-2">
+            <div class="sk-grid-cube"></div>
+            <div class="sk-grid-cube"></div>
+            <div class="sk-grid-cube"></div>
+            <div class="sk-grid-cube"></div>
+            <div class="sk-grid-cube"></div>
+            <div class="sk-grid-cube"></div>
+            <div class="sk-grid-cube"></div>
+            <div class="sk-grid-cube"></div>
+            <div class="sk-grid-cube"></div>
+          </div>
+        {{-- <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div> --}}
         <ul class="navbar-nav flex-row align-items-center ms-auto">
             <!-- Style Switcher -->
             <li class="nav-item dropdown-style-switcher dropdown me-2 me-xl-0">

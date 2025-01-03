@@ -30,14 +30,14 @@ return new class extends Migration
             $table->string('medical_history')->nullable();
             $table->string('father_name');
             $table->string('father_occupation');
-            $table->integer('father_income');
+            $table->bigInteger('father_income');
             $table->string('mother_name');
             $table->string('mother_occupation');
-            $table->integer('mother_income');
+            $table->bigInteger('mother_income');
             $table->string('parent_whatsapp');
             $table->enum('student_status', ['Yatim Piatu', 'Yatim', 'Piatu', 'Non Yatim Piatu']);
             $table->string('quran_record_link')->nullable();
-            $table->enum('status', ['pending', 'approve', 'rejected'])->default('pending');
+            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->string('attachment_family_register')->nullable();
             $table->string('attachment_birth_certificate')->nullable();
             $table->string('attachment_diploma')->nullable();

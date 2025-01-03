@@ -18,14 +18,9 @@ class AnnouncementController extends Controller
 
     public function create()
     {
-        $role = Auth::user()->Role->code;
-        switch ($role) {
-            case 'admin':
-                $targets = Role::all();
-                return view('AdministrationAdmin.announcement.create', compact('targets'));
-            case 'teacher':
-                return view('teacher.announcement.create');
-        }
+
+        $targets = Role::all();
+        return view('AdministrationAdmin.announcement.create', compact('targets'));
     }
 
     public function store(Request $request)
@@ -39,37 +34,18 @@ class AnnouncementController extends Controller
             'status' => 'required|in:active,inactive',
         ]);
         Announcement::create($request->all());
-        switch ($role) {
-            case 'admin':
-                return redirect()->route('administrationadmin.announcement.index')->with('success', 'Pengumuman berhasil dibuat.');
-            case 'teacher':
-                return redirect()->route('teacher.announcement.index')->with('success', 'Pengumuman berhasil dibuat.');
-        }
+        return redirect()->route('administrationadmin.announcement.index')->with('success', 'Pengumuman berhasil dibuat.');
     }
 
     public function show(Announcement $announcement)
     {
-        $role = Auth::user()->Role->code;
-        switch ($role) {
-            case 'admin':
-                return view('AdministrationAdmin.announcement.show', compact('announcement'));
-            case 'teacher':
-                return view('teacher.announcement.show', compact('announcement'));
-        }
+        return view('AdministrationAdmin.announcement.show', compact('announcement'));
     }
-
     public function edit(Announcement $announcement)
     {
-        $role = Auth::user()->Role->code;
-        switch ($role) {
-            case 'admin':
-                $targets = Role::all();
-                return view('AdministrationAdmin.announcement.edit', compact('announcement', 'targets'));
-            case 'teacher':
-                return view('teacher.announcement.edit', compact('announcement'));
-        }
+        $targets = Role::all();
+        return view('AdministrationAdmin.announcement.edit', compact('announcement', 'targets'));
     }
-
     public function update(Request $request, Announcement $announcement)
     {
         $role = Auth::user()->Role->code;
@@ -83,24 +59,12 @@ class AnnouncementController extends Controller
 
         $announcement->update($request->all());
 
-        switch ($role) {
-            case 'admin':
-                return redirect()->route('administrationadmin.announcement.index')->with('success', 'Pengumuman berhasil diubah.');
-            case 'teacher':
-                return redirect()->route('teacher.announcement.index')->with('success', 'Pengumuman berhasil diubah.');
-        }
+        return redirect()->route('administrationadmin.announcement.index')->with('success', 'Pengumuman berhasil diubah.');
     }
-
     public function destroy(Announcement $announcement)
     {
         $role = Auth::user()->Role->code;
         $announcement->delete();
-
-        switch ($role) {
-            case 'admin':
-                return redirect()->route('administrationadmin.announcement.index')->with('success', 'Pengumuman berhasil dihapus.');
-            case 'teacher':
-                return redirect()->route('teacher.announcement.index')->with('success', 'Pengumuman berhasil dihapus.');
-        }
+        return redirect()->route('administrationadmin.announcement.index')->with('success', 'Pengumuman berhasil dihapus.');
     }
 }

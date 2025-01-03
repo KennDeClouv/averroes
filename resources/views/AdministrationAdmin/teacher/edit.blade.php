@@ -57,11 +57,11 @@
                         </div>
                         <div class="card-body">
                             <div class="mb-3">
-                                <label class="form-label" for="fullname">Nama Lengkap</label>
-                                <input type="text" class="form-control @error('fullname') is-invalid @enderror"
-                                    id="fullname" name="fullname" value="{{ old('fullname', $teacher->name) }}"
+                                <label class="form-label" for="full_name">Nama Lengkap</label>
+                                <input type="text" class="form-control @error('full_name') is-invalid @enderror"
+                                    id="full_name" name="full_name" value="{{ old('full_name', $teacher->name) }}"
                                     placeholder="Nama Lengkap Ustadz">
-                                @errorFeedback('fullname')
+                                @errorFeedback('full_name')
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="ktp">KTP</label>
@@ -73,11 +73,11 @@
                                 <label class="form-label" for="gender">Jenis Kelamin</label>
                                 <select class="form-control select2" id="gender" name="gender">
                                     <option value="" disabled>Pilih Jenis Kelamin</option>
-                                    <option value="Laki-laki"
-                                        {{ old('gender', $teacher->gender) == 'Laki-laki' ? 'selected' : '' }}>
+                                    <option value="male"
+                                        {{ old('gender', $teacher->gender) == 'male' ? 'selected' : '' }}>
                                         Laki-laki</option>
-                                    <option value="Perempuan"
-                                        {{ old('gender', $teacher->gender) == 'Perempuan' ? 'selected' : '' }}>
+                                    <option value="female"
+                                        {{ old('gender', $teacher->gender) == 'female' ? 'selected' : '' }}>
                                         Perempuan</option>
                                 </select>
                                 @errorFeedback('gender')
@@ -86,7 +86,7 @@
                                 <label class="form-label" for="room">Kamar</label>
                                 <select class="form-control select2 @error('room_id') is-invalid @enderror" id="room"
                                     name="room_id">
-                                    <option value="" disabled>Pilih Kamar</option>
+                                    <option value="" selected disabled>Pilih Kamar</option>
                                     @foreach ($rooms as $room)
                                         <option value="{{ $room->id }}"
                                             {{ old('room_id', $teacher->room_id) == $room->id ? 'selected' : '' }}>
@@ -104,32 +104,32 @@
                                 @errorFeedback('phone')
                             </div>
                             <div class="mb-3">
-                                <label class="form-label" for="birthdate">Tanggal Lahir</label>
-                                <input type="date" class="form-control @error('birthdate') is-invalid @enderror"
-                                    id="birthdate" name="birthdate" value="{{ old('birthdate', $teacher->birthdate) }}">
-                                @errorFeedback('birthdate')
+                                <label class="form-label" for="birth_date">Tanggal Lahir</label>
+                                <input type="date" class="form-control @error('birth_date') is-invalid @enderror"
+                                    id="birth_date" name="birth_date" value="{{ old('birth_date', $teacher->birth_date) }}">
+                                @errorFeedback('birth_date')
                             </div>
                             <div class="mb-3">
-                                <label class="form-label" for="birthplace">Tempat Lahir</label>
-                                <input type="text" class="form-control @error('birthplace') is-invalid @enderror"
-                                    id="birthplace" name="birthplace"
-                                    value="{{ old('birthplace', $teacher->birthplace) }}"
+                                <label class="form-label" for="birth_place">Tempat Lahir</label>
+                                <input type="text" class="form-control @error('birth_place') is-invalid @enderror"
+                                    id="birth_place" name="birth_place"
+                                    value="{{ old('birth_place', $teacher->birth_place) }}"
                                     placeholder="Tempat Lahir Ustadz">
-                                @errorFeedback('birthplace')
+                                @errorFeedback('birth_place')
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="type">Tipe</label>
                                 <select class="form-control select2" id="type" name="type">
-                                    <option value="" disabled>Pilih Tipe</option>
-                                    <option value="Pengajar"
-                                        {{ old('type', $teacher->type) == 'Pengajar' ? 'selected' : '' }}>
+                                    <option value="" selected disabled>Pilih Tipe</option>
+                                    <option value="teacher"
+                                        {{ old('type', $teacher->type) == 'teacher' ? 'selected' : '' }}>
                                         Pengajar
                                     </option>
-                                    <option value="Musrif"
-                                        {{ old('type', $teacher->type) == 'Musrif' ? 'selected' : '' }}>Musrif
+                                    <option value="companion"
+                                        {{ old('type', $teacher->type) == 'companion' ? 'selected' : '' }}>Musrif
                                     </option>
-                                    <option value="Mudzir"
-                                        {{ old('type', $teacher->type) == 'Mudzir' ? 'selected' : '' }}>Mudzir
+                                    <option value="headmaster"
+                                        {{ old('type', $teacher->type) == 'headmaster' ? 'selected' : '' }}>Mudzir
                                     </option>
                                 </select>
                                 @errorFeedback('type')
@@ -138,15 +138,15 @@
                                 <label class="form-label" for="secondary_type">Tipe Sekunder</label>
                                 <select class="form-control select2 @error('secondary_type') is-invalid @enderror"
                                     id="secondary_type" name="secondary_type">
-                                    <option value="" disabled>Pilih Tipe Sekunder</option>
-                                    <option value="Pengajar"
-                                        {{ old('secondary_type', $teacher->secondary_type) == 'Pengajar' ? 'selected' : '' }}>
+                                    <option value="" selected disabled>Pilih Tipe Sekunder</option>
+                                    <option value="teacher"
+                                        {{ old('secondary_type', $teacher->secondary_type) == 'teacher' ? 'selected' : '' }}>
                                         Pengajar</option>
-                                    <option value="Musrif"
-                                        {{ old('secondary_type', $teacher->secondary_type) == 'Musrif' ? 'selected' : '' }}>
+                                    <option value="companion"
+                                        {{ old('secondary_type', $teacher->secondary_type) == 'companion' ? 'selected' : '' }}>
                                         Musrif</option>
-                                    <option value="Mudzir"
-                                        {{ old('secondary_type', $teacher->secondary_type) == 'Mudzir' ? 'selected' : '' }}>
+                                    <option value="headmaster"
+                                        {{ old('secondary_type', $teacher->secondary_type) == 'headmaster' ? 'selected' : '' }}>
                                         Mudzir</option>
                                 </select>
                                 @errorFeedback('secondary_type')

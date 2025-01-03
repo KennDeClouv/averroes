@@ -41,8 +41,8 @@
                     <tbody>
                         @foreach ($studentPermits as $studentPermit)
                             <tr>
-                                <td>{{ \Carbon\Carbon::parse($studentPermit->from)->format('d F Y H:i') }}</td>
-                                <td>{{ \Carbon\Carbon::parse($studentPermit->to)->format('d F Y H:i') }}</td>
+                                <td>{{ formatDate($studentPermit->from, 'd F Y H:i') }}</td>
+                                <td>{{ formatDate($studentPermit->to, 'd F Y H:i') }}</td>
                                 <td>{{ Str::limit($studentPermit->reason, 20) }}</td>
                                 <td>
                                     <span class="badge bg-{{ $studentPermit->status == 'pending' ? 'warning' : ($studentPermit->status == 'approved' ? 'success' : 'danger') }}">{{ $studentPermit->status }}</span>

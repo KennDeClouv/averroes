@@ -24,6 +24,14 @@
 
 
 <body style="overflow-x: hidden">
+    <div class="loader">
+        <div class="sk-fold sk-primary d-none d-lg-block m-2" style="width: 80px; height:80px">
+            <div class="sk-fold-cube"></div>
+            <div class="sk-fold-cube"></div>
+            <div class="sk-fold-cube"></div>
+            <div class="sk-fold-cube"></div>
+        </div>
+    </div>
     @include('components.alert')
     <div class="layout-wrapper layout-content-navbar  layout-without-menu">
         <div class="layout-page">

@@ -9,12 +9,11 @@
 @endsection
 
 @section('content')
-    <form action="{{ route('administrationadmin.studentregistrant.store') }}" method="POST">
+    <form action="{{ route('administrationadmin.studentregistrant.storeuser') }}" method="POST">
         <div class="container-xxl flex-grow-1 container-p-y">
             <h5 class="fw-bold py-3 mb-4">
-                <span class="text-muted fw-light"> <a href="{{ route('administrationadmin.studentregistrant.index') }}">Data
-                        Calon Santri</a> /</span>
-                Tambah Calon Santri
+                <span class="text-muted fw-light"> <a href="{{ route('administrationadmin.studentregistrant.index') }}">Data Akun Calon Santri</a> /</span>
+                Tambah Akun Calon Santri
             </h5>
             <div class="row">
                 <div class="col-xxl">

@@ -42,10 +42,6 @@
                 <h5 class="card-title">List Pendaftar</h5>
             </div>
             <div class="card-body pb-0 pt-4">
-                {{-- <div class="d-flex justify-content-end">
-                    <a href="{{ route('administrationadmin.studentregistrant.create') }}" class="btn btn-primary mb-3" data-bs-toggle="tooltip"
-                        data-bs-placement="top" title="Tambah Pendaftar">Tambah Pendaftar</a>
-                </div> --}}
             </div>
             <div class="card-datatable table-responsive text-start text-nowrap">
                 <table class="table table-bordered" id="table">
@@ -67,26 +63,35 @@
                                 <td>{{ $studentRegistrant->parent_whatsapp }}</td>
                                 <td>{{ formatDate($studentRegistrant->created_at, 'd F Y') }}</td>
                                 <td><span
-                                        class="badge bg-{{ $studentRegistrant->status == 'approve' ? 'success' : ($studentRegistrant->status == 'pending' ? 'warning' : 'danger') }}">{{ ucfirst($studentRegistrant->status) }}</span>
+                                        class="badge bg-{{ $studentRegistrant->status == 'approved' ? 'success' : ($studentRegistrant->status == 'pending' ? 'warning' : 'danger') }}">{{ getStatusLabel($studentRegistrant->status, 'approval') }}</span>
                                 </td>
                                 <td>
                                     <a href="{{ route('administrationadmin.studentregistrant.show', $studentRegistrant->id) }}"
-                                        data-bs-toggle="tooltip" data-bs-placement="top" title="Detail Santri"
+                                        data-bs-toggle="tooltip" data-bs-placement="top" title="Detail Calon Santri"
                                         class="btn btn-info "><i class="fa-solid fa-eye fs-6"></i></a>
                                     @if ($studentRegistrant->status === 'pending')
                                         <form
-                                            action="{{ route('administrationadmin.studentregistrant.accept', $studentRegistrant->id) }}"
+                                            action="{{ route('administrationadmin.studentregistrant.approve', $studentRegistrant->id) }}"
                                             method="POST" style="display:inline;">
                                             @csrf
                                             @method('PUT')
                                             <button type="submit" class="btn btn-success" data-bs-toggle="tooltip"
-                                                data-bs-placement="top" title="Terima Santri">
+                                                data-bs-placement="top" title="Terima Calon Santri">
                                                 <i class="fa-solid fa-check fs-6"></i>
                                             </button>
                                         </form>
+                                        <form
+                                            action="{{ route('administrationadmin.studentregistrant.reject', $studentRegistrant->id) }}"
+                                            method="POST" style="display:inline;">
+                                            @csrf
+                                            @method('PUT')
+                                            <button type="submit" class="btn btn-danger" data-bs-toggle="tooltip"
+                                                data-bs-placement="top" title="Tolak Calon Santri">
+                                                <i class="fa-solid fa-times fs-6"></i>
+                                            </button>
+                                        </form>
                                     @endif
-                                    <form
-                                        action="{{ route('administrationadmin.studentregistrant.sendNotification') }}"
+                                    {{-- <form action="{{ route('administrationadmin.studentregistrant.sendNotification') }}"
                                         method="POST" style="display:inline;">
                                         @csrf
                                         @method('POST')
@@ -94,7 +99,7 @@
                                             data-bs-placement="top" title="Kirim Notifikasi">
                                             <i class="fa-solid fa-bell fs-6"></i>
                                         </button>
-                                    </form>
+                                    </form> --}}
                                 </td>
                             </tr>
                         @endforeach

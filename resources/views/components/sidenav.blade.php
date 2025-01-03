@@ -28,26 +28,27 @@
         </li>
         {{--
         /**
-         * Auto Sidebar Include Documentation
+         * Dokumentasi Penyertaan Sidebar Otomatis
          *
-         * This section of the code dynamically includes the sidebar
-         * based on the user's role. The sidebar is constructed using
-         * Blade components, which allows for a modular and maintainable
-         * approach to rendering the navigation menu.
+         * Bagian kode ini secara dinamis menyertakan sidebar
+         * berdasarkan peran pengguna. Sidebar dibangun menggunakan
+         * komponen Blade, yang memungkinkan pendekatan modular dan
+         * mudah dipelihara untuk merender menu navigasi.
          *
-         * The sidebar is included using the following line:
+         * Sidebar disertakan menggunakan baris berikut:
          * @include('components.sidebar.' . Auth::user()->Role->code)
          *
-         * The 'Role' of the authenticated user determines which sidebar
-         * component is loaded. The available sidebar components are:
+         * 'Role' pengguna yang terautentikasi menentukan komponen
+         * sidebar mana yang dimuat. Komponen sidebar yang tersedia adalah:
          *
-         * - components.sidebar.superadmin
+         * - components.sidebar.super_admin
          * - components.sidebar.administration_admin
          * - components.sidebar.student
          * - components.sidebar.teacher
          *
-         * This approach ensures that users only see the menu items
-         * relevant to their permissions and roles within the application.
+         * Pastikan membuat role dan nama sidebar yang sama (GUNAKAN PENULISAN SNAKE CASE)
+         * Pendekatan ini memastikan bahwa pengguna hanya melihat item menu
+         * yang relevan dengan izin dan peran mereka dalam aplikasi.
          */
         --}}
         @include('components.sidebar.' . Auth::user()->Role->code)

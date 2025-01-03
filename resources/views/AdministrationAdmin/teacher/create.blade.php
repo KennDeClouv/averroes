@@ -13,7 +13,8 @@
         @csrf
         <div class="container-xxl flex-grow-1 container-p-y">
             <h5 class="fw-bold py-3 mb-4">
-                <span class="text-muted fw-light"> <a href="{{ route('administrationadmin.teacher.index') }}">Daftar Ustadz</a> /</span>
+                <span class="text-muted fw-light"> <a href="{{ route('administrationadmin.teacher.index') }}">Daftar
+                        Ustadz</a> /</span>
                 Tambah Ustadz
             </h5>
             <div class="row">
@@ -69,11 +70,11 @@
                         </div>
                         <div class="card-body">
                             <div class="mb-3">
-                                <label class="form-label" for="fullname">Nama Lengkap</label>
-                                <input type="text" class="form-control @error('fullname') is-invalid @enderror"
-                                    id="fullname" name="fullname" placeholder="Nama Lengkap Ustadz"
-                                    value="{{ old('fullname') }}">
-                                @errorFeedback('fullname')
+                                <label class="form-label" for="full_name">Nama Lengkap</label>
+                                <input type="text" class="form-control @error('full_name') is-invalid @enderror"
+                                    id="full_name" name="full_name" placeholder="Nama Lengkap Ustadz"
+                                    value="{{ old('full_name') }}">
+                                @errorFeedback('full_name')
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="ktp">KTP</label>
@@ -85,11 +86,10 @@
                                 <label class="form-label" for="gender">Jenis Kelamin</label>
                                 <select class="form-control select2 @error('gender') is-invalid @enderror" id="gender"
                                     name="gender">
-                                    <option value="" disabled {{ old('gender') ? '' : 'selected' }}>Pilih Jenis
-                                        Kelamin</option>
-                                    <option value="Laki-laki" {{ old('gender') == 'Laki-laki' ? 'selected' : '' }}>Laki-laki
+                                    <option value="" disabled selected>Pilih Jenis Kelamin</option>
+                                    <option value="male" {{ old('gender') == 'male' ? 'selected' : '' }}>Laki-laki
                                     </option>
-                                    <option value="Perempuan" {{ old('gender') == 'Perempuan' ? 'selected' : '' }}>Perempuan
+                                    <option value="female" {{ old('gender') == 'female' ? 'selected' : '' }}>Perempuan
                                     </option>
                                 </select>
                                 @errorFeedback('gender')
@@ -113,7 +113,9 @@
                                     <option value="" disabled {{ old('classes_id') ? '' : 'selected' }}>Pilih Kelas
                                     </option>
                                     @foreach ($classes as $class)
-                                        <option value="{{ $class->id }}" {{ old('classes_id') == $class->id ? 'selected' : '' }}>{{ $class->name }}</option>
+                                        <option value="{{ $class->id }}"
+                                            {{ old('classes_id') == $class->id ? 'selected' : '' }}>{{ $class->name }}
+                                        </option>
                                     @endforeach
                                 </select>
                                 @errorFeedback('classes_id')
@@ -126,17 +128,17 @@
                                 @errorFeedback('phone')
                             </div>
                             <div class="mb-3">
-                                <label class="form-label" for="birthdate">Tanggal Lahir</label>
-                                <input type="date" class="form-control @error('birthdate') is-invalid @enderror"
-                                    id="birthdate" name="birthdate" value="{{ old('birthdate') }}">
-                                @errorFeedback('birthdate')
+                                <label class="form-label" for="birth_date">Tanggal Lahir</label>
+                                <input type="date" class="form-control @error('birth_date') is-invalid @enderror"
+                                    id="birth_date" name="birth_date" value="{{ old('birth_date') }}">
+                                @errorFeedback('birth_date')
                             </div>
                             <div class="mb-3">
-                                <label class="form-label" for="birthplace">Tempat Lahir</label>
-                                <input type="text" class="form-control @error('birthplace') is-invalid @enderror"
-                                    id="birthplace" name="birthplace" placeholder="Tempat Lahir Ustadz"
-                                    value="{{ old('birthplace') }}">
-                                @errorFeedback('birthplace')
+                                <label class="form-label" for="birth_place">Tempat Lahir</label>
+                                <input type="text" class="form-control @error('birth_place') is-invalid @enderror"
+                                    id="birth_place" name="birth_place" placeholder="Tempat Lahir Ustadz"
+                                    value="{{ old('birth_place') }}">
+                                @errorFeedback('birth_place')
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="type">Tipe</label>
@@ -144,10 +146,12 @@
                                     name="type">
                                     <option value="" disabled {{ old('type') ? '' : 'selected' }}>Pilih Tipe
                                     </option>
-                                    <option value="Pengajar" {{ old('type') == 'Pengajar' ? 'selected' : '' }}>Pengajar
+                                    <option value="teacher" {{ old('type') == 'teacher' ? 'selected' : '' }}>Pengajar
                                     </option>
-                                    <option value="Musrif" {{ old('type') == 'Musrif' ? 'selected' : '' }}>Musrif</option>
-                                    <option value="Mudzir" {{ old('type') == 'Mudzir' ? 'selected' : '' }}>Mudzir</option>
+                                    <option value="companion" {{ old('type') == 'companion' ? 'selected' : '' }}>Musrif
+                                    </option>
+                                    <option value="headmaster" {{ old('type') == 'headmaster' ? 'selected' : '' }}>Mudzir
+                                    </option>
                                 </select>
                                 @errorFeedback('type')
                             </div>
@@ -157,11 +161,13 @@
                                     id="secondary_type" name="secondary_type">
                                     <option value="" disabled {{ old('secondary_type') ? '' : 'selected' }}>Pilih
                                         Tipe Sekunder</option>
-                                    <option value="Pengajar" {{ old('secondary_type') == 'Pengajar' ? 'selected' : '' }}>
+                                    <option value="teacher" {{ old('secondary_type') == 'teacher' ? 'selected' : '' }}>
                                         Pengajar</option>
-                                    <option value="Musrif" {{ old('secondary_type') == 'Musrif' ? 'selected' : '' }}>
+                                    <option value="companion"
+                                        {{ old('secondary_type') == 'companion' ? 'selected' : '' }}>
                                         Musrif</option>
-                                    <option value="Mudzir" {{ old('secondary_type') == 'Mudzir' ? 'selected' : '' }}>
+                                    <option value="headmaster"
+                                        {{ old('secondary_type') == 'headmaster' ? 'selected' : '' }}>
                                         Mudzir</option>
                                 </select>
                                 @errorFeedback('secondary_type')

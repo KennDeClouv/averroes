@@ -42,7 +42,7 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $teacher->name }}</td>
-                                <td>{{ $teacher->type ?? '-' }}</td>
+                                <td>{{ teacherType($teacher->type) ?? '-' }}</td>
                                 <td>
                                     <a href="{{ route('administrationadmin.teacher.show', $teacher->id) }}" data-bs-toggle="tooltip"
                                         data-bs-placement="top" title="Detail Ustadz" class="btn btn-info "><i

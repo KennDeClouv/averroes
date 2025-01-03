@@ -4,7 +4,7 @@
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
         <h5 class="fw-bold py-3 mb-4">
-            <span class="text-muted fw-light"> <a href="{{ route('administrationadmin.student.index') }}">Data Santri</a>
+            <span class="text-muted fw-light"> <a href="{{ route('administrationadmin.studentregistrant.index') }}">Data </a>
                 /</span>
             Detail Santri
         </h5>
@@ -37,22 +37,6 @@
                 </div>
                 <div class="row mb-3">
                     <div class="col-md-4">
-                        <strong>Kelas</strong>
-                    </div>
-                    <div class="col-md-8">
-                        : {{ $studentRegistrant->Classes->name ?? '-' }}
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <div class="col-md-4">
-                        <strong>Kamar</strong>
-                    </div>
-                    <div class="col-md-8">
-                        : {{ $studentRegistrant->Room->name ?? '-' }}
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <div class="col-md-4">
                         <strong>Jenis Kelamin</strong>
                     </div>
                     <div class="col-md-8">
@@ -65,14 +49,6 @@
                     </div>
                     <div class="col-md-8">
                         : {{ $studentRegistrant->address ?? '-' }}
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <div class="col-md-4">
-                        <strong>Telepon</strong>
-                    </div>
-                    <div class="col-md-8">
-                        : {{ $studentRegistrant->phone ?? '-' }}
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -128,7 +104,7 @@
                         <strong>Penghasilan Ayah</strong>
                     </div>
                     <div class="col-md-8">
-                        : {{ $studentRegistrant->father_income ?? '-' }}
+                        : {{ indonesianCurrency($studentRegistrant->father_income) ?? '-' }}
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -152,7 +128,7 @@
                         <strong>Penghasilan Ibu</strong>
                     </div>
                     <div class="col-md-8">
-                        : {{ $studentRegistrant->mother_income ?? '-' }}
+                        : {{ indonesianCurrency($studentRegistrant->mother_income) ?? '-' }}
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -160,7 +136,7 @@
                         <strong>Status Siswa</strong>
                     </div>
                     <div class="col-md-8">
-                        : {{ $studentRegistrant->studentRegistrant_status ?? '-' }}
+                        : {{ $studentRegistrant->student_status ?? '-' }}
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -189,21 +165,59 @@
                 </div>
                 <div class="row mb-3">
                     <div class="col-md-4">
-                        <strong>Memorization Quran</strong>
+                        <strong>Juz yang dihafal</strong>
                     </div>
                     <div class="col-md-8">
-                        : {{ $studentRegistrant->quran_memorization ?? '-' }}
+                        : {{ $studentRegistrant->quran_memorization ?? '-' }} juz
                     </div>
                 </div>
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <strong>Link bacaan Quran</strong>
+                    </div>
+                    <div class="col-md-8">
+                        : <a href="{{ $studentRegistrant->quran_record_link ?? '-' }}" target="_blank">{{ $studentRegistrant->quran_record_link ?? '-' }}</a>
+                    </div>
+                </div>
+                @if ($studentRegistrant->attachment_family_register)
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <strong>File KK</strong>
+                        </div>
+                        <div class="col-md-8">
+                            : <a href="{{ $studentRegistrant->attachment_family_register }}" target="_blank">klik untuk melihat</a>
+                        </div>
+                    </div>
+                @endif
+                @if ($studentRegistrant->attachment_birth_certificate)
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <strong>File Akta kelahiran</strong>
+                        </div>
+                        <div class="col-md-8">
+                            : <a href="{{ $studentRegistrant->attachment_birth_certificate }}" target="_blank">klik untuk melihat</a>
+                        </div>
+                    </div>
+                @endif
+                @if ($studentRegistrant->attachment_diploma)
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <strong>File Ijazah</strong>
+                        </div>
+                        <div class="col-md-8">
+                            : <a href="{{ $studentRegistrant->attachment_diploma }}" target="_blank">klik untuk melihat</a>
+                        </div>
+                    </div>
+                @endif
                 <div class="row">
                     <div class="col-md-12 text-end">
-                        <a href="{{ route('administrationadmin.student.index') }}" class="btn btn-secondary"
+                        <a href="{{ route('administrationadmin.studentregistrant.index') }}" class="btn btn-secondary"
                             data-bs-toggle="tooltip" data-bs-placement="top" title="Kembali"><i
                                 class="fa-solid fa-arrow-left"></i></a>
-                        <a href="{{ route('administrationadmin.student.edit', $studentRegistrant->id) }}"
+                        {{-- <a href="{{ route('administrationadmin.student.edit', $studentRegistrant->id) }}"
                             class="btn btn-warning" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Santri"><i
                                 class="fa-solid fa-edit"></i></a>
-                        <x-delete :route="route('administrationadmin.student.destroy', $studentRegistrant->id)" :message="'Apakah anda yakin ingin menghapus data ' . $studentRegistrant->name . '?'" :title="'Hapus Santri'" />
+                        <x-delete :route="route('administrationadmin.student.destroy', $studentRegistrant->id)" :message="'Apakah anda yakin ingin menghapus data ' . $studentRegistrant->name . '?'" :title="'Hapus Santri'" /> --}}
                     </div>
                 </div>
             </div>

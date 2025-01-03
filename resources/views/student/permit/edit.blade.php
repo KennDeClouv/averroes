@@ -38,13 +38,13 @@
                             <div class="mb-3">
                                 <label class="form-label" for="from">Dari</label>
                                 <input type="datetime-local" class="form-control @error('from') is-invalid @enderror" id="from"
-                                    name="from" value="{{ old('from', \Carbon\Carbon::parse($studentPermit->from)->format('Y-m-d\TH:i')) }}">
+                                    name="from" value="{{ old('from', formatDate($studentPermit->from, 'd F Y H:i')) }}">
                                 @errorFeedback('from')
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="to">Sampai</label>
                                 <input type="datetime-local" class="form-control @error('to') is-invalid @enderror" id="to"
-                                    name="to" value="{{ old('to', \Carbon\Carbon::parse($studentPermit->to)->format('Y-m-d\TH:i')) }}">
+                                    name="to" value="{{ old('to', formatDate($studentPermit->to, 'd F Y H:i')) }}">
                                 @errorFeedback('to')
                             </div>
                             <div class="mb-3">

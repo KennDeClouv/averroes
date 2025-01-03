@@ -4,7 +4,8 @@
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
         <h5 class="fw-bold py-3 mb-4">
-            <span class="text-muted fw-light"><a href="{{ route('teacher.studentpermit.index') }}">Daftar Ijin Santri</a> / </span>
+            <span class="text-muted fw-light"><a href="{{ route('teacher.studentpermit.index') }}">Daftar Ijin Santri</a> /
+            </span>
             Detail Ijin Santri
         </h5>
         <div class="card">
@@ -31,7 +32,7 @@
                         <strong>Dari</strong>
                     </div>
                     <div class="col-md-8">
-                        : {{ \Carbon\Carbon::parse($studentPermit->from)->format('d-m-Y H:i') }}
+                        : {{ formatDate($studentPermit->from, 'd F Y H:i') }}
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -39,7 +40,7 @@
                         <strong>Sampai</strong>
                     </div>
                     <div class="col-md-8">
-                        : {{ \Carbon\Carbon::parse($studentPermit->to)->format('d-m-Y H:i') }}
+                        : {{ formatDate($studentPermit->to, 'd F Y H:i') }}
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -63,7 +64,8 @@
                         <strong>Status</strong>
                     </div>
                     <div class="col-md-8">
-                        : <span class="badge bg-{{ $studentPermit->status == 'pending' ? 'warning' : ($studentPermit->status == 'approved' ? 'success' : 'danger') }}">{{ $studentPermit->status }}</span>
+                        : <span
+                            class="badge bg-{{ $studentPermit->status == 'pending' ? 'warning' : ($studentPermit->status == 'approved' ? 'success' : 'danger') }}">{{ $studentPermit->status }}</span>
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -76,8 +78,9 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12 text-end">
-                        <a href="{{ route('teacher.studentpermit.index') }}" class="btn btn-secondary" data-bs-toggle="tooltip"
-                            data-bs-placement="top" title="Kembali"><i class="fa-solid fa-arrow-left"></i></a>
+                        <a href="{{ route('teacher.studentpermit.index') }}" class="btn btn-secondary"
+                            data-bs-toggle="tooltip" data-bs-placement="top" title="Kembali"><i
+                                class="fa-solid fa-arrow-left"></i></a>
                         <a href="{{ route('teacher.studentpermit.edit', $studentPermit->id) }}" class="btn btn-warning"
                             data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Ijin Santri"><i
                                 class="fa-solid fa-edit"></i></a>

@@ -7,6 +7,7 @@ use App\Http\Controllers\MainController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Events\UserStatusUpdated;
 
 class LoginController extends Controller
 {
@@ -17,6 +18,7 @@ class LoginController extends Controller
         }
         return view('auth.login');
     }
+
     public function login(Request $request)
     {
         $credentials = $request->only('username', 'password');
@@ -31,6 +33,11 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials, $remember)) {
             $request->session()->regenerate();
+
+            // update status user jadi online
+            $user->update(['status' => 'online']);
+            broadcast(new UserStatusUpdated($user));
+
             return app(MainController::class)->index();
         }
 
@@ -38,11 +45,22 @@ class LoginController extends Controller
             'username' => 'Username atau password tidak sesuai.',
         ])->withInput($request->except('password'));
     }
+
     public function logout(Request $request)
     {
+        $user = Auth::user();
+
+        // update status user jadi offline
+        if ($user instanceof User) {
+            $user->status = 'offline';
+            $user->save();
+            broadcast(new UserStatusUpdated($user));
+        }
+
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
+
         return redirect('/login')->with('status', 'Logout berhasil.');
     }
 }

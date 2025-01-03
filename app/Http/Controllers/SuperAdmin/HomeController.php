@@ -16,8 +16,8 @@ class HomeController extends Controller
     {
         $role = Auth::user()->Role;
         $totalSantri = Student::count();
-        $totalSantriAktif = Student::where('status', 'Aktif')->count();
-        $totalSantriNonAktif = Student::where('status', 'Non Aktif')->count();
+        $totalSantriAktif = Student::where('is_graduate', false)->count();
+        $totalSantriNonAktif = Student::where('is_graduate', true)->count();
         $totalUstadz = Teacher::count();
         $totalIjin = StudentPermit::count();
 
@@ -36,6 +36,6 @@ class HomeController extends Controller
             ->take(2)
             ->get();
 
-        return view("$role->code.index", compact('totalSantri', 'totalSantriAktif', 'totalSantriNonAktif', 'totalUstadz', 'totalIjin', 'announcements', 'permits'));
+        return view("SuperAdmin.index", compact('totalSantri', 'totalSantriAktif', 'totalSantriNonAktif', 'totalUstadz', 'totalIjin', 'announcements', 'permits'));
     }
 }

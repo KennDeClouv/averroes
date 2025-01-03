@@ -1,4 +1,4 @@
-@extends('components.app-without-menu')
+@extends('components.appwithoutmenu')
 
 @section('title', 'Student Registrant Form')
 
@@ -29,7 +29,7 @@
             </div>
             <div class="card card-border-shadow-primary mt-3">
                 <div class="card-body">
-                    <form action="{{ route('studentregistrant.store') }}" method="POST">
+                    <form action="{{ route('studentregistrant.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
                             <label for="name" class="form-label">Nama</label>
@@ -187,6 +187,27 @@
                                 id="quran_record_link" name="quran_record_link" value="{{ old('quran_record_link') }}">
                             @errorFeedback('quran_record_link')
                         </div>
+                        <div class="mb-3">
+                            <label for="attachment_family_register" class="form-label">Lampiran Kartu Keluarga</label>
+                            <input type="file"
+                                class="form-control @error('attachment_family_register') is-invalid @enderror"
+                                id="attachment_family_register" name="attachment_family_register">
+                            @errorFeedback('attachment_family_register')
+                        </div>
+                        <div class="mb-3">
+                            <label for="attachment_birth_certificate" class="form-label">Lampiran Akta Kelahiran</label>
+                            <input type="file"
+                                class="form-control @error('attachment_birth_certificate') is-invalid @enderror"
+                                id="attachment_birth_certificate" name="attachment_birth_certificate">
+                            @errorFeedback('attachment_birth_certificate')
+                        </div>
+                        <div class="mb-3">
+                            <label for="attachment_diploma" class="form-label">Lampiran Ijazah</label>
+                            <input type="file" class="form-control @error('attachment_diploma') is-invalid @enderror"
+                                id="attachment_diploma" name="attachment_diploma">
+                            @errorFeedback('attachment_diploma')
+                        </div>
+
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
                 </div>
@@ -195,14 +216,36 @@
             @php
                 $data = Auth::user()->StudentRegistrant;
             @endphp
-            <div class="alert alert-success" role="alert">
-                <h4 class="alert-heading d-flex align-items-center">
-                    <span class="alert-icon rounded-circle"><i class="fas fa-check m-2"></i></span>Pendaftaran Berhasil :)
-                </h4>
-                <p class="mb-0">Anda telah berhasil melakukan pendaftaran, silakan menunggu konfirmasi lebih lanjut dari
-                    pihak sekolah Averroes.</p>
-                </button>
-            </div>
+            @if ($data->status === 'pending')
+                <div class="alert alert-warning" role="alert">
+                    <h4 class="alert-heading d-flex align-items-center">
+                        <span class="alert-icon rounded-circle"><i class="fas fa-clock fs-5"></i></span>Pendaftaran
+                        Berhasil :)
+                    </h4>
+                    <p class="mb-0">Anda telah berhasil melakukan pendaftaran, silakan menunggu konfirmasi lebih lanjut
+                        dari
+                        pihak sekolah Averroes.</p>
+                    </button>
+                </div>
+            @elseif ($data->status === 'rejected')
+                <div class="alert alert-danger" role="alert">
+                    <h4 class="alert-heading d-flex align-items-center">
+                        <span class="alert-icon rounded-circle"><i class="fas fa-times fs-5"></i></span>Pendaftaran
+                        Ditolak
+                    </h4>
+                    <p class="mb-0">Maaf, pendaftaran Anda telah ditolak. Untuk informasi lebih lanjut silakan hubungi
+                        admin.</p>
+                </div>
+            @else
+                <div class="alert alert-success" role="alert">
+                    <h4 class="alert-heading d-flex align-items-center">
+                        <span class="alert-icon rounded-circle"><i class="fas fa-check fs-5"></i></span>Pendaftaran
+                        Diterima
+                    </h4>
+                    <p class="mb-0">Selamat! Pendaftaran Anda telah diterima. Silakan menunggu informasi lebih lanjut
+                        dari pihak sekolah. anda bisa logout dan login lagi untuk menerima fitur yang sudah disediakan.</p>
+                </div>
+            @endif
             <div class="card card-border-shadow-primary mt-3">
                 <div class="card-body">
                     <div class="mb-3">

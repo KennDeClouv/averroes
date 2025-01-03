@@ -3,14 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Admin;
-use App\Models\Imam;
+use App\Http\Requests\UserRequest;
 use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\User;
-use App\Models\UserShortcut;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
 
 class AccountController extends Controller
 {
@@ -18,20 +15,9 @@ class AccountController extends Controller
     {
         return view('account.index');
     }
-    public function update(Request $request, User $user)
+    public function update(UserRequest $request, User $user)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'username' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255',
-            'photo' => 'nullable',
-        ], [
-            'name.required' => 'Nama harus diisi',
-            'username.required' => 'Username harus diisi',
-            'username.unique' => 'Username sudah ada',
-            'email.required' => 'Email harus diisi',
-            'email.unique' => 'Email sudah ada',
-        ]);
+        $validated = $request->validated();
         if ($request->password) {
             $request->validate(['password' => 'required|string|min:8|confirmed|regex:/^(?=.*[A-Z]).+$/'], [
                 'password.required' => 'Password harus diisi',
@@ -51,33 +37,33 @@ class AccountController extends Controller
         $user->update($validated);
         return redirect()->route('account.index')->with('success', 'Profile berhasil diperbarui!');
     }
-    public function updateStudent(Request $request)
+    public function updateStudent(UserRequest $request)
     {
         $validated = $request->validate([
             'name' => 'required|string|max:50',
             'phone' => 'required|string|max:20',
-            'birthplace' => 'required|string|max:100',
-            'birthdate' => 'required|date',
+            'birth_place' => 'required|string|max:100',
+            'birth_date' => 'required|date',
             'address' => 'nullable|string|max:255',
         ]);
         Student::where('user_id', Auth::id())->firstOrFail()->update($validated);
         return redirect()->route('account.index')->with('success', 'Santri berhasil diperbarui.');
     }
-    public function updateTeacher(Request $request)
+    public function updateTeacher(UserRequest $request)
     {
         $validated = $request->validate([
             'name' => 'required|string|max:50',
             'phone' => 'required|string|max:20',
             'ktp' => 'nullable|string|max:20',
-            'birthplace' => 'required|string|max:100',
-            'birthdate' => 'required|date',
+            'birth_place' => 'required|string|max:100',
+            'birth_date' => 'required|date',
             'address' => 'nullable|string|max:255',
         ], [
             'name.required' => 'Nama harus diisi',
             'phone.required' => 'Nomor telepon harus diisi',
             'ktp.max' => 'KTP maksimal 20 karakter',
-            'birthplace.required' => 'Tempat lahir harus diisi',
-            'birthdate.required' => 'Tanggal lahir harus diisi',
+            'birth_place.required' => 'Tempat lahir harus diisi',
+            'birth_date.required' => 'Tanggal lahir harus diisi',
             'address.max' => 'Alamat maksimal 255 karakter',
 
         ]);

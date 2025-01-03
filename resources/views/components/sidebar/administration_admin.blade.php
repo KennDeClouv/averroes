@@ -50,8 +50,8 @@
     </a>
     <ul class="menu-sub">
         <li
-            class="menu-item {{ request()->routeIs('administrationadmin.studentregistrant.user') ? 'active' : '' }}">
-            <a href="{{ route('administrationadmin.studentregistrant.user') }}" class="menu-link">Akun Calon Santri</a>
+            class="menu-item {{ request()->routeIs('administrationadmin.studentregistrant.indexuser','administrationadmin.studentregistrant.createuser','administrationadmin.studentregistrant.edituser') ? 'active' : '' }}">
+            <a href="{{ route('administrationadmin.studentregistrant.indexuser') }}" class="menu-link">Akun Calon Santri</a>
         </li>
         <li
             class="menu-item {{ request()->routeIs('administrationadmin.studentregistrant.index') ? 'active' : '' }}">

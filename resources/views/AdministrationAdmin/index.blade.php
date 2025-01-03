@@ -13,7 +13,7 @@
                                     Selamat datang {{ Auth::user()->name }} !
                                 </h2>
                                 <p class="mb-6">
-                                    {{ \Carbon\Carbon::now()->format('d F Y H:i') }}
+                                    {{ formatDate(now(), 'd F Y H:i') }}
                                 </p>
                                 <span class="badge bg-label-primary fs-5 ">{{ Auth::user()->Role->name }}</span>
 
@@ -22,7 +22,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="col-lg-4 col-md-12 mb-6">
                 <div class="card card-border-shadow-warning h-100">
                     <div class="card-body pb-4">
@@ -31,7 +30,8 @@
                             <div class="alert alert-{{ $announcement->status == 'active' ? 'success' : 'danger' }} fade show"
                                 role="alert">
                                 <p class="mb-0">{{ $announcement->title }}</p>
-                                <p class="mb-0 opacity-50 small">{{ \Carbon\Carbon::parse($announcement->date)->format('d F Y') }}</p>
+                                <p class="mb-0 opacity-50 small">
+                                    {{ formatDate($announcement->date) }}</p>
                             </div>
                         @empty
                             <div class="alert alert-secondary fade show" role="alert">
@@ -100,6 +100,9 @@
             </div>
             <div class="col-12 mt-4">
                 <div class="card card-border-shadow-secondary">
+                    <div class="card-header">
+                        <h5 class="card-title">Total Ijin pekan ini</h5>
+                    </div>
                     <div class="card-body">
                         <div id="chart"></div>
                     </div>
@@ -130,7 +133,7 @@
                                     show: false
                                 },
                             },
-                            timezone: 'Asia/Jakarta',
+                            timezone: '{{ env('APP_TIMEZONE', 'GMT') }}',
                             grid: {
                                 show: false,
                                 padding: {

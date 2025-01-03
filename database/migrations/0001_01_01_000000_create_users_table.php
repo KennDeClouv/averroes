@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('password');
             $table->longText('photo')->nullable();
             $table->boolean('is_active')->default(true);
+            $table->enum('status', ['online', 'away', 'busy', 'offline'])->default('offline');
+            $table->text('bio')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

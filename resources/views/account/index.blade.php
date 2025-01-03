@@ -395,17 +395,17 @@
                                             </div>
                                         </div>
                                         <div class="col-md-6 fv-plugins-icon-container">
-                                            <label for="birthdate" class="form-label">Tanggal Lahir</label>
-                                            <input class="form-control" type="date" id="birthdate" placeholder="-"
-                                                name="birthdate" value="{{ $user->Teacher->birthdate ?? '' }}">
+                                            <label for="birth_date" class="form-label">Tanggal Lahir</label>
+                                            <input class="form-control" type="date" id="birth_date" placeholder="-"
+                                                name="birth_date" value="{{ $user->Teacher->birth_date ?? '' }}">
                                             <div
                                                 class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
                                             </div>
                                         </div>
                                         <div class="col-md-6 fv-plugins-icon-container">
-                                            <label for="birthplace" class="form-label">Tempat Lahir</label>
-                                            <input class="form-control" type="text" id="birthplace" placeholder="-"
-                                                name="birthplace" value="{{ $user->Teacher->birthplace ?? '' }}">
+                                            <label for="birth_place" class="form-label">Tempat Lahir</label>
+                                            <input class="form-control" type="text" id="birth_place" placeholder="-"
+                                                name="birth_place" value="{{ $user->Teacher->birth_place ?? '' }}">
                                             <div
                                                 class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
                                             </div>

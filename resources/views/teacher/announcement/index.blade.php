@@ -41,7 +41,7 @@
                     <tbody>
                         @foreach ($announcements as $announcement)
                             <tr>
-                                <td>{{ \Carbon\Carbon::parse($announcement->date)->format('d F Y') }}</td>
+                                <td>{{ formatDate($announcement->date) }}</td>
                                 <td>{{ $announcement->title }}</td>
                                 <td>{{ $announcement->Target->name ?? '-' }}</td>
                                 <td>

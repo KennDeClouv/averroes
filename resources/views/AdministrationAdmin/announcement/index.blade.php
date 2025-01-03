@@ -23,8 +23,8 @@
             </div>
             <div class="card-body pb-0 pt-4">
                 <div class="d-flex justify-content-end">
-                    <a href="{{ route('administrationadmin.announcement.create') }}" class="btn btn-primary mb-3" data-bs-toggle="tooltip"
-                        data-bs-placement="top" title="Tambah Pengumuman">Tambah Pengumuman</a>
+                    <a href="{{ route('administrationadmin.announcement.create') }}" class="btn btn-primary mb-3"
+                        data-bs-toggle="tooltip" data-bs-placement="top" title="Tambah Pengumuman">Tambah Pengumuman</a>
                 </div>
             </div>
             <div class="card-datatable table-responsive text-start text-nowrap">
@@ -41,11 +41,12 @@
                     <tbody>
                         @foreach ($announcements as $announcement)
                             <tr>
-                                <td>{{ \Carbon\Carbon::parse($announcement->date)->format('d F Y') }}</td>
+                                <td>{{ formatDate($announcement->date) }}</td>
                                 <td>{{ $announcement->title }}</td>
                                 <td>{{ $announcement->Target->name ?? '-' }}</td>
                                 <td>
-                                    <span class="badge bg-{{ $announcement->status == 'active' ? 'success' : 'danger' }}">{{ $announcement->status }}</span>
+                                    <span
+                                        class="badge bg-{{ $announcement->status == 'active' ? 'success' : 'danger' }}">{{ getStatusLabel($announcement->status, 'activation') }}</span>
                                 </td>
                                 <td>
                                     <a href="{{ route('administrationadmin.announcement.show', $announcement->id) }}"

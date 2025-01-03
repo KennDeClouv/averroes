@@ -1,4 +1,18 @@
 <?php
+/**
+ * Format penulisan fungsi
+ *
+ * 1. Nama fungsi RELATION harus menggunakan PascalCase. Agar membedakannya dengan nama kolom.
+ * 2. Parameter fungsi harus didefinisikan dengan tipe data yang jelas.
+ * 3. Gunakan penamaan yang deskriptif untuk fungsi dan parameter.
+ *
+ * Contoh:
+ *
+ * public function SomeRelations()
+ * {
+ *   return $this->hasMany(SomeRelation::class);
+ * }
+ */
 
 namespace App\Models;
 
@@ -9,14 +23,7 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'name',
         'username',
@@ -25,23 +32,13 @@ class User extends Authenticatable
         'photo',
         'is_active',
         'role_id',
+        'status',
+        'bio',
     ];
-
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
-
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
     protected function casts(): array
     {
         return [
@@ -70,10 +67,10 @@ class User extends Authenticatable
         if (!empty($value) && !is_null($value)) {
             return $value;
         }
-        $randomColor = $this->getConsistentColor();
+        $color = $this->getConsistentColor();
         $name = $this->name ?? 'Imam';
 
-        return "https://api.dicebear.com/6.x/initials/svg?seed=" . urlencode($name) . "&backgroundColor=" . $randomColor;
+        return "https://api.dicebear.com/6.x/initials/svg?seed=" . urlencode($name) . "&backgroundColor=" . $color;
     }
 
     public function Permissions()

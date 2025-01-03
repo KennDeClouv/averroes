@@ -13,7 +13,7 @@
                                     Selamat datang {{ Auth::user()->name }} !
                                 </h2>
                                 <p class="mb-6">
-                                    {{ \Carbon\Carbon::now()->format('d F Y H:i') }}
+                                    {{ formatDate(now(),'d F Y H:i') }}
                                 </p>
                                 <span class="badge bg-label-primary fs-5 ">{{ Auth::user()->Role->name }}</span>
                             </div>
@@ -30,7 +30,8 @@
                             <div class="alert alert-{{ $announcement->status == 'active' ? 'success' : 'danger' }} fade show"
                                 role="alert">
                                 <p class="mb-0">{{ $announcement->title }}</p>
-                                <p class="mb-0 opacity-50 small">{{ \Carbon\Carbon::parse($announcement->date)->format('d F Y') }}</p>
+                                <p class="mb-0 opacity-50 small">
+                                    {{ formatDate($announcement->date) }}</p>
                             </div>
                         @empty
                             <div class="alert alert-secondary fade show" role="alert">

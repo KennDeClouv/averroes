@@ -23,8 +23,8 @@
             </div>
             <div class="card-body pb-0 pt-4">
                 <div class="d-flex justify-content-end">
-                    <a href="{{ route('teacher.studentpermit.create') }}" class="btn btn-primary mb-3"
-                        data-bs-toggle="tooltip" data-bs-placement="top" title="Tambah Ijin Santri">Tambah Ijin
+                    <a href="{{ route('teacher.studentpermit.create') }}" class="btn btn-primary mb-3" data-bs-toggle="tooltip"
+                        data-bs-placement="top" title="Tambah Ijin Santri">Tambah Ijin
                         Santri</a>
                 </div>
             </div>
@@ -45,8 +45,8 @@
                         @foreach ($studentPermits as $studentPermit)
                             <tr>
                                 <td>{{ $studentPermit->Student->name }}</td>
-                                <td>{{ \Carbon\Carbon::parse($studentPermit->from)->format('d F Y H:i') }}</td>
-                                <td>{{ \Carbon\Carbon::parse($studentPermit->to)->format('d F Y H:i') }}</td>
+                                <td>{{ formatDate($studentPermit->from, 'd F Y H:i') }}</td>
+                                <td>{{ formatDate($studentPermit->to, 'd F Y H:i') }}</td>
                                 <td>{{ $studentPermit->Student->Class->name ?? '-' }}</td>
                                 <td>{{ Str::limit($studentPermit->reason, 20) }}</td>
                                 <td>

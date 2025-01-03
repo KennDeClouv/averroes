@@ -1,13 +1,41 @@
 <?php
-// GLOBAL
+
+/**
+ * Dokumentasi dan Aturan Penulisan Route
+ *
+ * 1. Penulisan nama alias Class Controller
+ *    Gunakan format RoleFitur untuk penamaan alias controller.
+ *    Contoh: jika controller tersebut mengelola fitur home untuk role SuperAdmin,
+ *    maka penamaannya adalah SuperAdminHome. Pastikan untuk mengikuti konvensi ini
+ *    agar mudah dikenali dan dikelompokkan berdasarkan peran.
+ *
+ * 2. Menambah Route untuk Role Baru
+ *    Ketika menambahkan route untuk role baru, gunakan format berikut:
+ *
+ *    Route::prefix('role')->name('role.')->middleware(['auth', 'can:isRole'])->group(function () {
+ *        Route::redirect('/', '/role/home', 301); // Redirect ke halaman home role
+ *        Route::get('/home', [RoleHome::class, 'index'])->name('home'); // Mendefinisikan route home
+ *        // Di sini, Anda dapat menambahkan semua grup fitur lainnya yang relevan untuk role ini.
+ *    });
+ *
+ * 3. Menambah Fitur di Dalam Route Role
+ *    Jika Anda ingin menambahkan fitur di dalam route untuk role tertentu,
+ *    gunakan format berikut:
+ *
+ *    Route::prefix('fiture')->name('fiture.')->group(function () {
+ *        // Definisikan semua metode HTTP yang diperlukan seperti get, post, put, delete
+ *    });
+ */
+
+// **Dependencies**
 use Illuminate\Support\Facades\Route;
-// AUTH
+
+// **Controllers**
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\AccountController;
-// SUPER ADMIN
 use App\Http\Controllers\SuperAdmin\HomeController as SuperAdminHome;
 use App\Http\Controllers\SuperAdmin\LogViewerController as SuperAdminLogViewer;
-// ADMINISTRATION ADMIN
 use App\Http\Controllers\AdministrationAdmin\HomeController as AdministrationAdminHome;
 use App\Http\Controllers\AdministrationAdmin\AnnouncementController as AdministrationAdminAnnouncement;
 use App\Http\Controllers\AdministrationAdmin\ClassesController as AdministrationAdminClasses;
@@ -16,27 +44,42 @@ use App\Http\Controllers\AdministrationAdmin\StudentController as Administration
 use App\Http\Controllers\AdministrationAdmin\StudentPermitController as AdministrationAdminStudentPermit;
 use App\Http\Controllers\AdministrationAdmin\TeacherController as AdministrationAdminTeacher;
 use App\Http\Controllers\AdministrationAdmin\StudentRegistrantController as AdministrationAdminStudentRegistrant;
-// STUDENT
-// STUDENT REGISTRANT
 use App\Http\Controllers\StudentRegistrant\HomeController as StudentRegistrantHome;
 
-// Route::get('/', function () {
-//     return view('index');
-// });
-// AUTH
+/**
+ * **Root**
+ */
 Route::redirect('/', '/login');
+
+/**
+ * **Auth Routes**
+ */
 Route::get('/login', [LoginController::class, 'index'])->name('login.index');
 Route::post('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-// ACCOUNT
+
+/**
+ * **Account Routes**
+ */
 Route::prefix('account')->name('account.')->middleware(['auth'])->group(function () {
     Route::get('/', [AccountController::class, 'index'])->name('index');
     Route::put('update/{user}', [AccountController::class, 'update'])->name('update');
     Route::put('update-student/{student}', [AccountController::class, 'updateStudent'])->name('update-student');
     Route::put('update-teacher/{teacher}', [AccountController::class, 'updateTeacher'])->name('update-teacher');
 });
-// SUPER ADMIN
-Route::prefix('superadmin')->name('superadministrationadmin.')->middleware(['auth', 'can:isSuperAdmin'])->group(function () {
+Route::prefix('chat')->name('chat.')->middleware(['auth'])->group(function () {
+    Route::get('/', [MessageController::class, 'index'])->name('index');
+    Route::get('contacts', [MessageController::class, 'contacts'])->name('contacts');
+    Route::post('send/', [MessageController::class, 'send'])->name('send');
+    Route::get('history/{recipientId}', [MessageController::class, 'history'])->name('history');
+    Route::post('read/', [MessageController::class, 'read'])->name('read');
+    Route::post('setstatus/{user}', [MessageController::class, 'setStatus'])->name('set-status');
+});
+
+/**
+ * **Super Admin Routes**
+ */
+Route::prefix('superadmin')->name('superadmin.')->middleware(['auth', 'can:isSuperAdmin'])->group(function () {
     Route::redirect('/', '/superadmin/home', 301);
     Route::get('/home', [SuperAdminHome::class, 'index'])->name('home');
     // log Viewer
@@ -47,7 +90,10 @@ Route::prefix('superadmin')->name('superadministrationadmin.')->middleware(['aut
         Route::get('/download/{filename}', [SuperAdminLogViewer::class, 'download'])->name('download');
     });
 });
-// ADMINISTRATION ADMIN
+
+/**
+ * **Administration Admin Routes**
+ */
 Route::prefix('administrationadmin')->name('administrationadmin.')->middleware(['auth', 'can:isAdministrationAdmin'])->group(function () {
     Route::redirect('/', '/administrationadmin/home', 301);
     Route::get('/home', [AdministrationAdminHome::class, 'index'])->name('home');
@@ -116,20 +162,23 @@ Route::prefix('administrationadmin')->name('administrationadmin.')->middleware([
     });
     Route::prefix('studentregistrant')->name('studentregistrant.')->group(function () {
         Route::get('/', [AdministrationAdminStudentRegistrant::class, 'index'])->name('index');
-        // user
-        Route::get('user', [AdministrationAdminStudentRegistrant::class, 'user'])->name('user');
-        Route::get('create', [AdministrationAdminStudentRegistrant::class, 'create'])->name('create');
-        Route::post('store', [AdministrationAdminStudentRegistrant::class, 'store'])->name('store');
-        Route::get('edit/{user}', [AdministrationAdminStudentRegistrant::class, 'edit'])->name('edit');
-        Route::put('update/{user}', [AdministrationAdminStudentRegistrant::class, 'update'])->name('update');
-        Route::delete('destroy/{user}', [AdministrationAdminStudentRegistrant::class, 'destroy'])->name('destroy');
-        //student registrant list
         Route::get('show/{studentRegistrant}', [AdministrationAdminStudentRegistrant::class, 'show'])->name('show');
-        Route::put('accept/{studentRegistrant}', [AdministrationAdminStudentRegistrant::class, 'accept'])->name('accept');
+        Route::put('approve/{studentRegistrant}', [AdministrationAdminStudentRegistrant::class, 'approve'])->name('approve');
+        Route::put('reject/{studentRegistrant}', [AdministrationAdminStudentRegistrant::class, 'reject'])->name('reject');
         Route::post('sendNotification', [AdministrationAdminStudentRegistrant::class, 'sendNotification'])->name('sendNotification');
+
+        Route::get('indexuser', [AdministrationAdminStudentRegistrant::class, 'indexuser'])->name('indexuser');
+        Route::get('createuser', [AdministrationAdminStudentRegistrant::class, 'createuser'])->name('createuser');
+        Route::post('storeuser', [AdministrationAdminStudentRegistrant::class, 'storeuser'])->name('storeuser');
+        Route::get('edituser/{user}', [AdministrationAdminStudentRegistrant::class, 'edituser'])->name('edituser');
+        Route::put('updateuser/{user}', [AdministrationAdminStudentRegistrant::class, 'updateuser'])->name('updateuser');
+        Route::delete('destroyuser/{user}', [AdministrationAdminStudentRegistrant::class, 'destroyuser'])->name('destroyuser');
     });
 });
-// TEACHER
+
+/**
+ * **Teacher Routes**
+ */
 Route::prefix('teacher')->name('teacher.')->middleware(['auth', 'can:isTeacher'])->group(function () {
     Route::redirect('/', '/teacher/home', 301);
     Route::get('/home', [AdministrationAdminHome::class, 'index'])->name('home');
@@ -154,7 +203,10 @@ Route::prefix('teacher')->name('teacher.')->middleware(['auth', 'can:isTeacher']
         Route::delete('destroy/{announcement}', [AdministrationAdminAnnouncement::class, 'destroy'])->name('destroy');
     });
 });
-// STUDENT
+
+/**
+ * **Student Routes**
+ */
 Route::prefix('student')->name('student.')->middleware(['auth', 'can:isStudent'])->group(function () {
     Route::redirect('/', '/student/home', 301);
     Route::get('/home', [AdministrationAdminHome::class, 'index'])->name('home');
@@ -169,7 +221,10 @@ Route::prefix('student')->name('student.')->middleware(['auth', 'can:isStudent']
         Route::delete('destroy/{studentPermit}', [AdministrationAdminStudentPermit::class, 'destroy'])->name('destroy');
     });
 });
-//STUDENT REGISTRANT
+
+/**
+ * **Student Registrant Routes**
+ */
 Route::prefix('studentregistrant')->name('studentregistrant.')->middleware(['auth', 'can:isStudentRegistrant'])->group(function () {
     Route::redirect('/', '/studentregistrant/home', 301);
     Route::get('/home', [StudentRegistrantHome::class, 'index'])->name('home');

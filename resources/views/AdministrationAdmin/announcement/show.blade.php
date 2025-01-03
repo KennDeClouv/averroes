@@ -39,7 +39,7 @@
                         <strong>Tanggal</strong>
                     </div>
                     <div class="col-md-8">
-                        : {{ \Carbon\Carbon::parse($announcement->date)->format('d-m-Y') }}
+                        : {{ formatDate($announcement->date) }}
                     </div>
                 </div>
                 <div class="row mb-3">

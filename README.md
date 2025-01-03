@@ -1,66 +1,202 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
-
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+<img src="https://raw.githubusercontent.com/KennDeClouv/averroes/ec9596372e7e7b4c8d0fcf640b9381fc0e9c8cca/public/averroes.svg" />
 </p>
 
-## About Laravel
+# **AVERROES DIGITAL ISLAMIC SCHOOL**
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Proyek ini adalah aplikasi berbasis Laravel yang bertujuan untuk mengelola sistem manajemen sekolah Averroes Digital Islamic School.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## **Role**
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+-   Super Admin
+-   Administration Admin
+-   Teacher
+-   Student
+-   Student Registrant
 
-## Learning Laravel
+## **Cara Instalasi**
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Untuk menginstal proyek ini, ikuti langkah-langkah berikut:
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+1. **Clone Repository**  
+   Pertama, clone repository ini ke mesin lokal Anda menggunakan perintah berikut:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+    ```bash
+    git clone https://github.com/KennDeClouv/averroes.git
+    ```
 
-## Laravel Sponsors
+2. **Masuk ke Direktori Proyek**  
+   Setelah cloning selesai, masuk ke direktori proyek:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+    ```bash
+    cd averroes
+    ```
 
-### Premium Partners
+3. **Instalasi Dependensi**  
+   Pastikan Anda memiliki Composer dan Node.js terinstal. Kemudian, jalankan perintah berikut untuk menginstal dependensi PHP dan JavaScript:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+    ```bash
+    composer install
+    ```
 
-## Contributing
+4. **Konfigurasi Environment**  
+   Salin file `.env.example` menjadi `.env` dan sesuaikan konfigurasi sesuai kebutuhan Anda:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+    ```bash
+    cp .env.example .env
+    ```
 
-## Code of Conduct
+5. **Generate Kunci Aplikasi**  
+   Jalankan perintah berikut untuk menghasilkan kunci aplikasi:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+    ```bash
+    php artisan key:generate
+    ```
 
-## Security Vulnerabilities
+6. **Migrasi Database**  
+   Jika Anda menggunakan database, jalankan migrasi untuk membuat tabel yang diperlukan:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+    ```bash
+    php artisan migrate --seed
+    ```
 
-## License
+7. **Menjalankan Aplikasi**  
+   Setelah semua langkah di atas selesai, Anda dapat menjalankan aplikasi dengan perintah:
+    ```bash
+    php artisan serve
+    ```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Aplikasi sekarang dapat diakses di `http://localhost:8000`.
+
+Pastikan untuk memeriksa dokumentasi lebih lanjut untuk konfigurasi dan penggunaan yang lebih mendalam.
+
+# Dokumentasi Penulisan dan Konvensi Proyek
+
+## **Dokumentasi Penamaan Controller**
+
+Penamaan controller harus mengikuti konvensi berikut untuk memastikan keterbacaan, konsistensi, dan kemudahan pemeliharaan kode:
+
+1. **File Terpisah per Role**  
+   Setiap role yang berbeda harus memiliki file controller terpisah. Gunakan format penamaan camel case untuk nama file.  
+   Contoh: `SuperAdmin.php`, `AdministrationAdmin.php`.  
+   Ini membantu dalam mengorganisir kode dan memudahkan pengembang lain untuk menemukan controller yang relevan dengan role tertentu.
+
+2. **Format `FiturController`**  
+   Untuk penamaan controller, gunakan format `FiturController`, di mana `Fitur` adalah nama fitur yang dikelola oleh controller tersebut.  
+   Contoh: Jika controller tersebut mengelola fitur home untuk role `SuperAdmin`, buat controller dengan nama `HomeController.php` di dalam folder `SuperAdmin`.  
+   Ini memberikan kejelasan tentang fungsi controller dan memudahkan pengelompokan berdasarkan fitur.
+
+3. **Konvensi Role**  
+   Pastikan untuk mengikuti konvensi penamaan ini agar controller mudah dikenali dan dikelompokkan berdasarkan role.  
+   Ini penting untuk menjaga struktur proyek yang terorganisir dan memudahkan kolaborasi antar pengembang.
+
+4. **Penamaan Generik untuk Fitur Umum**  
+   Untuk fitur yang bersifat umum dan dapat diakses oleh banyak role, gunakan nama generik seperti `MainController.php`, `AccountController.php`, dan sebagainya.  
+   Ini membantu dalam mengidentifikasi controller yang menangani fungsi umum dalam aplikasi.
+
+5. **Hindari Singkatan yang Tidak Umum**  
+   Nama controller harus mencerminkan fungsionalitasnya dengan jelas. Hindari penggunaan singkatan yang tidak umum atau ambigu, karena ini dapat membingungkan pengembang lain.  
+   Pastikan nama controller memberikan gambaran yang jelas tentang tugas yang dilakukannya.
+
+6. **Gunakan Bahasa Inggris**  
+   Semua penamaan, termasuk nama file, variabel, dan struktur proyek, harus menggunakan bahasa Inggris.  
+   Ini adalah praktik terbaik untuk memastikan bahwa kode dapat dipahami oleh pengembang dari berbagai latar belakang dan lokasi.
+
+---
+
+## **Dokumentasi dan Aturan Penulisan Route**
+
+1. **Penulisan Nama Alias Class Controller**  
+   Gunakan format `RoleFitur` untuk penamaan alias controller.  
+   Contoh: Untuk mengelola fitur home pada role `SuperAdmin`, gunakan alias `SuperAdminHome`.  
+   Ini membantu dalam mengidentifikasi dengan cepat controller mana yang bertanggung jawab untuk fitur tertentu dalam konteks role.
+
+2. **Menambah Route untuk Role Baru**  
+   Format penulisan untuk menambahkan route baru untuk role adalah sebagai berikut:
+
+    ```php
+    Route::prefix('role')->name('role.')->middleware(['auth', 'can:isRole'])->group(function () {
+        Route::redirect('/', '/role/home', 301); // Redirect ke halaman home role
+        Route::get('/home', [RoleHome::class, 'index'])->name('home'); // Route home
+        // Tambahkan grup fitur lain untuk role ini di sini
+    });
+    ```
+
+    Pastikan untuk menambahkan semua route yang relevan untuk role baru di dalam grup ini.
+
+3. **Menambah Fitur di Dalam Route Role**  
+   Format penulisan untuk menambahkan fitur di dalam route role adalah sebagai berikut:
+    ```php
+    Route::prefix('fitur')->name('fitur.')->group(function () {
+        Route::get('/', [FiturController::class, 'index'])->name('index'); // Mendapatkan daftar fitur
+        Route::post('/create', [FiturController::class, 'create'])->name('create'); // Membuat fitur baru
+        Route::put('/update/{id}', [FiturController::class, 'update'])->name('update'); // Memperbarui fitur
+        Route::delete('/delete/{id}', [FiturController::class, 'destroy'])->name('delete'); // Menghapus fitur
+    });
+    ```
+    Pastikan untuk mengikuti format ini agar konsistensi dan keterbacaan tetap terjaga.
+
+---
+
+## **Dokumentasi RoleSeeder**
+
+Seeder bertanggung jawab untuk mengisi tabel role dengan data role yang telah ditentukan.
+
+### Struktur Role
+
+Role didefinisikan dalam array asosiatif dengan kunci berikut:
+
+-   `name`: Nama tampilan dari role (misalnya, `Super Admin`).
+-   `code`: Kode unik yang mewakili role (misalnya, `super_admin`).
+
+### Menambahkan Role Baru
+
+Untuk menambahkan role baru, tambahkan array asosiatif baru ke `$roles` dalam metode `run`.  
+Pastikan:
+
+-   `code` bersifat unik dan menggunakan format **snake_case**.  
+    (Kesalahan penulisan dapat memicu error fatal karena sistem otomatis sangat bergantung pada penulisan ini.)
+
+### Contoh:
+
+[
+'name' => 'Nama Role Baru',
+'code' => 'kode_role_baru',
+],
+
+Setelah didefinisikan, seeder akan mengiterasi melalui `$roles` dan membuat setiap role di database menggunakan model `Role`.
+
+---
+
+## **Dokumentasi Penamaan View**
+
+Penamaan view harus mengikuti konvensi berikut:
+
+1.  **Folder berdasarkan role**
+    untuk folder role gunakan pascal case seperti 'SuperAdmin'
+
+2.  **Gunakan format lowercase untuk nama file view.**
+    Contoh: `home.blade.php`, `addlist.blade.php`.
+
+3.  **Tempatkan view dalam folder yang sesuai dengan fitur.**
+    Contoh: Untuk view yang terkait dengan fitur registrasi siswa maka student_registrant.
+
+4.  **Pastikan nama file view mencerminkan fungsionalitasnya.**
+    Hindari penggunaan singkatan yang tidak umum.
+
+5.  **Gunakan bahasa Inggris dalam penamaan file view untuk memastikan**
+    keterbacaan dan pemahaman yang lebih baik oleh pengembang lain.
+
+6.  **Pastikan untuk semua folder role memiliki index.blade.php untuk mencegah error**
+
+7.  **jadi kesimpulannya**
+    PascalCase/snake_case/lowercase
+    AdministrationAdmin/student_registrant/addlist.blade.php
+
+## **Catatan Penting**
+
+-   Gunakan konvensi penamaan dan struktur yang dijelaskan di atas untuk menjaga konsistensi dan memudahkan pengelolaan kode.
+-   Hindari penggunaan singkatan atau nama yang tidak mencerminkan fungsionalitas dari fitur, controller, atau route.
+-   Selalu gunakan bahasa Inggris dalam penamaan file, variabel, dan struktur proyek.
+
+Make with 💝 by [kenndeclouv](https://kenndeclouv.rf.gd)

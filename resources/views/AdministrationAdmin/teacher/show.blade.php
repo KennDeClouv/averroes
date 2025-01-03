@@ -39,7 +39,7 @@
                         <strong>Jenis Kelamin</strong>
                     </div>
                     <div class="col-md-8">
-                        : {{ $teacher->gender ?? '-' }}
+                        : {{ getGender($teacher->gender) ?? '-' }}
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -71,7 +71,7 @@
                         <strong>Tanggal Lahir</strong>
                     </div>
                     <div class="col-md-8">
-                        : {{ $teacher->birthdate ?? '-' }}
+                        : {{ formatDate($teacher->birth_date) ?? '-' }}
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -79,7 +79,7 @@
                         <strong>Tempat Lahir</strong>
                     </div>
                     <div class="col-md-8">
-                        : {{ $teacher->birthplace ?? '-' }}
+                        : {{ $teacher->birth_place ?? '-' }}
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -87,7 +87,7 @@
                         <strong>Tipe</strong>
                     </div>
                     <div class="col-md-8">
-                        : {{ $teacher->type ?? '-' }}
+                        : {{ teacherType($teacher->type) ?? '-' }}
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -95,7 +95,7 @@
                         <strong>Tipe Sekunder</strong>
                     </div>
                     <div class="col-md-8">
-                        : {{ $teacher->secondary_type ?? '-' }}
+                        : {{ teacherType($teacher->secondary_type) ?? '-' }}
                     </div>
                 </div>
 
