@@ -8,16 +8,28 @@ use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class AccountController extends Controller
 {
     public function index()
     {
-        return view('account.index');
+        return view('common.account.index');
     }
-    public function update(UserRequest $request, User $user)
+    public function update(Request $request, User $user)
     {
-        $validated = $request->validated();
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'username' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255',
+            'photo' => 'nullable',
+        ], [
+            'name.required' => 'Nama harus diisi',
+            'username.required' => 'Username harus diisi',
+            'username.unique' => 'Username sudah ada',
+            'email.required' => 'Email harus diisi',
+            'email.unique' => 'Email sudah ada',
+        ]);
         if ($request->password) {
             $request->validate(['password' => 'required|string|min:8|confirmed|regex:/^(?=.*[A-Z]).+$/'], [
                 'password.required' => 'Password harus diisi',

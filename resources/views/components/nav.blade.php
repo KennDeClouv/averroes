@@ -11,12 +11,6 @@
         </div>
     @endif
     <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-        {{-- <div class="sk-fold sk-primary d-none d-lg-block m-2">
-            <div class="sk-fold-cube"></div>
-            <div class="sk-fold-cube"></div>
-            <div class="sk-fold-cube"></div>
-            <div class="sk-fold-cube"></div>
-        </div> --}}
         <div class="sk-grid sk-primary d-none d-lg-block m-2">
             <div class="sk-grid-cube"></div>
             <div class="sk-grid-cube"></div>
@@ -27,9 +21,13 @@
             <div class="sk-grid-cube"></div>
             <div class="sk-grid-cube"></div>
             <div class="sk-grid-cube"></div>
-          </div>
+        </div>
         {{-- <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div> --}}
-        <ul class="navbar-nav flex-row align-items-center ms-auto">
+        <ul class="navbar-nav flex-row align-items-center ms-auto gap-2">
+            <a href="{{ route('chat.index') }}" class="nav-item nav-link cursor-pointer">
+                <i
+                    class="fa-solid fa-message-lines fa-xl {{ request()->routeIs('chat.index') ? 'text-primary' : '' }}"></i>
+            </a>
             <!-- Style Switcher -->
             <li class="nav-item dropdown-style-switcher dropdown me-2 me-xl-0">
                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
@@ -58,7 +56,7 @@
             <li class="nav-item navbar-dropdown dropdown-user dropdown" data-bs-toggle="tooltip"
                 data-bs-placement="bottom" data-bs-title="Akun">
                 <a class="nav-link dropdown-toggle hide-arrow p-0" href="javascript:void(0);" data-bs-toggle="dropdown">
-                    <div class="avatar avatar-online">
+                    <div class="avatar avatar-{{ $user->status }} chat-sidebar-avatar" id="avatar-status">
                         <img src="{{ $user->photo }}" alt="Avatar" class="rounded-circle">
                     </div>
                 </a>
@@ -68,7 +66,7 @@
                             href="{{ $user?->StudentRegistrant ? route('studentregistrant.home') : route('account.index') }}">
                             <div class="d-flex">
                                 <div class="flex-shrink-0 me-3">
-                                    <div class="avatar avatar-online">
+                                    <div class="avatar avatar-{{ $user->status }}" id="avatar-status">
                                         <img src="{{ $user->photo }}" alt="Avatar" class="rounded-circle">
                                     </div>
                                 </div>

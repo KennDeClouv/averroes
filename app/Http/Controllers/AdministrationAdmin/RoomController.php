@@ -12,12 +12,12 @@ class RoomController extends Controller
     public function index()
     {
         $rooms = Room::all();
-        return view('AdministrationAdmin.room.index', compact('rooms'));
+        return view('roles.AdministrationAdmin.room.index', compact('rooms'));
     }
 
     public function create()
     {
-        return view('AdministrationAdmin.room.create');
+        return view('roles.AdministrationAdmin.room.create');
     }
 
     public function store(Request $request)
@@ -39,13 +39,13 @@ class RoomController extends Controller
     public function show($id)
     {
         $room = Room::findOrFail($id);
-        return view('AdministrationAdmin.room.show', compact('room'));
+        return view('roles.AdministrationAdmin.room.show', compact('room'));
     }
 
     public function edit($id)
     {
         $room = Room::findOrFail($id);
-        return view('AdministrationAdmin.room.edit', compact('room'));
+        return view('roles.AdministrationAdmin.room.edit', compact('room'));
     }
 
     public function update(Request $request, $id)
@@ -82,7 +82,7 @@ class RoomController extends Controller
     {
         $room = Room::findOrFail($id);
         $students = $room->Students;
-        return view('AdministrationAdmin.room.list', compact('room', 'students'));
+        return view('roles.AdministrationAdmin.room.list', compact('room', 'students'));
     }
     public function deleteStudentFromRoom(Student $student)
     {
@@ -95,7 +95,7 @@ class RoomController extends Controller
     public function addStudentToRoomForm(Room $room)
     {
         $students = Student::where('room_id', null)->get();
-        return view('AdministrationAdmin.room.addlist', compact('room', 'students'));
+        return view('roles.AdministrationAdmin.room.addlist', compact('room', 'students'));
     }
     public function addStudentToRoom(Request $request, Room $room)
     {

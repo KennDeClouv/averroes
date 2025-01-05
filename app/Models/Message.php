@@ -8,10 +8,14 @@ class Message extends Model
 {
     protected $guarded = [];
 
-    public function User() {
-        $this->belongsTo(User::class);
+    public function User()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
-    public function Recipient() {
-        $this->belongsTo(User::class);
+
+    // relasi ke penerima pesan (recipient_id)
+    public function Recipient()
+    {
+        return $this->belongsTo(User::class, 'recipient_id');
     }
 }

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="{{ app()->getLocale() }}" class="layout-navbar-fixed layout-menu-fixed customizer-hide" dir="ltr"
+    data-theme="{{ config('app.theme') }}" data-assets-path="{{ config('app.assets_path') }}"
+    data-template="{{ config('app.template') }}" data-style="{{ config('app.style') }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+    <title>@yield('title') | {{ ucwords(str_replace('_', ' ', config('app.name')) ?? '-') }}</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{{ asset('averroes.svg') }}">
+
+    <!-- SEO -->
+    @include('layouts.layout_partials.seo')
+
+    <!-- Styles -->
+    @include('layouts.layout_partials.styles')
+
+    <!-- Helpers -->
+    @include('layouts.layout_partials.helpers')
+</head>
+
+<body>
+    <div class="loader">
+        <div class="sk-fold sk-primary d-none d-lg-block m-2" style="width: 80px; height:80px">
+            <div class="sk-fold-cube"></div>
+            <div class="sk-fold-cube"></div>
+            <div class="sk-fold-cube"></div>
+            <div class="sk-fold-cube"></div>
+        </div>
+    </div>
+    @yield('content')
+
+    <!-- Main JS -->
+    @include('layouts.layout_partials.scripts')
+</body>
+
+</html>

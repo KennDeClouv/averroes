@@ -1,4 +1,4 @@
-@extends('components.error')
+@extends('layouts.error')
 @section('title', 'Metode tidak diizinkan')
 
 @section('content')

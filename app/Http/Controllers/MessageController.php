@@ -22,7 +22,7 @@ class MessageController extends Controller
             $q->where('id', '!=', $user);
         })->get();
         $admins = User::where('role_id', '2')->where('id', '!=', $user)->get();
-        return view('chat.index', compact('students','parents','admins'));
+        return view('common.chat.index', compact('students','parents','admins'));
     }
 
     public function send(Request $request)
@@ -64,25 +64,223 @@ class MessageController extends Controller
                     'senderId' => $chat->user_id, // pengirim
                     'recipientId' => $chat->recipient_id,
                     'read' => $chat->read,
+                    'createdAt' => formatDate($chat->created_at),
                 ];
             });
         return response()->json($chats);
     }
-    public function contacts(){
-        $user = Auth::user()->id;
-        $contacts = User::where('id','!=',$user)->get()
-        ->map(function ($contact) {
-            return [
-                'id'=>$contact->id,
-                'status'=>$contact->status,
-                'photo'=>$contact->photo,
-                'name'=>$contact->name,
-                'lastSeen' => $contact->updated_at ? $contact->updated_at->diffForHumans() : 'Never',
-                'bio'=>$contact->bio ?? '...',
-            ];
-        });
-        return response()->json($contacts);
+    // public function contacts()
+    // {
+    //     $user = Auth::user();
+    //     $userId = $user->id;
+
+    //     // inisialisasi collection kosong
+    //     $contacts = collect();
+
+    //     // jika role bukan administration_admin atau super_admin
+    //     if (!in_array($user->Role->code, ['administration_admin', 'super_admin'])) {
+    //         // ambil kontak berdasarkan message
+    //         $messageContacts = Message::where(function ($query) use ($userId) {
+    //             $query->where('user_id', $userId)
+    //                 ->orWhere('recipient_id', $userId);
+    //         })
+    //         ->with(['Recipient.Role', 'User.Role', 'Recipient.Student', 'User.Student']) // eager loading untuk relasi
+    //         ->get()
+    //         ->map(function ($message) use ($userId) {
+    //             $contact = $message->user_id === $userId ? $message->Recipient : $message->User;
+
+    //             if ($contact) {
+    //                 return [
+    //                     'id' => $contact->id ?? null,
+    //                     'status' => $contact->status ?? 'unknown',
+    //                     'photo' => $contact->photo ?? 'default.png',
+    //                     'name' => $contact->name ?? 'unknown',
+    //                     'lastSeen' => isset($contact->updated_at) && $contact->updated_at == $contact->created_at
+    //                         ? 'never'
+    //                         : ($contact->updated_at->diffForHumans() ?? 'unknown'),
+    //                     'role' => ($contact->Role->code === 'student' && $contact->Student)
+    //                         ? 'Santri ' . ($contact->Student->major ?? 'unknown')
+    //                         : ($contact->Role->name ?? 'unknown'),
+    //                 ];
+    //             }
+
+    //             return null;
+    //         })
+    //         ->filter() // hapus nilai null
+    //         ->unique('id') // hapus duplikat berdasarkan id
+    //         ->values();
+
+    //         // pastikan $messageContacts adalah collection
+    //         $messageContacts = collect($messageContacts);
+
+    //         // ambil kontak berdasarkan role yang sama
+    //         $sameRoleContacts = User::where('id', '!=', $userId)
+    //             ->whereHas('Role', function ($query) use ($user) {
+    //                 $query->where('code', $user->Role->code);
+    //             })
+    //             ->with(['Role', 'Student']) // eager loading untuk relasi
+    //             ->get()
+    //             ->map(function ($contact) {
+    //                 return [
+    //                     'id' => $contact->id ?? null,
+    //                     'status' => $contact->status ?? 'unknown',
+    //                     'photo' => $contact->photo ?? 'default.png',
+    //                     'name' => $contact->name ?? 'unknown',
+    //                     'lastSeen' => isset($contact->updated_at) && $contact->updated_at == $contact->created_at
+    //                         ? 'never'
+    //                         : ($contact->updated_at->diffForHumans() ?? 'unknown'),
+    //                     'role' => ($contact->Role->code === 'student' && $contact->Student)
+    //                         ? 'Santri ' . ($contact->Student->major ?? 'unknown')
+    //                         : ($contact->Role->name ?? 'unknown'),
+    //                 ];
+    //             });
+
+    //         // pastikan $sameRoleContacts adalah collection
+    //         $sameRoleContacts = collect($sameRoleContacts);
+
+    //         // gabungkan kontak dari message dan role
+    //         $contacts = $messageContacts->merge($sameRoleContacts)
+    //             ->unique('id') // pastikan tidak ada duplikat
+    //             ->values();
+    //     } else {
+    //         // jika role administration_admin atau super_admin, ambil semua kontak
+    //         $contacts = User::where('id', '!=', $userId)
+    //             ->with(['Role', 'Student']) // eager loading untuk relasi
+    //             ->get()
+    //             ->map(function ($contact) {
+    //                 return [
+    //                     'id' => $contact->id ?? null,
+    //                     'status' => $contact->status ?? 'unknown',
+    //                     'photo' => $contact->photo ?? 'default.png',
+    //                     'name' => $contact->name ?? 'unknown',
+    //                     'lastSeen' => isset($contact->updated_at) && $contact->updated_at == $contact->created_at
+    //                         ? 'never'
+    //                         : ($contact->updated_at->diffForHumans() ?? 'unknown'),
+    //                     'role' => ($contact->Role->code === 'student' && $contact->Student)
+    //                         ? 'Santri ' . ($contact->Student->major ?? 'unknown')
+    //                         : ($contact->Role->name ?? 'unknown'),
+    //                 ];
+    //             });
+
+    //         // pastikan $contacts adalah collection
+    //         $contacts = collect($contacts);
+    //     }
+
+    //     return response()->json($contacts);
+    // }
+
+    public function contacts()
+{
+    $user = Auth::user();
+    $userId = $user->id;
+
+    // inisialisasi collection kosong
+    $contacts = collect();
+
+    // jika role bukan administration_admin atau super_admin
+    if (!in_array($user->Role->code, ['administration_admin', 'super_admin'])) {
+        // ambil kontak berdasarkan message
+        $messageContacts = Message::where(function ($query) use ($userId) {
+            $query->where('user_id', $userId)
+                ->orWhere('recipient_id', $userId);
+        })
+        ->with(['Recipient.Role', 'User.Role', 'Recipient.Student', 'User.Student']) // eager loading untuk relasi
+        ->get()
+        ->map(function ($message) use ($userId) {
+            $contact = $message->user_id === $userId ? $message->Recipient : $message->User;
+
+            if ($contact) {
+                // hitung jumlah pesan yang belum dibaca untuk kontak ini
+                $notifCount = Message::where('user_id', $contact->id)
+                    ->where('recipient_id', $userId)
+                    ->where('read', false)
+                    ->count();
+
+                return [
+                    'id' => $contact->id ?? null,
+                    'status' => $contact->status ?? 'unknown',
+                    'photo' => $contact->photo ?? 'default.png',
+                    'name' => $contact->name ?? 'unknown',
+                    'lastSeen' => isset($contact->updated_at) && $contact->updated_at == $contact->created_at
+                        ? 'never'
+                        : ($contact->updated_at->diffForHumans() ?? 'unknown'),
+                    'role' => ($contact->Role->code === 'student' && $contact->Student)
+                        ? 'Santri ' . ($contact->Student->major ?? 'unknown')
+                        : ($contact->Role->name ?? 'unknown'),
+                    'notifCount' => $notifCount,
+                ];
+            }
+
+            return null;
+        })
+        ->filter() // hapus nilai null
+        ->unique('id') // hapus duplikat berdasarkan id
+        ->values();
+
+        // ambil kontak berdasarkan role yang sama
+        $sameRoleContacts = User::where('id', '!=', $userId)
+            ->whereHas('Role', function ($query) use ($user) {
+                $query->where('code', $user->Role->code);
+            })
+            ->with(['Role', 'Student']) // eager loading untuk relasi
+            ->get()
+            ->map(function ($contact) use ($userId) {
+                // hitung jumlah pesan yang belum dibaca untuk kontak ini
+                $notifCount = Message::where('user_id', $contact->id)
+                    ->where('recipient_id', $userId)
+                    ->where('read', false)
+                    ->count();
+
+                return [
+                    'id' => $contact->id ?? null,
+                    'status' => $contact->status ?? 'unknown',
+                    'photo' => $contact->photo ?? 'default.png',
+                    'name' => $contact->name ?? 'unknown',
+                    'lastSeen' => isset($contact->updated_at) && $contact->updated_at == $contact->created_at
+                        ? 'never'
+                        : ($contact->updated_at->diffForHumans() ?? 'unknown'),
+                    'role' => ($contact->Role->code === 'student' && $contact->Student)
+                        ? 'Santri ' . ($contact->Student->major ?? 'unknown')
+                        : ($contact->Role->name ?? 'unknown'),
+                    'notifCount' => $notifCount,
+                ];
+            });
+
+        // gabungkan kontak dari message dan role
+        $contacts = $messageContacts->merge($sameRoleContacts)
+            ->unique('id') // pastikan tidak ada duplikat
+            ->values();
+    } else {
+        // jika role administration_admin atau super_admin, ambil semua kontak
+        $contacts = User::where('id', '!=', $userId)
+            ->with(['Role', 'Student']) // eager loading untuk relasi
+            ->get()
+            ->map(function ($contact) use ($userId) {
+                // hitung jumlah pesan yang belum dibaca untuk kontak ini
+                $notifCount = Message::where('user_id', $contact->id)
+                    ->where('recipient_id', $userId)
+                    ->where('read', false)
+                    ->count();
+
+                return [
+                    'id' => $contact->id ?? null,
+                    'status' => $contact->status ?? 'unknown',
+                    'photo' => $contact->photo ?? 'default.png',
+                    'name' => $contact->name ?? 'unknown',
+                    'lastSeen' => isset($contact->updated_at) && $contact->updated_at == $contact->created_at
+                        ? 'never'
+                        : ($contact->updated_at->diffForHumans() ?? 'unknown'),
+                    'role' => ($contact->Role->code === 'student' && $contact->Student)
+                        ? 'Santri ' . ($contact->Student->major ?? 'unknown')
+                        : ($contact->Role->name ?? 'unknown'),
+                    'notifCount' => $notifCount,
+                ];
+            });
     }
+
+    return response()->json($contacts);
+}
+
     public function read(Request $request) {
         $validated = $request->validate([
             'recipient_id' => 'required|exists:users,id',
@@ -102,5 +300,15 @@ class MessageController extends Controller
         ]);
         $user->update(['status' => $validated['status']]);
         return response()->json(['success' => true]);
+    }
+
+    public function editUser(Request $request, User $user) {
+        $validated = $request->validate([
+            'bio'=> 'nullable|string|max:120',
+            'status' => 'nullable|in:online,offline,away,busy',
+        ]);
+
+        $user->update($validated);
+        return redirect()->route('chat.index')->with('success','Berhasil update profile.');
     }
 }

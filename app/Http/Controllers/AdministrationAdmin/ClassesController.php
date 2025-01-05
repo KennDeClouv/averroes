@@ -12,12 +12,12 @@ class ClassesController extends Controller
     public function index()
     {
         $classes = Classes::all();
-        return view('AdministrationAdmin.classes.index', compact('classes'));
+        return view('roles.AdministrationAdmin.classes.index', compact('classes'));
     }
 
     public function create()
     {
-        return view('AdministrationAdmin.classes.create');
+        return view('roles.AdministrationAdmin.classes.create');
     }
 
     public function store(Request $request)
@@ -39,13 +39,13 @@ class ClassesController extends Controller
     public function show($id)
     {
         $class = Classes::findOrFail($id);
-        return view('AdministrationAdmin.classes.show', compact('class'));
+        return view('roles.AdministrationAdmin.classes.show', compact('class'));
     }
 
     public function edit($id)
     {
         $class = Classes::findOrFail($id);
-        return view('AdministrationAdmin.classes.edit', compact('class'));
+        return view('roles.AdministrationAdmin.classes.edit', compact('class'));
     }
 
     public function update(Request $request, Classes $class)
@@ -79,7 +79,7 @@ class ClassesController extends Controller
     {
         $class = Classes::findOrFail($id);
         $students = $class->Students;
-        return view('AdministrationAdmin.classes.list', compact('class', 'students'));
+        return view('roles.AdministrationAdmin.classes.list', compact('class', 'students'));
     }
     public function deleteStudentFromClass(Student $student)
     {
@@ -92,7 +92,7 @@ class ClassesController extends Controller
     public function addStudentToClassForm(Classes $class)
     {
         $students = Student::where('classes_id', null)->get();
-        return view('AdministrationAdmin.classes.addlist', compact('class', 'students'));
+        return view('roles.AdministrationAdmin.classes.addlist', compact('class', 'students'));
     }
     public function addStudentToClass(Request $request, Classes $class)
     {

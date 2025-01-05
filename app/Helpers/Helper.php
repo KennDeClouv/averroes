@@ -143,6 +143,13 @@ if (!function_exists('getStatusLabel')) {
                 'active' => 'Aktif',
                 'inactive' => 'Tidak Aktif',
             ],
+            'color' => [
+                'pending' => 'warning',
+                'approved' => 'success',
+                'active' => 'success',
+                'rejected' => 'danger',
+                'inactive' => 'danger'
+            ]
         ];
 
         return $labels[$type][$status] ?? 'Unknown';
@@ -164,7 +171,6 @@ if (! function_exists('deleteFile')) {
         }
     }
 }
-
 if (! function_exists('indonesianCurrency')) {
     function indonesianCurrency($number)
     {

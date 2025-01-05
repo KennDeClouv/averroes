@@ -12,32 +12,17 @@ class AnnouncementController extends Controller
 {
     public function index()
     {
-        $role = Auth::user()->Role->code;
-        switch ($role) {
-            case 'admin':
-                $announcements = Announcement::all();
-                return view('AdministrationAdmin.announcement.index', compact('announcements'));
-            case 'teacher':
-                $announcements = Announcement::where('target_id', 3)->get();
-                return view('teacher.announcement.index', compact('announcements'));
-        }
+        $announcements = Announcement::where('target_id', 4)->get();
+        return view('roles.Teacher.announcement.index', compact('announcements'));
     }
 
     public function create()
     {
-        $role = Auth::user()->Role->code;
-        switch ($role) {
-            case 'admin':
-                $targets = Role::all();
-                return view('AdministrationAdmin.announcement.create', compact('targets'));
-            case 'teacher':
-                return view('teacher.announcement.create');
-        }
+                return view('roles.Teacher.announcement.create');
     }
 
     public function store(Request $request)
     {
-        $role = Auth::user()->Role->code;
         $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required',
@@ -46,40 +31,27 @@ class AnnouncementController extends Controller
             'status' => 'required|in:active,inactive',
         ]);
         Announcement::create($request->all());
-        switch ($role) {
-            case 'admin':
-                return redirect()->route('administrationadmin.announcement.index')->with('success', 'Pengumuman berhasil dibuat.');
-            case 'teacher':
+
                 return redirect()->route('teacher.announcement.index')->with('success', 'Pengumuman berhasil dibuat.');
-        }
+
     }
 
     public function show(Announcement $announcement)
     {
-        $role = Auth::user()->Role->code;
-        switch ($role) {
-            case 'admin':
-                return view('AdministrationAdmin.announcement.show', compact('announcement'));
-            case 'teacher':
-                return view('teacher.announcement.show', compact('announcement'));
-        }
+
+                return view('roles.Teacher.announcement.show', compact('announcement'));
+
     }
 
     public function edit(Announcement $announcement)
     {
-        $role = Auth::user()->Role->code;
-        switch ($role) {
-            case 'admin':
-                $targets = Role::all();
-                return view('AdministrationAdmin.announcement.edit', compact('announcement', 'targets'));
-            case 'teacher':
-                return view('teacher.announcement.edit', compact('announcement'));
-        }
+
+                return view('roles.Teacher.announcement.edit', compact('announcement'));
+
     }
 
     public function update(Request $request, Announcement $announcement)
     {
-        $role = Auth::user()->Role->code;
         $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required',
@@ -89,25 +61,15 @@ class AnnouncementController extends Controller
         ]);
 
         $announcement->update($request->all());
-
-        switch ($role) {
-            case 'admin':
-                return redirect()->route('administrationadmin.announcement.index')->with('success', 'Pengumuman berhasil diubah.');
-            case 'teacher':
                 return redirect()->route('teacher.announcement.index')->with('success', 'Pengumuman berhasil diubah.');
-        }
+
     }
 
     public function destroy(Announcement $announcement)
     {
-        $role = Auth::user()->Role->code;
         $announcement->delete();
 
-        switch ($role) {
-            case 'admin':
-                return redirect()->route('administrationadmin.announcement.index')->with('success', 'Pengumuman berhasil dihapus.');
-            case 'teacher':
                 return redirect()->route('teacher.announcement.index')->with('success', 'Pengumuman berhasil dihapus.');
-        }
+
     }
 }

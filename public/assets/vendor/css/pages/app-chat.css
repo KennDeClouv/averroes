@@ -180,6 +180,11 @@
 .layout-navbar-hidden .app-chat .app-chat-history .chat-history-body {
     height: calc(100vh - 17.6rem);
 }
+@media (max-width: 1200px) {
+    .app-chat .app-chat-history .chat-history-body {
+        height: calc(100vh - 22rem);
+    }
+}
 @media (min-width: 1200px) {
     .layout-horizontal .app-chat .app-chat-history .chat-history-body {
         height: calc(100vh - 22rem - 3rem);
@@ -557,4 +562,16 @@
     .chat-message-text {
     border-top-left-radius: 0 !important;
     border-top-right-radius: 0.375rem !important;
+}
+.auto-wrap {
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+    white-space: normal !important;
+    width: 100%;
+}
+.chat-date-separator {
+    text-align: center;
+    margin: 20px 0;
+    font-size: 0.9rem;
+    color: var(--bs-primary,#888);
 }

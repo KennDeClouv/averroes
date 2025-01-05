@@ -48,7 +48,7 @@ class LogViewerController extends Controller
                 'modified' => $file->getMTime(),
             ];
         }
-        return view('AdministrationAdmin.log.index', compact('logs', 'stats'));
+        return view('roles.SuperAdmin.log.index', compact('logs', 'stats'));
     }
 
     public function show($filename)
@@ -59,7 +59,7 @@ class LogViewerController extends Controller
         $content = File::get($filePath);
         $logs = collect($this->parseLog($content))->sortByDesc('timestamp');
 
-        return response()->view('AdministrationAdmin.log.show', compact('logs', 'filename'));
+        return response()->view('roles.SuperAdmin.log.show', compact('logs', 'filename'));
     }
 
     private function parseLog($content)
@@ -101,7 +101,7 @@ class LogViewerController extends Controller
     public function destroy($filename)
     {
         File::delete(storage_path("logs/{$filename}"));
-        return redirect()->route('administrationadmin.logs')->with('success', 'Log file deleted successfully!');
+        return redirect()->route('superadmin.logs.index')->with('success', 'Log file deleted successfully!');
     }
     public function download($filename)
     {

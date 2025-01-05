@@ -28,6 +28,7 @@
  */
 
 // **Dependencies**
+use App\Http\Controllers\SuperAdmin\TreeViewController as SuperAdminTreeView;
 use Illuminate\Support\Facades\Route;
 
 // **Controllers**
@@ -35,13 +36,17 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\SuperAdmin\HomeController as SuperAdminHome;
+use App\Http\Controllers\SuperAdmin\AdminController as SuperAdminAdmin;
 use App\Http\Controllers\SuperAdmin\LogViewerController as SuperAdminLogViewer;
 use App\Http\Controllers\AdministrationAdmin\HomeController as AdministrationAdminHome;
 use App\Http\Controllers\AdministrationAdmin\AnnouncementController as AdministrationAdminAnnouncement;
+use App\Http\Controllers\Teacher\AnnouncementController as TeacherAnnouncement;
 use App\Http\Controllers\AdministrationAdmin\ClassesController as AdministrationAdminClasses;
 use App\Http\Controllers\AdministrationAdmin\RoomController as AdministrationAdminRoom;
 use App\Http\Controllers\AdministrationAdmin\StudentController as AdministrationAdminStudent;
 use App\Http\Controllers\AdministrationAdmin\StudentPermitController as AdministrationAdminStudentPermit;
+use App\Http\Controllers\Student\StudentPermitController as StudentStudentPermit;
+use App\Http\Controllers\Teacher\StudentPermitController as TeacherStudentPermit;
 use App\Http\Controllers\AdministrationAdmin\TeacherController as AdministrationAdminTeacher;
 use App\Http\Controllers\AdministrationAdmin\StudentRegistrantController as AdministrationAdminStudentRegistrant;
 use App\Http\Controllers\StudentRegistrant\HomeController as StudentRegistrantHome;
@@ -59,7 +64,7 @@ Route::post('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 /**
- * **Account Routes**
+ * **Common Routes**
  */
 Route::prefix('account')->name('account.')->middleware(['auth'])->group(function () {
     Route::get('/', [AccountController::class, 'index'])->name('index');
@@ -74,6 +79,17 @@ Route::prefix('chat')->name('chat.')->middleware(['auth'])->group(function () {
     Route::get('history/{recipientId}', [MessageController::class, 'history'])->name('history');
     Route::post('read/', [MessageController::class, 'read'])->name('read');
     Route::post('setstatus/{user}', [MessageController::class, 'setStatus'])->name('set-status');
+    Route::put('edituser/{user}', [MessageController::class, 'editUser'])->name('edit-user');
+});
+Route::prefix('kanban')->name('kanban.')->middleware(['auth'])->group(function () {
+
+    Route::get('/', function () {
+        return view('common.kanban.index');
+    })->name('index');
+    // Route::get('/', [KanbanController::class, 'index'])->name('index');
+    // Route::post('create', [KanbanController::class, 'create'])->name('create');
+    // Route::put('update/{task}', [KanbanController::class, 'update'])->name('update');
+    // Route::delete('delete/{task}', [KanbanController::class, 'destroy'])->name('destroy');
 });
 
 /**
@@ -82,12 +98,23 @@ Route::prefix('chat')->name('chat.')->middleware(['auth'])->group(function () {
 Route::prefix('superadmin')->name('superadmin.')->middleware(['auth', 'can:isSuperAdmin'])->group(function () {
     Route::redirect('/', '/superadmin/home', 301);
     Route::get('/home', [SuperAdminHome::class, 'index'])->name('home');
-    // log Viewer
-    Route::prefix('log-viewer')->name('logs.')->group(function () {
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Route::get('/', [SuperAdminAdmin::class, 'index'])->name('index');
+        Route::get('create', [SuperAdminAdmin::class, 'create'])->name('create');
+        Route::post('store', [SuperAdminAdmin::class, 'store'])->name('store');
+        Route::get('show/{admin}', [SuperAdminAdmin::class, 'show'])->name('show');
+        Route::get('edit/{admin}', [SuperAdminAdmin::class, 'edit'])->name('edit');
+        Route::put('update/{admin}', [SuperAdminAdmin::class, 'update'])->name('update');
+        Route::delete('destroy/{admin}', [SuperAdminAdmin::class, 'destroy'])->name('destroy');
+    });
+    Route::prefix('logviewer')->name('logs.')->group(function () {
         Route::get('/', [SuperAdminLogViewer::class, 'index'])->name('index');
         Route::get('/show/{filename}', [SuperAdminLogViewer::class, 'show'])->name('show');
         Route::delete('/delete/{filename}', [SuperAdminLogViewer::class, 'destroy'])->name('destroy');
         Route::get('/download/{filename}', [SuperAdminLogViewer::class, 'download'])->name('download');
+    });
+    Route::prefix('foldertree')->name('foldertree.')->middleware(['auth'])->group(function () {
+        Route::get('/', [SuperAdminTreeView::class, 'index'])->name('index');
     });
 });
 
@@ -166,6 +193,8 @@ Route::prefix('administrationadmin')->name('administrationadmin.')->middleware([
         Route::put('approve/{studentRegistrant}', [AdministrationAdminStudentRegistrant::class, 'approve'])->name('approve');
         Route::put('reject/{studentRegistrant}', [AdministrationAdminStudentRegistrant::class, 'reject'])->name('reject');
         Route::post('sendNotification', [AdministrationAdminStudentRegistrant::class, 'sendNotification'])->name('sendNotification');
+        Route::delete('destroy/{studentRegistrant}', [AdministrationAdminStudentRegistrant::class, 'destroy'])->name('destroy');
+
 
         Route::get('indexuser', [AdministrationAdminStudentRegistrant::class, 'indexuser'])->name('indexuser');
         Route::get('createuser', [AdministrationAdminStudentRegistrant::class, 'createuser'])->name('createuser');
@@ -184,23 +213,24 @@ Route::prefix('teacher')->name('teacher.')->middleware(['auth', 'can:isTeacher']
     Route::get('/home', [AdministrationAdminHome::class, 'index'])->name('home');
 
     Route::prefix('studentpermit')->name('studentpermit.')->group(function () {
-        Route::get('/', [AdministrationAdminStudentPermit::class, 'index'])->name('index');
-        Route::get('create', [AdministrationAdminStudentPermit::class, 'create'])->name('create');
-        Route::post('store', [AdministrationAdminStudentPermit::class, 'store'])->name('store');
-        Route::get('show/{studentPermit}', [AdministrationAdminStudentPermit::class, 'show'])->name('show');
-        Route::get('edit/{studentPermit}', [AdministrationAdminStudentPermit::class, 'edit'])->name('edit');
-        Route::put('update/{studentPermit}', [AdministrationAdminStudentPermit::class, 'update'])->name('update');
-        Route::delete('destroy/{studentPermit}', [AdministrationAdminStudentPermit::class, 'destroy'])->name('destroy');
-        Route::put('approve/{studentPermit}', [AdministrationAdminStudentPermit::class, 'approve'])->name('approve');
+        Route::get('/', [TeacherStudentPermit::class, 'index'])->name('index');
+        Route::get('create', [TeacherStudentPermit::class, 'create'])->name('create');
+        Route::post('store', [TeacherStudentPermit::class, 'store'])->name('store');
+        Route::get('show/{studentPermit}', [TeacherStudentPermit::class, 'show'])->name('show');
+        Route::get('edit/{studentPermit}', [TeacherStudentPermit::class, 'edit'])->name('edit');
+        Route::put('update/{studentPermit}', [TeacherStudentPermit::class, 'update'])->name('update');
+        Route::delete('destroy/{studentPermit}', [TeacherStudentPermit::class, 'destroy'])->name('destroy');
+        Route::put('approve/{studentPermit}', [TeacherStudentPermit::class, 'approve'])->name('approve');
+        Route::put('reject/{studentPermit}', [TeacherStudentPermit::class, 'reject'])->name('reject');
     });
     Route::prefix('announcement')->name('announcement.')->group(function () {
-        Route::get('/', [AdministrationAdminAnnouncement::class, 'index'])->name('index');
-        Route::get('create', [AdministrationAdminAnnouncement::class, 'create'])->name('create');
-        Route::post('store', [AdministrationAdminAnnouncement::class, 'store'])->name('store');
-        Route::get('show/{announcement}', [AdministrationAdminAnnouncement::class, 'show'])->name('show');
-        Route::get('edit/{announcement}', [AdministrationAdminAnnouncement::class, 'edit'])->name('edit');
-        Route::put('update/{announcement}', [AdministrationAdminAnnouncement::class, 'update'])->name('update');
-        Route::delete('destroy/{announcement}', [AdministrationAdminAnnouncement::class, 'destroy'])->name('destroy');
+        Route::get('/', [TeacherAnnouncement::class, 'index'])->name('index');
+        Route::get('create', [TeacherAnnouncement::class, 'create'])->name('create');
+        Route::post('store', [TeacherAnnouncement::class, 'store'])->name('store');
+        Route::get('show/{announcement}', [TeacherAnnouncement::class, 'show'])->name('show');
+        Route::get('edit/{announcement}', [TeacherAnnouncement::class, 'edit'])->name('edit');
+        Route::put('update/{announcement}', [TeacherAnnouncement::class, 'update'])->name('update');
+        Route::delete('destroy/{announcement}', [TeacherAnnouncement::class, 'destroy'])->name('destroy');
     });
 });
 
@@ -212,13 +242,13 @@ Route::prefix('student')->name('student.')->middleware(['auth', 'can:isStudent']
     Route::get('/home', [AdministrationAdminHome::class, 'index'])->name('home');
 
     Route::prefix('permit')->name('permit.')->group(function () {
-        Route::get('/', [AdministrationAdminStudentPermit::class, 'index'])->name('index');
-        Route::get('create', [AdministrationAdminStudentPermit::class, 'create'])->name('create');
-        Route::post('store', [AdministrationAdminStudentPermit::class, 'store'])->name('store');
-        Route::get('show/{studentPermit}', [AdministrationAdminStudentPermit::class, 'show'])->name('show');
-        Route::get('edit/{studentPermit}', [AdministrationAdminStudentPermit::class, 'edit'])->name('edit');
-        Route::put('update/{studentPermit}', [AdministrationAdminStudentPermit::class, 'update'])->name('update');
-        Route::delete('destroy/{studentPermit}', [AdministrationAdminStudentPermit::class, 'destroy'])->name('destroy');
+        Route::get('/', [StudentStudentPermit::class, 'index'])->name('index');
+        Route::get('create', [StudentStudentPermit::class, 'create'])->name('create');
+        Route::post('store', [StudentStudentPermit::class, 'store'])->name('store');
+        Route::get('show/{studentPermit}', [StudentStudentPermit::class, 'show'])->name('show');
+        Route::get('edit/{studentPermit}', [StudentStudentPermit::class, 'edit'])->name('edit');
+        Route::put('update/{studentPermit}', [StudentStudentPermit::class, 'update'])->name('update');
+        Route::delete('destroy/{studentPermit}', [StudentStudentPermit::class, 'destroy'])->name('destroy');
     });
 });
 
@@ -230,5 +260,5 @@ Route::prefix('studentregistrant')->name('studentregistrant.')->middleware(['aut
     Route::get('/home', [StudentRegistrantHome::class, 'index'])->name('home');
 
     Route::post('store', [StudentRegistrantHome::class, 'store'])->name('store');
-    // Route::put('update', [StudentRegistrantHome::class, 'update'])->name('update');
+    Route::put('update/{studentRegistrant}', [StudentRegistrantHome::class, 'update'])->name('update');
 });

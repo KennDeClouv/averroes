@@ -16,19 +16,19 @@ class TeacherController extends Controller
     public function index()
     {
         $teachers = Teacher::all();
-        return view('AdministrationAdmin.teacher.index', compact('teachers'));
+        return view('roles.AdministrationAdmin.teacher.index', compact('teachers'));
     }
 
     public function show(Teacher $teacher)
     {
-        return view('AdministrationAdmin.teacher.show', compact('teacher'));
+        return view('roles.AdministrationAdmin.teacher.show', compact('teacher'));
     }
 
     public function create()
     {
         $classes = Classes::all();
         $rooms = Room::all();
-        return view('AdministrationAdmin.teacher.create', compact('classes', 'rooms'));
+        return view('roles.AdministrationAdmin.teacher.create', compact('classes', 'rooms'));
     }
 
     public function store(UserRequest $requestUser, TeacherRequest $teacherRequest)
@@ -48,7 +48,7 @@ class TeacherController extends Controller
     {
         $classes = Classes::all();
         $rooms = Room::all();
-        return view('AdministrationAdmin.teacher.edit', compact('teacher', 'classes', 'rooms'));
+        return view('roles.AdministrationAdmin.teacher.edit', compact('teacher', 'classes', 'rooms'));
     }
 
     public function update(UserRequest $userRequest, TeacherRequest $teacherRequest, Teacher $teacher)

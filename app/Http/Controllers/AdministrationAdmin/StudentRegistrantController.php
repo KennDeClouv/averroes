@@ -13,11 +13,11 @@ class StudentRegistrantController extends Controller
     public function indexuser()
     {
         $studentRegistrants = User::where('role_id', '=', 5)->get();
-        return view('AdministrationAdmin.student_registrant.indexuser', compact('studentRegistrants'));
+        return view('roles.AdministrationAdmin.student_registrant.indexuser', compact('studentRegistrants'));
     }
     public function createuser()
     {
-        return view('AdministrationAdmin.student_registrant.createuser');
+        return view('roles.AdministrationAdmin.student_registrant.createuser');
     }
     public function storeuser(UserRequest $request)
     {
@@ -30,7 +30,7 @@ class StudentRegistrantController extends Controller
     }
     public function edituser(User $user)
     {
-        return view('AdministrationAdmin.student_registrant.edituser', compact('user'));
+        return view('roles.AdministrationAdmin.student_registrant.edituser', compact('user'));
     }
     public function updateuser(UserRequest $request, User $user)
     {
@@ -44,14 +44,15 @@ class StudentRegistrantController extends Controller
         $user->delete();
         return redirect()->route('administrationadmin.studentregistrant.indexuser')->with('success', 'User calon santri berhasil dihapus.');
     }
+
     public function index()
     {
         $studentRegistrants = StudentRegistrant::all();
-        return view('AdministrationAdmin.student_registrant.index', compact('studentRegistrants'));
+        return view('roles.AdministrationAdmin.student_registrant.index', compact('studentRegistrants'));
     }
     public function show(StudentRegistrant $studentRegistrant)
     {
-        return view('AdministrationAdmin.student_registrant.show', compact('studentRegistrant'));
+        return view('roles.AdministrationAdmin.student_registrant.show', compact('studentRegistrant'));
     }
     public function approve(StudentRegistrant $studentRegistrant)
     {
@@ -148,5 +149,10 @@ untuk informasi lebih lanjut silakan hubungi admin.
         $phone = formatPhoneToInternational('0813 3644 6666');
         sendWhatsAppMessage($phone, $message);
         return redirect()->route("administrationadmin.studentregistrant.index")->with('success', 'Calon santri berhasil diterima dan diberi pesan.');
+    }
+    public function destroy(StudentRegistrant $studentRegistrant)
+    {
+        $studentRegistrant->delete();
+        return redirect()->route("administrationadmin.studentregistrant.index")->with('success', 'Calon santri berhasil dihapus.');
     }
 }

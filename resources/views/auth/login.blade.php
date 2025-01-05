@@ -1,4 +1,4 @@
-@extends('components.authapp')
+@extends('layouts.auth')
 
 @section('page-style')
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/pages/page-auth.css') }}">

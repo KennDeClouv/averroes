@@ -123,4 +123,27 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | App Theme And Styling
+    |--------------------------------------------------------------------------
+    |
+    | 'theme': The theme used by the application, which can be set via the
+    | APP_THEME environment variable.
+    |
+    | 'assets_path': The path to the application's assets, which can be set
+    | via the APP_ASSETS_PATH environment variable.
+    |
+    | 'template': The template used for the application layout, which can be
+    | set via the APP_TEMPLATE environment variable.
+    |
+    | 'style': The style of the application, which can be set via the
+    | APP_STYLE environment variable.
+    |
+    */
+    'theme' => env('APP_STYLE_THEME', 'theme-default'),
+    'assets_path' => env('APP_STYLE_ASSETS_PATH', '/assets/'),
+    'template' => env('APP_STYLE_TEMPLATE', 'vertical-menu-template'),
+    'style' => env('APP_STYLE_STYLE', 'light'),
+
 ];

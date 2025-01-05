@@ -36,6 +36,6 @@ class HomeController extends Controller
             ->take(2)
             ->get();
 
-        return view("AdministrationAdmin.index", compact('totalSantri', 'totalSantriAktif', 'totalSantriNonAktif', 'totalUstadz', 'totalIjin', 'announcements', 'permits'));
+        return view('roles.AdministrationAdmin.index', compact('totalSantri', 'totalSantriAktif', 'totalSantriNonAktif', 'totalUstadz', 'totalIjin', 'announcements', 'permits'));
     }
 }

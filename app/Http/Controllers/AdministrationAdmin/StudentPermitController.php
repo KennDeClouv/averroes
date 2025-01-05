@@ -14,14 +14,14 @@ class StudentPermitController extends Controller
     public function index()
     {
         $studentPermits = StudentPermit::all();
-        return view('AdministrationAdmin.student_permit.index', compact('studentPermits'));
+        return view('roles.AdministrationAdmin.student_permit.index', compact('studentPermits'));
     }
 
     public function create()
     {
         $students = Student::all();
         $teachers = Teacher::all();
-        return view('AdministrationAdmin.student_permit.create', compact('students', 'teachers'));
+        return view('roles.AdministrationAdmin.student_permit.create', compact('students', 'teachers'));
     }
 
     public function store(Request $request)
@@ -50,14 +50,14 @@ class StudentPermitController extends Controller
 
     public function show(StudentPermit $studentPermit)
     {
-        return view('AdministrationAdmin.student_permit.show', compact('studentPermit'));
+        return view('roles.AdministrationAdmin.student_permit.show', compact('studentPermit'));
     }
 
     public function edit(StudentPermit $studentPermit)
     {
         $students = Student::all();
         $teachers = Teacher::all();
-        return view('AdministrationAdmin.student_permit.edit', compact('studentPermit', 'students', 'teachers'));
+        return view('roles.AdministrationAdmin.student_permit.edit', compact('studentPermit', 'students', 'teachers'));
     }
 
     public function update(Request $request, StudentPermit $studentPermit)

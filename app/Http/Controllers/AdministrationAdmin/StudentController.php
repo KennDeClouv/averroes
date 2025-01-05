@@ -16,19 +16,19 @@ class StudentController extends Controller
     public function index()
     {
         $students = Student::all();
-        return view('AdministrationAdmin.student.index', compact('students'));
+        return view('roles.AdministrationAdmin.student.index', compact('students'));
     }
 
     public function show(Student $student)
     {
-        return view('AdministrationAdmin.student.show', compact('student'));
+        return view('roles.AdministrationAdmin.student.show', compact('student'));
     }
 
     public function create()
     {
         $classes = Classes::all();
         $rooms = Room::all();
-        return view('AdministrationAdmin.student.create', compact('classes', 'rooms'));
+        return view('roles.AdministrationAdmin.student.create', compact('classes', 'rooms'));
     }
 
     public function store(StudentRequest $studentRequest, UserRequest $userRequest)
@@ -76,7 +76,7 @@ class StudentController extends Controller
     {
         $classes = Classes::all();
         $rooms = Room::all();
-        return view('AdministrationAdmin.student.edit', compact('student', 'classes', 'rooms'));
+        return view('roles.AdministrationAdmin.student.edit', compact('student', 'classes', 'rooms'));
     }
 
     public function update(StudentRequest $studentRequest, UserRequest $userRequest, Student $student)
