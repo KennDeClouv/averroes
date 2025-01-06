@@ -22,7 +22,7 @@
                     href="{{ route('administrationadmin.room.list', $room->id) }}">Kamar {{ $room->name }}</a> / </span>
             Tambah Santri
         </h5>
-        <form action="{{ route('administrationadmin.room.add.student-to-room', $room->id) }}" method="post">
+        <form action="{{ route('administrationadmin.room.add-student-to-room', $room->id) }}" method="post">
             @csrf
             <div class="card">
                 <div class="card-header border-bottom d-flex justify-content-between align-items-center">

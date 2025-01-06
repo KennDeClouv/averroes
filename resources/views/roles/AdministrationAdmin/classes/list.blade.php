@@ -28,7 +28,7 @@
                 <div class="d-flex justify-content-end gap-2">
                     <a href="{{ route('administrationadmin.class.index') }}" class="btn btn-secondary mb-3" data-bs-toggle="tooltip"
                         data-bs-placement="top" title="Kembali ke daftar kelas">Kembali</a>
-                    <a href="{{ route('administrationadmin.class.add.student-to-class.form', $class->id) }}" class="btn btn-primary mb-3" data-bs-toggle="tooltip"
+                    <a href="{{ route('administrationadmin.class.add-student-to-class-form', $class->id) }}" class="btn btn-primary mb-3" data-bs-toggle="tooltip"
                         data-bs-placement="top" title="Tambah Santri Kelas {{ $class->name }}">Tambah Santri Kelas {{ $class->name }}</a>
                 </div>
             </div>
@@ -52,7 +52,7 @@
                                     <a href="{{ route('administrationadmin.student.show', $student->id) }}" data-bs-toggle="tooltip"
                                         data-bs-placement="top" title="Detail Santri" class="btn btn-info "><i
                                             class="fa-solid fa-eye fs-6"></i></a>
-                                    <x-delete :route="route('administrationadmin.class.delete.student-from-class', $student->id)" :message="'Apakah anda yakin ingin menghapus santri ' . $student->name . ' dari kelas ini?'" :title="'Hapus Santri dari Kelas'" />
+                                    <x-delete :route="route('administrationadmin.class.delete-student-from-class', $student->id)" :message="'Apakah anda yakin ingin menghapus santri ' . $student->name . ' dari kelas ini?'" :title="'Hapus Santri dari Kelas'" />
                                 </td>
                             </tr>
                         @endforeach

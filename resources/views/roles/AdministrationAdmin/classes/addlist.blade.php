@@ -22,7 +22,7 @@
                     href="{{ route('administrationadmin.class.list', $class->id) }}">Kelas {{ $class->name }}</a> / </span>
             Tambah Santri
         </h5>
-        <form action="{{ route('administrationadmin.class.add.student-to-class', $class->id) }}" method="post">
+        <form action="{{ route('administrationadmin.class.add-student-to-class', $class->id) }}" method="post">
             @csrf
             <div class="card">
                 <div class="card-header border-bottom d-flex justify-content-between align-items-center">

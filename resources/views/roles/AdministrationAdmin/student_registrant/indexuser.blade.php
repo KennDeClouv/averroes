@@ -43,7 +43,7 @@
             </div>
             <div class="card-body pb-0 pt-4">
                 <div class="d-flex justify-content-end">
-                    <a href="{{ route('administrationadmin.studentregistrant.createuser') }}" class="btn btn-primary mb-3" data-bs-toggle="tooltip"
+                    <a href="{{ route('administrationadmin.studentregistrant.create-user') }}" class="btn btn-primary mb-3" data-bs-toggle="tooltip"
                         data-bs-placement="top" title="Tambah Akun Calon Santri">Tambah Akun Calon Santri</a>
                 </div>
             </div>
@@ -66,10 +66,10 @@
                                 <td>{{ $studentRegistrant->username }}</td>
                                 <td>{{ formatDate($studentRegistrant->updated_at, 'd F Y H:i') }}</td>
                                 <td>
-                                    <a href="{{ route('administrationadmin.studentregistrant.edituser', $studentRegistrant->id) }}" data-bs-toggle="tooltip"
+                                    <a href="{{ route('administrationadmin.studentregistrant.edit-user', $studentRegistrant->id) }}" data-bs-toggle="tooltip"
                                         data-bs-placement="top" title="Edit User Calon Santri" class="btn btn-warning "><i
                                             class="fa-solid fa-edit fs-6"></i></a>
-                                    <x-delete :route="route('administrationadmin.studentregistrant.destroyuser', $studentRegistrant->id)" :message="'Apakah anda yakin ingin menghapus user calon santri ' . $studentRegistrant->name . '?'" :title="'Hapus User Calon Santri'" />
+                                    <x-delete :route="route('administrationadmin.studentregistrant.destroy-user', $studentRegistrant->id)" :message="'Apakah anda yakin ingin menghapus user calon santri ' . $studentRegistrant->name . '?'" :title="'Hapus User Calon Santri'" />
                                 </td>
                             </tr>
                         @endforeach

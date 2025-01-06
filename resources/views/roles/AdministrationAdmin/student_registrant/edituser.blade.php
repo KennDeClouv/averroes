@@ -9,7 +9,7 @@
 @endsection
 
 @section('content')
-    <form action="{{ route('administrationadmin.studentregistrant.updateuser', $user->id) }}" method="POST">
+    <form action="{{ route('administrationadmin.studentregistrant.update-user', $user->id) }}" method="POST">
         @csrf
         @method('PUT')
         <div class="container-xxl flex-grow-1 container-p-y">

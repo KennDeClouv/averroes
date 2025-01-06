@@ -216,7 +216,7 @@
                             @errorFeedback('attachment_birth_certificate')
                         </div>
                         <div class="mb-3">
-                            <label for="attachment_diploma" class="form-label">Lampiran Ijazah</label>
+                            <label for="attachment_diploma" class="form-label">Lampiran Ijazah / SKL</label>
                             <input type="file" class="form-control @error('attachment_diploma') is-invalid @enderror"
                                 id="attachment_diploma" name="attachment_diploma">
                             @errorFeedback('attachment_diploma')

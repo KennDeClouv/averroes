@@ -29,7 +29,7 @@
                 <div class="d-flex justify-content-end gap-2">
                     <a href="{{ route('administrationadmin.room.index') }}" class="btn btn-secondary mb-3" data-bs-toggle="tooltip"
                         data-bs-placement="top" title="Kembali ke daftar kamar">Kembali</a>
-                    <a href="{{ route('administrationadmin.room.add.student-to-room.form', $room->id) }}" class="btn btn-primary mb-3"
+                    <a href="{{ route('administrationadmin.room.add-student-to-room-form', $room->id) }}" class="btn btn-primary mb-3"
                         data-bs-toggle="tooltip" data-bs-placement="top"
                         title="Tambah Santri Kamar {{ $room->name }}">Tambah Santri Kamar {{ $room->name }}</a>
                 </div>
@@ -54,7 +54,7 @@
                                     <a href="{{ route('administrationadmin.student.show', $student->id) }}" data-bs-toggle="tooltip"
                                         data-bs-placement="top" title="Detail Santri" class="btn btn-info "><i
                                             class="fa-solid fa-eye fs-6"></i></a>
-                                    <x-delete :route="route('administrationadmin.room.delete.student-from-room', $student->id)" :message="'Apakah anda yakin ingin menghapus santri ' .
+                                    <x-delete :route="route('administrationadmin.room.delete-student-from-room', $student->id)" :message="'Apakah anda yakin ingin menghapus santri ' .
                                         $student->name .
                                         ' dari kamar ini?'" :title="'Hapus Santri dari Kamar'" />
                                 </td>

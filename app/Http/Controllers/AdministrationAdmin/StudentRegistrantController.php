@@ -10,39 +10,39 @@ use App\Models\User;
 
 class StudentRegistrantController extends Controller
 {
-    public function indexuser()
+    public function indexUser()
     {
         $studentRegistrants = User::where('role_id', '=', 5)->get();
         return view('roles.AdministrationAdmin.student_registrant.indexuser', compact('studentRegistrants'));
     }
-    public function createuser()
+    public function createUser()
     {
         return view('roles.AdministrationAdmin.student_registrant.createuser');
     }
-    public function storeuser(UserRequest $request)
+    public function storeUser(UserRequest $request)
     {
         $validated = $request->validated();
 
         $validated['role_id'] = 5;
         $validated['is_active'] = true;
         User::create($validated);
-        return redirect()->route('administrationadmin.studentregistrant.indexuser')->with('success', 'User calon santri berhasil dibuat.');
+        return redirect()->route('administrationadmin.studentregistrant.index-user')->with('success', 'User calon santri berhasil dibuat.');
     }
-    public function edituser(User $user)
+    public function editUser(User $user)
     {
         return view('roles.AdministrationAdmin.student_registrant.edituser', compact('user'));
     }
-    public function updateuser(UserRequest $request, User $user)
+    public function updateUser(UserRequest $request, User $user)
     {
         $validated = $request->validated();
 
         $user->update($validated);
-        return redirect()->route('administrationadmin.studentregistrant.indexuser')->with('success', 'User calon santri berhasil diubah.');
+        return redirect()->route('administrationadmin.studentregistrant.index-user')->with('success', 'User calon santri berhasil diubah.');
     }
-    public function destroyuser(User $user)
+    public function destroyUser(User $user)
     {
         $user->delete();
-        return redirect()->route('administrationadmin.studentregistrant.indexuser')->with('success', 'User calon santri berhasil dihapus.');
+        return redirect()->route('administrationadmin.studentregistrant.index-user')->with('success', 'User calon santri berhasil dihapus.');
     }
 
     public function index()
