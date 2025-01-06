@@ -41,6 +41,8 @@ return new class extends Migration
             $table->string('attachment_family_register')->nullable();
             $table->string('attachment_birth_certificate')->nullable();
             $table->string('attachment_diploma')->nullable();
+            $table->string('attachment_father_identity_card')->nullable();
+            $table->string('attachment_mother_identity_card')->nullable();
             $table->timestamps();
         });
     }

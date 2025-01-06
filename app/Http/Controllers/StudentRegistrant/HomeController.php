@@ -33,7 +33,14 @@ class HomeController extends Controller
             $file = $request->file('attachment_diploma');
             $validated['attachment_diploma'] = uploadFile($file, 'uploads/diplomas');
         }
-
+        if ($request->hasFile('attachment_father_identity_card')) {
+            $file = $request->file('attachment_father_identity_card');
+            $validated['attachment_father_identity_card'] = uploadFile($file, 'uploads/father_identity_cards');
+        }
+        if ($request->hasFile('attachment_mother_identity_card')) {
+            $file = $request->file('attachment_mother_identity_card');
+            $validated['attachment_mother_identity_card'] = uploadFile($file, 'uploads/mother_identity_cards');
+        }
         // Menambahkan user_id ke dalam data yang divalidasi
         $validated['user_id'] = Auth::user()->id;
 
@@ -69,7 +76,20 @@ class HomeController extends Controller
             $file = $request->file('attachment_diploma');
             $validated['attachment_diploma'] = uploadFile($file, 'uploads/diplomas');
         }
-
+        if ($request->hasFile('attachment_father_identity_card')) {
+            if ($studentRegistrant->attachment_father_identity_card) {
+                deleteFile($studentRegistrant->attachment_father_identity_card);
+            }
+            $file = $request->file('attachment_father_identity_card');
+            $validated['attachment_father_identity_card'] = uploadFile($file, 'uploads/father_identity_cards');
+        }
+        if ($request->hasFile('attachment_mother_identity_card')) {
+            if ($studentRegistrant->attachment_mother_identity_card) {
+                deleteFile($studentRegistrant->attachment_mother_identity_card);
+            }
+            $file = $request->file('attachment_mother_identity_card');
+            $validated['attachment_mother_identity_card'] = uploadFile($file, 'uploads/mother_identity_cards');
+        }
         // Mencari StudentRegistrant berdasarkan ID dan memperbarui datanya
         $studentRegistrant->update($validated);
 

@@ -53,6 +53,8 @@ class StudentRequest extends FormRequest
             'attachment_family_register' => 'nullable|file|mimes:pdf,jpg,png|max:5120',
             'attachment_birth_certificate' => 'nullable|file|mimes:pdf,jpg,png|max:5120',
             'attachment_diploma' => 'nullable|file|mimes:pdf,jpg,png|max:5120',
+            'attachment_father_identity_card' => 'nullable|file|mimes:pdf,jpg,png|max:5120',
+            'attachment_mother_identity_card' => 'nullable|file|mimes:pdf,jpg,png|max:5120',
         ];
         if ($this->isMethod('put') || $this->isMethod('patch')) {
             $rules['name'] = 'sometimes|string|max:255';
@@ -118,6 +120,14 @@ class StudentRequest extends FormRequest
             'attachment_diploma.file' => 'Lampiran ijazah harus berupa file',
             'attachment_diploma.mimes' => 'Lampiran ijazah harus berupa file pdf, png atau jpg',
             'attachment_diploma.max' => 'Lampiran ijazah tidak boleh lebih dari 5 mb',
+            'attachment_father_identity_card.nullable' => 'Lampiran KTP ayah boleh kosong',
+            'attachment_father_identity_card.file' => 'Lampiran KTP ayah harus berupa file',
+            'attachment_father_identity_card.mimes' => 'Lampiran KTP ayah harus berupa file pdf, png atau jpg',
+            'attachment_father_identity_card.max' => 'Lampiran KTP ayah tidak boleh lebih dari 5 mb',
+            'attachment_mother_identity_card.nullable' => 'Lampiran KTP ibu boleh kosong',
+            'attachment_mother_identity_card.file' => 'Lampiran KTP ibu harus berupa file',
+            'attachment_mother_identity_card.mimes' => 'Lampiran KTP ibu harus berupa file pdf, png atau jpg',
+            'attachment_mother_identity_card.max' => 'Lampiran KTP ibu tidak boleh lebih dari 5 mb',
         ];
     }
 }

@@ -210,10 +210,30 @@
                 @if ($student->attachment_diploma)
                     <div class="row mb-3">
                         <div class="col-md-4">
-                            <strong>File Ijazah</strong>
+                            <strong>File Ijazah / SKL</strong>
                         </div>
                         <div class="col-md-8">
                             : <a href="{{ $student->attachment_diploma }}" target="_blank">klik untuk melihat</a>
+                        </div>
+                    </div>
+                @endif
+                @if ($student->attachment_father_identity_card)
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <strong>File KTP Ayah</strong>
+                        </div>
+                        <div class="col-md-8">
+                            : <a href="{{ $student->attachment_father_identity_card }}" target="_blank">klik untuk melihat</a>
+                        </div>
+                    </div>
+                @endif
+                @if ($student->attachment_mother_identity_card)
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <strong>File KTP Ibu</strong>
+                        </div>
+                        <div class="col-md-8">
+                            : <a href="{{ $student->attachment_mother_identity_card }}" target="_blank">klik untuk melihat</a>
                         </div>
                     </div>
                 @endif

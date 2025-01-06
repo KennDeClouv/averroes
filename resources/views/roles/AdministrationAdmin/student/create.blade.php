@@ -210,10 +210,22 @@
                                 @errorFeedback('attachment_birth_certificate')
                             </div>
                             <div class="mb-3">
-                                <label class="form-label" for="attachment_diploma">Lampiran Ijazah</label>
+                                <label class="form-label" for="attachment_diploma">Lampiran Ijazah / SKL</label>
                                 <input type="file" class="form-control @error('attachment_diploma') is-invalid @enderror"
                                     id="attachment_diploma" name="attachment_diploma">
                                 @errorFeedback('attachment_diploma')
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="attachment_father_identity_card">Lampiran KTP Ayah</label>
+                                <input type="file" class="form-control @error('attachment_father_identity_card') is-invalid @enderror"
+                                    id="attachment_father_identity_card" name="attachment_father_identity_card">
+                                @errorFeedback('attachment_father_identity_card')
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="attachment_mother_identity_card">Lampiran KTP Ibu</label>
+                                <input type="file" class="form-control @error('attachment_mother_identity_card') is-invalid @enderror"
+                                    id="attachment_mother_identity_card" name="attachment_mother_identity_card">
+                                @errorFeedback('attachment_mother_identity_card')
                             </div>
                             <button type="submit" class="btn btn-primary">Simpan</button>
                         </div>

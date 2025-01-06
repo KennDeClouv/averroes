@@ -221,7 +221,20 @@
                                 id="attachment_diploma" name="attachment_diploma">
                             @errorFeedback('attachment_diploma')
                         </div>
-
+                        <div class="mb-3">
+                            <label for="attachment_father_identity_card" class="form-label">Lampiran KTP Ayah</label>
+                            <input type="file"
+                                class="form-control @error('attachment_father_identity_card') is-invalid @enderror"
+                                id="attachment_father_identity_card" name="attachment_father_identity_card">
+                            @errorFeedback('attachment_father_identity_card')
+                        </div>
+                        <div class="mb-3">
+                            <label for="attachment_mother_identity_card" class="form-label">Lampiran KTP Ibu</label>
+                            <input type="file"
+                                class="form-control @error('attachment_mother_identity_card') is-invalid @enderror"
+                                id="attachment_mother_identity_card" name="attachment_mother_identity_card">
+                            @errorFeedback('attachment_mother_identity_card')
+                        </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
                 </div>
@@ -430,7 +443,7 @@
                             @endif
                         </div>
                         <div class="mb-3">
-                            <label class="form-label" for="attachment_diploma">Lampiran Ijazah</label>
+                            <label class="form-label" for="attachment_diploma">Lampiran Ijazah / SKL</label>
                             <input type="file"
                                 class="form-control @error('attachment_diploma') is-invalid @enderror"
                                 id="attachment_diploma" name="attachment_diploma" disabled>
@@ -438,6 +451,26 @@
                             @if ($data->attachment_diploma)
                                 <a href="{{ $data->attachment_diploma }}" target="_blank">klik untuk melihat
                                     gambar</a>
+                            @endif
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="attachment_father_identity_card">Lampiran KTP Ayah</label>
+                            <input type="file"
+                                class="form-control @error('attachment_father_identity_card') is-invalid @enderror"
+                                id="attachment_father_identity_card" name="attachment_father_identity_card" disabled>
+                            @errorFeedback('attachment_father_identity_card')
+                            @if ($data->attachment_father_identity_card)
+                                <a href="{{ $data->attachment_father_identity_card }}" target="_blank">klik untuk melihat gambar</a>
+                            @endif
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="attachment_mother_identity_card">Lampiran KTP Ibu</label>
+                            <input type="file"
+                                class="form-control @error('attachment_mother_identity_card') is-invalid @enderror"
+                                id="attachment_mother_identity_card" name="attachment_mother_identity_card" disabled>
+                            @errorFeedback('attachment_mother_identity_card')
+                            @if ($data->attachment_mother_identity_card)
+                                <a href="{{ $data->attachment_mother_identity_card }}" target="_blank">klik untuk melihat gambar</a>
                             @endif
                         </div>
                         <div id="button-wrapper">

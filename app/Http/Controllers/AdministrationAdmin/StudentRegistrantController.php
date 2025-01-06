@@ -94,6 +94,8 @@ class StudentRegistrantController extends Controller
             "attachment_family_register" => basename($studentRegistrant->getRawOriginal('attachment_family_register')),
             "attachment_birth_certificate" => basename($studentRegistrant->getRawOriginal('attachment_birth_certificate')),
             "attachment_diploma" => basename($studentRegistrant->getRawOriginal('attachment_diploma')),
+            "attachment_father_identity_card" => basename($studentRegistrant->getRawOriginal('attachment_father_identity_card')),
+            "attachment_mother_identity_card" => basename($studentRegistrant->getRawOriginal('attachment_mother_identity_card')),
             "user_id" => $studentRegistrant->User->id,
         ]);
 
