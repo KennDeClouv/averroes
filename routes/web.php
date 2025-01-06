@@ -84,7 +84,7 @@ Route::prefix('chat')->name('chat.')->middleware(['auth'])->group(function () {
 Route::prefix('kanban')->name('kanban.')->middleware(['auth'])->group(function () {
 
     Route::get('/', function () {
-        return view('common.kanban.index');
+        return view('common.kanban.index'); 
     })->name('index');
     // Route::get('/', [KanbanController::class, 'index'])->name('index');
     // Route::post('create', [KanbanController::class, 'create'])->name('create');

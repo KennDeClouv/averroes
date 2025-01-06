@@ -2,14 +2,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const chatHistoryBody = document.querySelector(".chat-history-body");
     const messageForm = document.getElementById("message-form");
     const contactList = document.querySelector("#contact");
-
     let activeContact = null;
     let polling = null;
     let isUserAtBottom = true;
     let userManuallyScrolledUp = false;
-
     chatHistoryBody.addEventListener("scroll", () => {
-        const threshold = 10; // toleransi kecil
+        const threshold = 10;
         const scrollDelta =
             chatHistoryBody.scrollHeight -
             chatHistoryBody.scrollTop -
@@ -17,13 +15,11 @@ document.addEventListener("DOMContentLoaded", function () {
         isUserAtBottom = scrollDelta < threshold;
         userManuallyScrolledUp = scrollDelta > threshold;
     });
-
     const autoScroll = () => {
         if (isUserAtBottom) {
             chatHistoryBody.scrollTop = chatHistoryBody.scrollHeight;
         }
     };
-
     const markMessageAsRead = async (senderId) => {
         try {
             const response = await fetch(`/chat/read`, {
@@ -45,7 +41,6 @@ document.addEventListener("DOMContentLoaded", function () {
             console.error("Error marking messages as read:", error);
         }
     };
-
     const escapeHtml = (str) => {
         const map = {
             "&": "&amp;",
@@ -96,7 +91,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 </a>
             `;
             contactList.appendChild(listItem);
-
             listItem.addEventListener("click", async () => {
                 activeContact = contact;
                 const allContacts = document.querySelectorAll(
@@ -113,7 +107,6 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         });
     };
-
     const fetchContacts = async () => {
         try {
             const response = await fetch("/chat/contacts");
@@ -124,12 +117,10 @@ document.addEventListener("DOMContentLoaded", function () {
             return [];
         }
     };
-
     const loadContacts = async () => {
         const contacts = await fetchContacts();
         updateContacts(contacts);
     };
-
     const fetchMessages = async (recipientId) => {
         try {
             const response = await fetch(`/chat/history/${recipientId}`);
@@ -140,24 +131,18 @@ document.addEventListener("DOMContentLoaded", function () {
             return [];
         }
     };
-
     const loadMessages = async (recipientId) => {
         const messages = await fetchMessages(recipientId);
         const chatHistory = document.getElementById("chat-history");
-
         chatHistory.innerHTML = "";
         if (messages.length === 0) {
             chatHistory.innerHTML =
                 "<li class='no-messages'>Tidak ada pesan.</li>";
             return;
         }
-
-        let lastMessageDate = null; // untuk melacak tanggal pesan sebelumnya
-
+        let lastMessageDate = null;
         messages.forEach((msg) => {
-            const currentDate = msg.createdAt; // format tanggal pesan
-
-            // tambahkan elemen tanggal jika berbeda dari tanggal sebelumnya
+            const currentDate = msg.createdAt;
             if (lastMessageDate !== currentDate) {
                 const dateElement = document.createElement("li");
                 dateElement.className = "chat-date-separator";
@@ -167,9 +152,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     </div>
                 `;
                 chatHistory.appendChild(dateElement);
-                lastMessageDate = currentDate; // perbarui tanggal terakhir
+                lastMessageDate = currentDate;
             }
-
             const messageElement = document.createElement("li");
             messageElement.className = [
                 "chat-message",
@@ -178,7 +162,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     ? "chat-message-right text-end ms-auto"
                     : "text-start",
             ].join(" ");
-
             messageElement.innerHTML = `
                 <div class="d-flex overflow-hidden">
                     <div class="chat-message-wrapper flex-grow-1">
@@ -197,8 +180,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     </div>
                 </div>
             `;
-
-            // tandai pesan sebagai telah dibaca jika kondisi terpenuhi
             if (
                 msg.senderId !== window.userId &&
                 msg.recipientId === window.userId &&
@@ -206,41 +187,33 @@ document.addEventListener("DOMContentLoaded", function () {
             ) {
                 markMessageAsRead(msg.senderId);
             }
-
             chatHistory.appendChild(messageElement);
         });
-
         autoScroll();
     };
-
     const startPollingMessages = () => {
-        stopPollingMessages(); // pastikan polling lama dihentikan
-
+        stopPollingMessages();
         if (activeContact) {
             polling = setInterval(() => {
                 loadMessages(activeContact.id);
             }, 5000);
         }
     };
-
     const stopPollingMessages = () => {
         if (polling) {
             clearInterval(polling);
             polling = null;
         }
     };
-
     messageForm.addEventListener("submit", async (e) => {
         e.preventDefault();
         const messageInput = messageForm.querySelector(".message-input");
         const recipientId = messageForm.dataset.recipientId;
         const message = messageInput.value.trim();
-
         if (!message) {
             alert("Pesan tidak boleh kosong!");
             return;
         }
-
         try {
             const response = await fetch("/chat/send", {
                 method: "POST",
@@ -252,10 +225,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 },
                 body: JSON.stringify({ recipient_id: recipientId, message }),
             });
-
             if (!response.ok) throw new Error("Gagal mengirim pesan.");
             const { message_id } = await response.json();
-
             const newMessage = document.createElement("li");
             newMessage.className =
                 "chat-message chat-message-right text-end ms-auto";
@@ -279,22 +250,17 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         autoScroll();
     });
-
     let intervalId;
-
     function checkAndLoadContacts() {
         if (!document.querySelector(".chat-search-input").matches(":focus")) {
             loadContacts();
             intervalId = setTimeout(checkAndLoadContacts, 5000);
         } else if (intervalId) {
-            clearTimeout(intervalId); // hentikan timeout jika input fokus
+            clearTimeout(intervalId);
             intervalId = null;
         }
     }
-
-    // panggil fungsi pertama kali untuk memulai
     checkAndLoadContacts();
-
     let e = document.querySelector(".app-chat-contacts .sidebar-body"),
         t = [].slice.call(
             document.querySelectorAll(
@@ -310,7 +276,6 @@ document.addEventListener("DOMContentLoaded", function () {
             )
         ),
         s = $(".chat-sidebar-left-user-about"),
-        // o = document.querySelector(".form-send-message"),
         n = document.querySelector(".message-input"),
         i = document.querySelector(".chat-search-input"),
         d = $(".speech-to-text"),
