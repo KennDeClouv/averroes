@@ -107,7 +107,8 @@
                                 </div>
                                 <h4 class="mb-0">{{ $performanceData['cpuUsage'] }}%</h4>
                             </div>
-                            <p class="mb-2">CPU Usage</p>
+                            <p class="m-0">CPU Usage</p>
+                            <small class="mb-2 opacity-50">{{ $performanceData['systemInfo']['cpu'] }}</small>
                         </div>
                     </div>
                 </div>
@@ -121,7 +122,8 @@
                                 </div>
                                 <h4 class="mb-0">{{ $performanceData['memoryUsage'] }}%</h4>
                             </div>
-                            <p class="mb-2">Memory Usage</p>
+                            <p class="m-0">Memory Usage</p>
+                            <small class="mb-2 opacity-50">{{ $performanceData['systemInfo']['memory'] }}</small>
                         </div>
                     </div>
                 </div>
@@ -141,41 +143,5 @@
                 </div>
             </div>
         </div>
-        <div class="row mb-6">
-
-        </div>
-        {{-- <div class="card mb-6">
-            <h5 class="card-header">Performance Matrix</h5>
-            <div class="card-body">
-                <!-- Database Performance -->
-                <h3>Database Performance</h3>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Query</th>
-                            <th>Bindings</th>
-                            <th>Execution Time (ms)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($performanceData['queryLog'] as $query)
-                            <tr>
-                                <td>{{ $query['query'] }}</td>
-                                <td>{{ implode(', ', $query['bindings']) }}</td>
-                                <td>{{ $query['time'] }}</td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-
-                <!-- Active Sessions -->
-                <h3>Active Users</h3>
-                <p>Currently Active Users: {{ $performanceData['activeUsers'] }}</p>
-
-                <!-- Queue Jobs -->
-                <h3>Queue Jobs</h3>
-                <p>Pending Jobs: {{ $performanceData['jobsPending'] }}</p>
-            </div>
-        </div> --}}
     </div>
 @endsection
