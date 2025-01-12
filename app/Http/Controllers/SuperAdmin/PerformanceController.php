@@ -246,10 +246,26 @@ class PerformanceController extends Controller
 
     private function getMemoryTypeLinux()
     {
-        @exec("sudo dmidecode --type memory | grep -m1 'Type:'", $output);
-        if (!empty($output)) {
-            $line = trim($output[0]);
-            return str_replace('Type:', '', $line);
+        $process = proc_open(
+            "sudo dmidecode --type memory | grep -m1 'Type:'",
+            [
+                1 => ["pipe", "w"], // stdout
+                2 => ["pipe", "w"], // stderr
+            ],
+            $pipes
+        );
+
+        if (is_resource($process)) {
+            $output = stream_get_contents($pipes[1]);
+            fclose($pipes[1]);
+            fclose($pipes[2]);
+
+            $returnCode = proc_close($process);
+
+            if ($output) {
+                $line = trim($output);
+                return str_replace('Type:', '', $line);
+            }
         }
         return ' ';
     }
