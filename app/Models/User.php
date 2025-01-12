@@ -20,7 +20,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-
+use App\Models\Feature;
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
@@ -80,7 +80,10 @@ class User extends Authenticatable
 
     public function getPermissionCodes()
     {
-        if ($this->Admin && $this->is_active == true) {
+        if ($this->Role->code == 'super_admin') {
+            return Feature::pluck('code');
+        }
+        if ($this->is_active == true) {
             $codes = $this->Permissions
                 ? $this->Permissions->pluck('Feature.code')
                 : collect([]);

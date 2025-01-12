@@ -2,9 +2,13 @@
 @section('title', 'Detail Kamar')
 
 @section('content')
+    @php
+        $permissions = collect(Auth::user()->getPermissionCodes());
+    @endphp
     <div class="container-xxl flex-grow-1 container-p-y">
         <h5 class="fw-bold py-3 mb-4">
-            <span class="text-muted fw-light"><a href="{{ route('administrationadmin.class.index') }}">Daftar Kamar</a> / </span>
+            <span class="text-muted fw-light"><a href="{{ route('administrationadmin.class.index') }}">Daftar Kamar</a> /
+            </span>
             Detail Kamar
         </h5>
         <div class="card">
@@ -29,12 +33,17 @@
 
                 <div class="row">
                     <div class="col-md-12 text-end">
-                        <a href="{{ route('administrationadmin.class.index') }}" class="btn btn-secondary" data-bs-toggle="tooltip"
-                            data-bs-placement="top" title="Kembali"><i class="fa-solid fa-arrow-left"></i></a>
-                        <a href="{{ route('administrationadmin.room.edit', $room->id) }}" class="btn btn-warning"
-                            data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Kamar"><i
-                                class="fa-solid fa-edit"></i></a>
-                        <x-delete :route="route('administrationadmin.room.destroy', $room->id)" :message="'Apakah anda yakin ingin menghapus data ' . $room->name . '?'" :title="'Hapus Kamar'" />
+                        <a href="{{ route('administrationadmin.class.index') }}" class="btn btn-secondary"
+                            data-bs-toggle="tooltip" data-bs-placement="top" title="Kembali"><i
+                                class="fa-solid fa-arrow-left"></i></a>
+                        @if ($permissions->contains('edit_room'))
+                            <a href="{{ route('administrationadmin.room.edit', $room->id) }}" class="btn btn-warning"
+                                data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Kamar"><i
+                                    class="fa-solid fa-edit"></i></a>
+                        @endif
+                        @if ($permissions->contains('delete_room'))
+                            <x-delete :route="route('administrationadmin.room.destroy', $room->id)" :message="'Apakah kamu yakin ingin menghapus data ' . $room->name . '?'" :title="'Hapus Kamar'" />
+                        @endif
                     </div>
                 </div>
             </div>

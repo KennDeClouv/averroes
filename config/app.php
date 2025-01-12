@@ -145,5 +145,6 @@ return [
     'assets_path' => env('APP_STYLE_ASSETS_PATH', '/assets/'),
     'template' => env('APP_STYLE_TEMPLATE', 'vertical-menu-template'),
     'style' => env('APP_STYLE_STYLE', 'light'),
-
+    'primary_color' => env('APP_STYLE_PRIMARY_COLOR', '#ffffff'),
+    'themes' => env('APP_STYLE_THEMES', 'theme-default'),
 ];

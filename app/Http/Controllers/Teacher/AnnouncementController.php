@@ -18,7 +18,7 @@ class AnnouncementController extends Controller
 
     public function create()
     {
-                return view('roles.Teacher.announcement.create');
+        return view('roles.Teacher.announcement.create');
     }
 
     public function store(Request $request)
@@ -32,22 +32,19 @@ class AnnouncementController extends Controller
         ]);
         Announcement::create($request->all());
 
-                return redirect()->route('teacher.announcement.index')->with('success', 'Pengumuman berhasil dibuat.');
-
+        return redirect()->route('teacher.announcement.index')->with('success', 'Pengumuman berhasil dibuat.');
     }
 
     public function show(Announcement $announcement)
     {
 
-                return view('roles.Teacher.announcement.show', compact('announcement'));
-
+        return view('roles.Teacher.announcement.show', compact('announcement'));
     }
 
     public function edit(Announcement $announcement)
     {
 
-                return view('roles.Teacher.announcement.edit', compact('announcement'));
-
+        return view('roles.Teacher.announcement.edit', compact('announcement'));
     }
 
     public function update(Request $request, Announcement $announcement)
@@ -61,15 +58,13 @@ class AnnouncementController extends Controller
         ]);
 
         $announcement->update($request->all());
-                return redirect()->route('teacher.announcement.index')->with('success', 'Pengumuman berhasil diubah.');
-
+        return redirect()->route('teacher.announcement.index')->with('success', 'Pengumuman berhasil diubah.');
     }
 
     public function destroy(Announcement $announcement)
     {
         $announcement->delete();
 
-                return redirect()->route('teacher.announcement.index')->with('success', 'Pengumuman berhasil dihapus.');
-
+        return redirect()->route('teacher.announcement.index')->with('success', 'Pengumuman berhasil dihapus.');
     }
 }

@@ -50,7 +50,12 @@
                                     <a href="{{ route('superadmin.admin.edit', $admin->id) }}"
                                         data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Admin"
                                         class="btn btn-warning"><i class="fa-solid fa-edit"></i></a>
-                                    <x-delete :route="route('superadmin.admin.destroy', $admin->id)" :message="'Apakah anda yakin ingin menghapus Admin ini?'" :title="'Hapus Admin'"></x-delete>
+                                    <x-delete :route="route('superadmin.admin.destroy', $admin->id)" :message="'Apakah kamu yakin ingin menghapus Admin ini?'" :title="'Hapus Admin'"></x-delete>
+                                    <a href="{{ route('superadmin.admin.permissions', $admin->id) }}"
+                                        class="btn btn-info" data-bs-toggle="tooltip" data-bs-placement="top"
+                                        data-bs-title="Ijin Akses">
+                                        <i class="fa-solid fa-key"></i>
+                                    </a>
                                 </td>
                             </tr>
                         @endforeach

@@ -19,8 +19,8 @@ class StudentPermitController extends Controller
 
     public function create()
     {
-        $students = Student::all();
-        $teachers = Teacher::all();
+        $students = Student::all()->where('name', '!=', 'Super Admin');
+        $teachers = Teacher::all()->where('name', '!=', 'Super Admin');
         return view('roles.AdministrationAdmin.student_permit.create', compact('students', 'teachers'));
     }
 
@@ -55,8 +55,8 @@ class StudentPermitController extends Controller
 
     public function edit(StudentPermit $studentPermit)
     {
-        $students = Student::all();
-        $teachers = Teacher::all();
+        $students = Student::all()->where('name', '!=', 'Super Admin');
+        $teachers = Teacher::all()->where('name', '!=', 'Super Admin');
         return view('roles.AdministrationAdmin.student_permit.edit', compact('studentPermit', 'students', 'teachers'));
     }
 

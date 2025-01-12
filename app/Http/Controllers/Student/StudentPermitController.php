@@ -18,7 +18,7 @@ class StudentPermitController extends Controller
     }
     public function create()
     {
-        $teachers = Teacher::all();
+        $teachers = Teacher::all()->where('name', '!=', 'Super Admin');
         return view('roles.Student.permit.create', compact('teachers'));
     }
 
@@ -44,7 +44,6 @@ class StudentPermitController extends Controller
 
         StudentPermit::create($request->all());
         return redirect()->route('student.permit.index')->with('success', 'Permohonan izin santri berhasil dibuat.');
-
     }
 
     public function show(StudentPermit $studentPermit)
@@ -54,13 +53,12 @@ class StudentPermitController extends Controller
 
     public function edit(StudentPermit $studentPermit)
     {
-        $teachers = Teacher::all();
+        $teachers = Teacher::all()->where('name', '!=', 'Super Admin');
         return view('roles.Student.permit.edit', compact('studentPermit', 'teachers'));
     }
 
     public function update(Request $request, StudentPermit $studentPermit)
     {
-        $role = Auth::user()->Role->code;
         $request->validate([
             'student_id' => 'required|exists:students,id',
             'teacher_id' => 'required|exists:teachers,id',
@@ -86,7 +84,6 @@ class StudentPermitController extends Controller
     {
         $studentPermit->delete();
         return redirect()->route('student.permit.index')->with('success', 'Permohonan izin kamu berhasil dihapus.');
-
     }
 
     public function approve(Request $request, StudentPermit $studentPermit)

@@ -60,7 +60,7 @@
                         <a href="{{ route('teacher.announcement.edit', $announcement->id) }}" class="btn btn-warning"
                             data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Pengumuman"><i
                                 class="fa-solid fa-edit"></i></a>
-                        <x-delete :route="route('teacher.announcement.destroy', $announcement->id)" :message="'Apakah anda yakin ingin menghapus pengumuman ini?'" :title="'Hapus Pengumuman'" />
+                        <x-delete :route="route('teacher.announcement.destroy', $announcement->id)" :message="'Apakah kamu yakin ingin menghapus pengumuman ini?'" :title="'Hapus Pengumuman'" />
                     </div>
                 </div>
             </div>

@@ -2,9 +2,13 @@
 @section('title', 'Detail Ustadz')
 
 @section('content')
+    @php
+        $permissions = collect(Auth::user()->getPermissionCodes());
+    @endphp
     <div class="container-xxl flex-grow-1 container-p-y">
         <h5 class="fw-bold py-3 mb-4">
-            <span class="text-muted fw-light"> <a href="{{ route('administrationadmin.teacher.index') }}">Daftar Ustadz</a> /</span>
+            <span class="text-muted fw-light"> <a href="{{ route('administrationadmin.teacher.index') }}">Daftar Ustadz</a>
+                /</span>
             Detail Ustadz
         </h5>
         <div class="card">
@@ -101,12 +105,17 @@
 
                 <div class="row">
                     <div class="col-md-12 text-end">
-                        <a href="{{ route('administrationadmin.teacher.index') }}" class="btn btn-secondary" data-bs-toggle="tooltip"
-                            data-bs-placement="top" title="Kembali"><i class="fa-solid fa-arrow-left"></i></a>
-                        <a href="{{ route('administrationadmin.teacher.edit', $teacher->id) }}" class="btn btn-warning"
-                            data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Ustadz"><i
-                                class="fa-solid fa-edit"></i></a>
-                        <x-delete :route="route('administrationadmin.teacher.destroy', $teacher->id)" :message="'Apakah anda yakin ingin menghapus data ' . $teacher->name . '?'" :title="'Hapus Ustadz'" />
+                        <a href="{{ route('administrationadmin.teacher.index') }}" class="btn btn-secondary"
+                            data-bs-toggle="tooltip" data-bs-placement="top" title="Kembali"><i
+                                class="fa-solid fa-arrow-left"></i></a>
+                        @if ($permissions->contains('edit_teacher'))
+                            <a href="{{ route('administrationadmin.teacher.edit', $teacher->id) }}" class="btn btn-warning"
+                                data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Ustadz"><i
+                                    class="fa-solid fa-edit"></i></a>
+                        @endif
+                        @if ($permissions->contains('delete_teacher'))
+                            <x-delete :route="route('administrationadmin.teacher.destroy', $teacher->id)" :message="'Apakah kamu yakin ingin menghapus data ' . $teacher->name . '?'" :title="'Hapus Ustadz'" />
+                        @endif
                     </div>
                 </div>
             </div>

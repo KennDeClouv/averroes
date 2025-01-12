@@ -94,7 +94,9 @@ class RoomController extends Controller
 
     public function addStudentToRoomForm(Room $room)
     {
-        $students = Student::where('room_id', null)->get();
+        $students = Student::where('room_id', null)
+            ->where('name', '!=', 'Super Admin')
+            ->get();
         return view('roles.AdministrationAdmin.room.addlist', compact('room', 'students'));
     }
     public function addStudentToRoom(Request $request, Room $room)

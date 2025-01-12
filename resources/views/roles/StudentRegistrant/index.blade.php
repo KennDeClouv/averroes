@@ -249,7 +249,7 @@
                         <span class="alert-icon rounded-circle"><i class="fas fa-clock fs-5"></i></span>Pendaftaran
                         Berhasil :)
                     </h4>
-                    <p class="mb-0">Anda telah berhasil melakukan pendaftaran, silakan menunggu konfirmasi lebih lanjut
+                    <p class="mb-0">Kamu telah berhasil melakukan pendaftaran, silakan menunggu konfirmasi lebih lanjut
                         dari
                         pihak sekolah Averroes.</p>
                     </button>
@@ -260,7 +260,7 @@
                         <span class="alert-icon rounded-circle"><i class="fas fa-times fs-5"></i></span>Pendaftaran
                         Ditolak
                     </h4>
-                    <p class="mb-0">Maaf, pendaftaran Anda telah ditolak. Untuk informasi lebih lanjut silakan hubungi
+                    <p class="mb-0">Maaf, pendaftaran Kamu telah ditolak. Untuk informasi lebih lanjut silakan hubungi
                         admin.</p>
                 </div>
             @else
@@ -269,8 +269,8 @@
                         <span class="alert-icon rounded-circle"><i class="fas fa-check fs-5"></i></span>Pendaftaran
                         Diterima
                     </h4>
-                    <p class="mb-0">Selamat! Pendaftaran Anda telah diterima. Silakan menunggu informasi lebih lanjut
-                        dari pihak sekolah. anda bisa logout dan login lagi untuk menerima fitur yang sudah disediakan.</p>
+                    <p class="mb-0">Selamat! Pendaftaran Kamu telah diterima. Silakan menunggu informasi lebih lanjut
+                        dari pihak sekolah. kamu bisa logout dan login lagi untuk menerima fitur yang sudah disediakan.</p>
                 </div>
             @endif
             <div class="card card-border-shadow-primary mt-3">

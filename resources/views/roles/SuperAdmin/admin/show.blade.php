@@ -49,7 +49,7 @@
                         <a href="{{ route('superadmin.admin.edit', $admin->id) }}" class="btn btn-warning"
                             data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Admin"><i
                                 class="fa-solid fa-edit"></i></a>
-                        <x-delete :route="route('superadmin.admin.destroy', $admin->id)" :message="'Apakah anda yakin ingin menghapus admin ini?'" :title="'Hapus Admin'" />
+                        <x-delete :route="route('superadmin.admin.destroy', $admin->id)" :message="'Apakah kamu yakin ingin menghapus admin ini?'" :title="'Hapus Admin'" />
                     </div>
                 </div>
             </div>

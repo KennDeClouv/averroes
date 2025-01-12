@@ -102,7 +102,7 @@
                             </div>
                             <div class="flex-grow-1 input-group input-group-merge rounded-pill">
                                 <span class="input-group-text" id="basic-addon-search31"><i
-                                        class="bx bx-search bx-sm"></i></span>
+                                        class="fa-solid fa-magnifying-glass"></i></span>
                                 <input type="text" class="form-control chat-search-input" placeholder="Search..."
                                     aria-label="Search..." aria-describedby="basic-addon-search31">
                             </div>

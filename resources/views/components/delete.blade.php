@@ -1,9 +1,9 @@
-@props(['route', 'message' => 'Apakah anda yakin ingin menghapus item ini?', 'title' => 'Hapus Item'])
+@props(['route', 'message' => 'Apakah kamu yakin ingin menghapus item ini?', 'title' => 'Hapus Item', 'icon' => 'fa-solid fa-trash'])
 
 <button type="button" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top"
     data-bs-title="{{ $title }}"
     onclick="confirmDelete('{{ $route }}', '{{ $title }}', '{{ $message }}')">
-    <i class="fa-solid fa-trash"></i>
+    <i class="{{ $icon }}"></i>
 </button>
 
 <script>
@@ -47,7 +47,7 @@
             } else if (result.dismiss === Swal.DismissReason.cancel) {
                 Swal.fire({
                     title: "Batal",
-                    text: "Anda tidak jadi menghapus data ini :)",
+                    text: "Kamu tidak jadi menghapus data ini :)",
                     icon: "error",
                     background: isDarkMode ? '#2b2c40' : '#fff',
                     color: isDarkMode ? '#b2b2c4' : '#000',

@@ -60,7 +60,7 @@
                                     <a href="{{ route('teacher.studentpermit.edit', $studentPermit->id) }}"
                                         data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Ijin Santri"
                                         class="btn btn-warning"><i class="fa-solid fa-edit"></i></a>
-                                    <x-delete :route="route('teacher.studentpermit.destroy', $studentPermit->id)" :message="'Apakah anda yakin ingin menghapus ijin santri ini?'" :title="'Hapus Ijin Santri'" />
+                                    <x-delete :route="route('teacher.studentpermit.destroy', $studentPermit->id)" :message="'Apakah kamu yakin ingin menghapus ijin santri ini?'" :title="'Hapus Ijin Santri'" />
                                     @if ($studentPermit->status == 'pending')
                                         <form action="{{ route('teacher.studentpermit.approve', $studentPermit->id) }}"
                                             method="POST" style="display:inline;">
@@ -88,7 +88,7 @@
                                                                 aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            {{-- Apakah anda yakin ingin menyetujui ijin santri ini? --}}
+                                                            {{-- Apakah kamu yakin ingin menyetujui ijin santri ini? --}}
                                                             <div class="form-group mt-3">
                                                                 <label for="note">Catatan</label>
                                                                 <input type="text" name="note" id="note"
@@ -131,7 +131,7 @@
                                                                 aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            {{-- Apakah anda yakin ingin menyetujui ijin santri ini? --}}
+                                                            {{-- Apakah kamu yakin ingin menyetujui ijin santri ini? --}}
                                                             <div class="form-group mt-3">
                                                                 <label for="note">Catatan</label>
                                                                 <input type="text" name="note" id="note"

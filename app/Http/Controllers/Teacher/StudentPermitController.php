@@ -13,16 +13,13 @@ class StudentPermitController extends Controller
 {
     public function index()
     {
-                $studentPermits = StudentPermit::where('teacher_id', Auth::user()->Teacher->id)->get();
-                return view('roles.Teacher.student_permit.index', compact('studentPermits'));
-
+        $studentPermits = StudentPermit::where('teacher_id', Auth::user()->Teacher->id)->get();
+        return view('roles.Teacher.student_permit.index', compact('studentPermits'));
     }
     public function create()
     {
-
-                $students = Student::all();
-                return view('roles.Teacher.student_permit.create', compact('students'));
-
+        $students = Student::all()->where('name', '!=', 'Super Admin');
+        return view('roles.Teacher.student_permit.create', compact('students'));
     }
 
     public function store(Request $request)
@@ -48,23 +45,20 @@ class StudentPermitController extends Controller
 
         StudentPermit::create($request->all());
 
-                return redirect()->route('teacher.studentpermit.index')->with('success', 'Permohonan izin santri berhasil dibuat.');
-
+        return redirect()->route('teacher.studentpermit.index')->with('success', 'Permohonan izin santri berhasil dibuat.');
     }
 
     public function show(StudentPermit $studentPermit)
     {
 
-                return view('roles.Teacher.student_permit.show', compact('studentPermit'));
-
+        return view('roles.Teacher.student_permit.show', compact('studentPermit'));
     }
 
     public function edit(StudentPermit $studentPermit)
     {
 
-                $students = Student::all();
-                return view('roles.Teacher.student_permit.edit', compact('studentPermit', 'students'));
-
+        $students = Student::all()->where('name', '!=', 'Super Admin');
+        return view('roles.Teacher.student_permit.edit', compact('studentPermit', 'students'));
     }
 
     public function update(Request $request, StudentPermit $studentPermit)
@@ -88,15 +82,13 @@ class StudentPermitController extends Controller
         ]);
         $studentPermit->update($request->all());
 
-                return redirect()->route('teacher.studentpermit.index')->with('success', 'Permohonan izin santri berhasil diubah.');
-
+        return redirect()->route('teacher.studentpermit.index')->with('success', 'Permohonan izin santri berhasil diubah.');
     }
 
     public function destroy(StudentPermit $studentPermit)
     {
         $studentPermit->delete();
-                return redirect()->route('teacher.studentpermit.index')->with('success', 'Permohonan izin santri berhasil dihapus.');
-
+        return redirect()->route('teacher.studentpermit.index')->with('success', 'Permohonan izin santri berhasil dihapus.');
     }
 
     public function approve(Request $request, StudentPermit $studentPermit)

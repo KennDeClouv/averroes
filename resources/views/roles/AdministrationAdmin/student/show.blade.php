@@ -2,6 +2,9 @@
 @section('title', 'Detail Santri')
 
 @section('content')
+    @php
+        $permissions = collect(Auth::user()->getPermissionCodes());
+    @endphp
     <div class="container-xxl flex-grow-1 container-p-y">
         <h5 class="fw-bold py-3 mb-4">
             <span class="text-muted fw-light"> <a href="{{ route('administrationadmin.student.index') }}">Data Santri</a>
@@ -223,7 +226,8 @@
                             <strong>File KTP Ayah</strong>
                         </div>
                         <div class="col-md-8">
-                            : <a href="{{ $student->attachment_father_identity_card }}" target="_blank">klik untuk melihat</a>
+                            : <a href="{{ $student->attachment_father_identity_card }}" target="_blank">klik untuk
+                                melihat</a>
                         </div>
                     </div>
                 @endif
@@ -233,7 +237,8 @@
                             <strong>File KTP Ibu</strong>
                         </div>
                         <div class="col-md-8">
-                            : <a href="{{ $student->attachment_mother_identity_card }}" target="_blank">klik untuk melihat</a>
+                            : <a href="{{ $student->attachment_mother_identity_card }}" target="_blank">klik untuk
+                                melihat</a>
                         </div>
                     </div>
                 @endif
@@ -242,10 +247,14 @@
                         <a href="{{ route('administrationadmin.student.index') }}" class="btn btn-secondary"
                             data-bs-toggle="tooltip" data-bs-placement="top" title="Kembali"><i
                                 class="fa-solid fa-arrow-left"></i></a>
-                        <a href="{{ route('administrationadmin.student.edit', $student->id) }}" class="btn btn-warning"
-                            data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Santri"><i
-                                class="fa-solid fa-edit"></i></a>
-                        <x-delete :route="route('administrationadmin.student.destroy', $student->id)" :message="'Apakah anda yakin ingin menghapus data ' . $student->name . '?'" :title="'Hapus Santri'" />
+                        @if ($permissions->contains('edit_student'))
+                            <a href="{{ route('administrationadmin.student.edit', $student->id) }}"
+                                class="btn btn-warning" data-bs-toggle="tooltip" data-bs-placement="top"
+                                title="Edit Santri"><i class="fa-solid fa-edit"></i></a>
+                        @endif
+                        @if ($permissions->contains('destroy_student'))
+                            <x-delete :route="route('administrationadmin.student.destroy', $student->id)" :message="'Apakah kamu yakin ingin menghapus data ' . $student->name . '?'" :title="'Hapus Santri'" />
+                        @endif
                     </div>
                 </div>
             </div>

@@ -1427,12 +1427,13 @@
                                                         ));
                                             };
                                         var colorPicker = this.container.querySelector("#customizerPrimaryColor");
-                                        const primaryColor = localStorage.getItem('templateCustomizer-vertical-menu-template--PrimaryColor') || "#E9C62C";
+                                        const primaryColor = localStorage.getItem('templateCustomizer-vertical-menu-template--PrimaryColor') || document.documentElement.getAttribute('data-primary-color') || '#696cff';
                                         t.setPrimaryColor(primaryColor);
                                         colorPicker.value = primaryColor;
                                         colorPicker.addEventListener("input", function(event) {
                                             t.setPrimaryColor(event.target.value);
                                         });
+                                        t.setTheme(localStorage.getItem("templateCustomizer-vertical-menu-template--Theme") || document.documentElement.getAttribute('data-themes'));
                                         a.addEventListener("click", n),
                                             this._listeners.push([
                                                 a,

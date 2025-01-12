@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}" class="layout-navbar-fixed layout-menu-fixed customizer-hide" dir="ltr"
     data-theme="{{ config('app.theme') }}" data-assets-path="{{ config('app.assets_path') }}"
-    data-template="{{ config('app.template') }}" data-style="{{ config('app.style') }}">
+    data-template="{{ config('app.template') }}" data-style="{{ config('app.style') }}" data-primary-color="{{ config('app.primary_color') }}" data-themes="{{ config('app.themes') }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport"

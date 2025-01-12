@@ -2,9 +2,13 @@
 @section('title', 'Detail Ijin Santri')
 
 @section('content')
+    @php
+        $permissions = collect(Auth::user()->getPermissionCodes());
+    @endphp
     <div class="container-xxl flex-grow-1 container-p-y">
         <h5 class="fw-bold py-3 mb-4">
-            <span class="text-muted fw-light"><a href="{{ route('administrationadmin.studentpermit.index') }}">Daftar Ijin Santri</a> / </span>
+            <span class="text-muted fw-light"><a href="{{ route('administrationadmin.studentpermit.index') }}">Daftar Ijin
+                    Santri</a> / </span>
             Detail Ijin Santri
         </h5>
         <div class="card">
@@ -63,7 +67,8 @@
                         <strong>Status</strong>
                     </div>
                     <div class="col-md-8">
-                        : <span class="badge bg-{{ $studentPermit->status == 'pending' ? 'warning' : ($studentPermit->status == 'approved' ? 'success' : 'danger') }}">{{ $studentPermit->status }}</span>
+                        : <span
+                            class="badge bg-{{ $studentPermit->status == 'pending' ? 'warning' : ($studentPermit->status == 'approved' ? 'success' : 'danger') }}">{{ getStatusLabel($studentPermit->status, 'approval') }}</span>
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -76,12 +81,17 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12 text-end">
-                        <a href="{{ route('administrationadmin.studentpermit.index') }}" class="btn btn-secondary" data-bs-toggle="tooltip"
-                            data-bs-placement="top" title="Kembali"><i class="fa-solid fa-arrow-left"></i></a>
-                        <a href="{{ route('administrationadmin.studentpermit.edit', $studentPermit->id) }}" class="btn btn-warning"
-                            data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Ijin Santri"><i
-                                class="fa-solid fa-edit"></i></a>
-                        <x-delete :route="route('administrationadmin.studentpermit.destroy', $studentPermit->id)" :message="'Apakah anda yakin ingin menghapus ijin santri ini?'" :title="'Hapus Ijin Santri'" />
+                        <a href="{{ route('administrationadmin.studentpermit.index') }}" class="btn btn-secondary"
+                            data-bs-toggle="tooltip" data-bs-placement="top" title="Kembali"><i
+                                class="fa-solid fa-arrow-left"></i></a>
+                        @if ($permissions->contains('edit_student_permit'))
+                            <a href="{{ route('administrationadmin.studentpermit.edit', $studentPermit->id) }}"
+                                class="btn btn-warning" data-bs-toggle="tooltip" data-bs-placement="top"
+                                title="Edit Ijin Santri"><i class="fa-solid fa-edit"></i></a>
+                        @endif
+                        @if ($permissions->contains('delete_student_permit'))
+                            <x-delete :route="route('administrationadmin.studentpermit.destroy', $studentPermit->id)" :message="'Apakah kamu yakin ingin menghapus ijin santri ini?'" :title="'Hapus Ijin Santri'" />
+                        @endif
                     </div>
                 </div>
             </div>

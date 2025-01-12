@@ -16,8 +16,8 @@
         function handleFormSubmit(event, form) {
             event.preventDefault();
             Swal.fire({
-                title: "Apakah anda yakin?",
-                text: "Setelah dihapus, Anda tidak akan dapat memulihkan data ini!",
+                title: "Apakah kamu yakin?",
+                text: "Setelah dihapus, Kamu tidak akan dapat memulihkan data ini!",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: 'var(--bs-primary)',
@@ -36,6 +36,9 @@
 @endsection
 
 @section('content')
+    @php
+        $permissions = collect(Auth::user()->getPermissionCodes());
+    @endphp
     <div class="container-xxl flex-grow-1 container-p-y">
         <div class="card">
             <div class="card-header border-bottom d-flex justify-content-between align-items-center">
@@ -52,7 +55,12 @@
                             <th>No Whatsapp</th>
                             <th>Tanggal mendaftar</th>
                             <th>Status</th>
-                            <th>Aksi</th>
+                            @if (
+                                $permissions->contains('show_student_registrant') ||
+                                    $permissions->contains('edit_student_registrant') ||
+                                    $permissions->contains('delete_student_registrant'))
+                                <th>Aksi</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -65,34 +73,48 @@
                                 <td><span
                                         class="badge bg-{{ $studentRegistrant->status == 'approved' ? 'success' : ($studentRegistrant->status == 'pending' ? 'warning' : 'danger') }}">{{ getStatusLabel($studentRegistrant->status, 'approval') }}</span>
                                 </td>
-                                <td>
-                                    <a href="{{ route('administrationadmin.studentregistrant.show', $studentRegistrant->id) }}"
-                                        data-bs-toggle="tooltip" data-bs-placement="top" title="Detail Calon Santri"
-                                        class="btn btn-info "><i class="fa-solid fa-eye fs-6"></i></a>
-                                    @if ($studentRegistrant->status === 'pending')
-                                        <form
-                                            action="{{ route('administrationadmin.studentregistrant.approve', $studentRegistrant->id) }}"
-                                            method="POST" style="display:inline;">
-                                            @csrf
-                                            @method('PUT')
-                                            <button type="submit" class="btn btn-success" data-bs-toggle="tooltip"
-                                                data-bs-placement="top" title="Terima Calon Santri">
-                                                <i class="fa-solid fa-check fs-6"></i>
-                                            </button>
-                                        </form>
-                                        <form
-                                            action="{{ route('administrationadmin.studentregistrant.reject', $studentRegistrant->id) }}"
-                                            method="POST" style="display:inline;">
-                                            @csrf
-                                            @method('PUT')
-                                            <button type="submit" class="btn btn-danger" data-bs-toggle="tooltip"
-                                                data-bs-placement="top" title="Tolak Calon Santri">
-                                                <i class="fa-solid fa-times fs-6"></i>
-                                            </button>
-                                        </form>
-                                    @endif
-                                    <x-delete :route="route('administrationadmin.studentregistrant.destroy', $studentRegistrant->id)" :message="'Apakah anda yakin ingin menghapus data calon santri ' . $studentRegistrant->name . '?'" :title="'Hapus Data Calon Santri'" />
-                                </td>
+                                @if (
+                                    $permissions->contains('show_student_registrant') ||
+                                        $permissions->contains('edit_student_registrant') ||
+                                        $permissions->contains('delete_student_registrant'))
+                                    <td>
+                                        @if ($permissions->contains('show_student_registrant'))
+                                            <a href="{{ route('administrationadmin.studentregistrant.show', $studentRegistrant->id) }}"
+                                                data-bs-toggle="tooltip" data-bs-placement="top" title="Detail Calon Santri"
+                                                class="btn btn-info "><i class="fa-solid fa-eye fs-6"></i></a>
+                                        @endif
+                                        @if ($permissions->contains('edit_student_registrant') && $studentRegistrant->status === 'pending')
+                                            <form
+                                                action="{{ route('administrationadmin.studentregistrant.approve', $studentRegistrant->id) }}"
+                                                method="POST" style="display:inline;">
+                                                @csrf
+                                                @method('PUT')
+                                                <button type="submit" class="btn btn-success" data-bs-toggle="tooltip"
+                                                    data-bs-placement="top" title="Terima Calon Santri">
+                                                    <i class="fa-solid fa-check fs-6"></i>
+                                                </button>
+                                            </form>
+                                            <form
+                                                action="{{ route('administrationadmin.studentregistrant.reject', $studentRegistrant->id) }}"
+                                                method="POST" style="display:inline;">
+                                                @csrf
+                                                @method('PUT')
+                                                <button type="submit" class="btn btn-danger" data-bs-toggle="tooltip"
+                                                    data-bs-placement="top" title="Tolak Calon Santri">
+                                                    <i class="fa-solid fa-times fs-6"></i>
+                                                </button>
+                                            </form>
+                                        @endif
+                                        @if ($permissions->contains('delete_student_registrant'))
+                                            <x-delete :route="route(
+                                                'administrationadmin.studentregistrant.destroy',
+                                                $studentRegistrant->id,
+                                            )" :message="'Apakah kamu yakin ingin menghapus data calon santri ' .
+                                                $studentRegistrant->name .
+                                                '?'" :title="'Hapus Data Calon Santri'" />
+                                        @endif
+                                    </td>
+                                @endif
                             </tr>
                         @endforeach
                     </tbody>

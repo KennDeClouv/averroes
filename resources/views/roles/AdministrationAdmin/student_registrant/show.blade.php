@@ -214,10 +214,6 @@
                         <a href="{{ route('administrationadmin.studentregistrant.index') }}" class="btn btn-secondary"
                             data-bs-toggle="tooltip" data-bs-placement="top" title="Kembali"><i
                                 class="fa-solid fa-arrow-left"></i></a>
-                        {{-- <a href="{{ route('administrationadmin.student.edit', $studentRegistrant->id) }}"
-                            class="btn btn-warning" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Santri"><i
-                                class="fa-solid fa-edit"></i></a>
-                        <x-delete :route="route('administrationadmin.student.destroy', $studentRegistrant->id)" :message="'Apakah anda yakin ingin menghapus data ' . $studentRegistrant->name . '?'" :title="'Hapus Santri'" /> --}}
                     </div>
                 </div>
             </div>

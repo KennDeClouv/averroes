@@ -15,7 +15,7 @@ class TeacherController extends Controller
 {
     public function index()
     {
-        $teachers = Teacher::all();
+        $teachers = Teacher::all()->where('name', '!=', 'Super Admin');
         return view('roles.AdministrationAdmin.teacher.index', compact('teachers'));
     }
 

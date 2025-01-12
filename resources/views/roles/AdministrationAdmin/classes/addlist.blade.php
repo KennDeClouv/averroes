@@ -11,6 +11,13 @@
                     url: 'https://cdn.datatables.net/plug-ins/1.10.21/i18n/Indonesian.json'
                 }
             });
+            $('#check-all').click(function() {
+                if ($(this).is(':checked')) {
+                    $('input[type="checkbox"]').prop('checked', true);
+                } else {
+                    $('input[type="checkbox"]').prop('checked', false);
+                }
+            });
         });
     </script>
 @endsection
@@ -30,7 +37,8 @@
                 </div>
                 <div class="card-body pb-0 pt-4">
                     <div class="d-flex justify-content-end">
-                        <button type="submit" class="btn btn-success">Tambahkan Santri ke Kelas {{ $class->name }}</button>
+                        <button type="submit" class="btn btn-success">Tambahkan Santri ke Kelas
+                            {{ $class->name }}</button>
                     </div>
                 </div>
                 <div class="card-datatable table-responsive text-start text-nowrap">
@@ -40,7 +48,7 @@
                                 <th>No</th>
                                 <th>Nama</th>
                                 <th>NISN</th>
-                                <th>Pilih</th>
+                                <th><input type="checkbox" id="check-all" class="form-check-input"></th>
                             </tr>
                         </thead>
                         <tbody>

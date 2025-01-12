@@ -84,7 +84,7 @@
                         <a href="{{ route('teacher.studentpermit.edit', $studentPermit->id) }}" class="btn btn-warning"
                             data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Ijin Santri"><i
                                 class="fa-solid fa-edit"></i></a>
-                        <x-delete :route="route('teacher.studentpermit.destroy', $studentPermit->id)" :message="'Apakah anda yakin ingin menghapus ijin santri ini?'" :title="'Hapus Ijin Santri'" />
+                        <x-delete :route="route('teacher.studentpermit.destroy', $studentPermit->id)" :message="'Apakah kamu yakin ingin menghapus ijin santri ini?'" :title="'Hapus Ijin Santri'" />
                     </div>
                 </div>
             </div>

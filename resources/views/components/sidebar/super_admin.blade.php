@@ -10,8 +10,7 @@
             class="menu-item {{ request()->routeIs('superadmin.admin.index', 'superadmin.admin.show', 'superadmin.admin.edit') ? 'active' : '' }}">
             <a href="{{ route('superadmin.admin.index') }}" class="menu-link">Data Admin</a>
         </li>
-        <li
-            class="menu-item {{ request()->routeIs('superadmin.admin.create') ? 'active' : '' }}">
+        <li class="menu-item {{ request()->routeIs('superadmin.admin.create') ? 'active' : '' }}">
             <a href="{{ route('superadmin.admin.create') }}" class="menu-link">Tambah Admin</a>
         </li>
     </ul>
@@ -23,7 +22,7 @@
     <a href="{{ route('superadmin.logs.index') }}" class="menu-link ">
         <i class="menu-icon fa-solid fa-sheet-plastic fs-6"></i>
         <div class="text-truncate">
-            Logs
+            Log
         </div>
     </a>
 </li>
@@ -35,3 +34,40 @@
         </div>
     </a>
 </li>
+<li class="menu-item {{ request()->routeIs('superadmin.routelist.*') ? 'open active' : '' }}">
+    <a href="{{ route('superadmin.routelist.index') }}" class="menu-link ">
+        <i class="menu-icon fa-solid fa-route fs-6"></i>
+        <div class="text-truncate">
+            Route List
+        </div>
+    </a>
+</li>
+<li class="menu-item {{ request()->routeIs('superadmin.performance.*') ? 'open active' : '' }}">
+    <a href="{{ route('superadmin.performance.index') }}" class="menu-link ">
+        <i class="menu-icon fa-solid fa-gauge-max fs-6"></i>
+        <div class="text-truncate">
+            Performance
+        </div>
+    </a>
+</li>
+<li class="menu-item {{ request()->routeIs('superadmin.database.*') ? 'open active' : '' }}">
+    <a href="{{ route('superadmin.database.index') }}" class="menu-link ">
+        <i class="menu-icon fa-solid fa-database fs-6"></i>
+        <div class="text-truncate">
+            Database
+        </div>
+    </a>
+</li>
+<li class="menu-header small text-uppercase">
+    <span class="menu-header-text">Menu setiap role</span>
+</li>
+@foreach (App\Models\Role::where('code', '!=', 'super_admin')->get() as $role)
+    @if ($role->code == 'student_registrant')
+        @continue
+    @endif
+    <li class="menu-header small text-uppercase">
+        <span class="menu-header-text">{{ $role->name }}</span>
+    </li>
+    @include('components.sidebar.' . $role->code)
+@endforeach
+{{-- @include('components.sidebar.administration_admin') --}}

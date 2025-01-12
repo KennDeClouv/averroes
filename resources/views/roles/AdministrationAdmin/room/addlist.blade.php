@@ -11,6 +11,13 @@
                     url: 'https://cdn.datatables.net/plug-ins/1.10.21/i18n/Indonesian.json'
                 }
             });
+            $('#check-all').click(function() {
+                if ($(this).is(':checked')) {
+                    $('input[type="checkbox"]').prop('checked', true);
+                } else {
+                    $('input[type="checkbox"]').prop('checked', false);
+                }
+            });
         });
     </script>
 @endsection
@@ -40,7 +47,7 @@
                                 <th>No</th>
                                 <th>Nama</th>
                                 <th>NISN</th>
-                                <th>Pilih</th>
+                                <th><input type="checkbox" id="check-all" class="form-check-input"></th>
                             </tr>
                         </thead>
                         <tbody>

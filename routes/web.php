@@ -15,11 +15,11 @@
  *    Route::prefix('role')->name('role.')->middleware(['auth', 'can:isRole'])->group(function () {
  *        Route::redirect('/', '/role/home', 301); // Redirect ke halaman home role
  *        Route::get('/home', [RoleHome::class, 'index'])->name('home'); // Mendefinisikan route home
- *        // Di sini, Anda dapat menambahkan semua grup fitur lainnya yang relevan untuk role ini.
+ *        // Di sini, Kamu dapat menambahkan semua grup fitur lainnya yang relevan untuk role ini.
  *    });
  *
  * 3. Menambah Fitur di Dalam Route Role
- *    Jika Anda ingin menambahkan fitur di dalam route untuk role tertentu,
+ *    Jika Kamu ingin menambahkan fitur di dalam route untuk role tertentu,
  *    gunakan format berikut:
  *
  *    Route::prefix('fiture')->name('fiture.')->group(function () {
@@ -35,7 +35,6 @@
  */
 
 // **Dependencies**
-use App\Http\Controllers\SuperAdmin\TreeViewController as SuperAdminTreeView;
 use Illuminate\Support\Facades\Route;
 
 // **Controllers**
@@ -45,6 +44,10 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\SuperAdmin\HomeController as SuperAdminHome;
 use App\Http\Controllers\SuperAdmin\AdminController as SuperAdminAdmin;
 use App\Http\Controllers\SuperAdmin\LogViewerController as SuperAdminLogViewer;
+use App\Http\Controllers\SuperAdmin\TreeViewController as SuperAdminTreeView;
+use App\Http\Controllers\SuperAdmin\RouteListController as SuperAdminRouteList;
+use App\Http\Controllers\SuperAdmin\PerformanceController as SuperAdminPerformance;
+use App\Http\Controllers\SuperAdmin\DatabaseController as SuperAdminDatabase;
 use App\Http\Controllers\AdministrationAdmin\HomeController as AdministrationAdminHome;
 use App\Http\Controllers\AdministrationAdmin\AnnouncementController as AdministrationAdminAnnouncement;
 use App\Http\Controllers\Teacher\AnnouncementController as TeacherAnnouncement;
@@ -76,8 +79,8 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::prefix('account')->name('account.')->middleware(['auth'])->group(function () {
     Route::get('/', [AccountController::class, 'index'])->name('index');
     Route::put('update/{user}', [AccountController::class, 'update'])->name('update');
-    Route::put('updatestudent/{student}', [AccountController::class, 'updateStudent'])->name('updatestudent');
-    Route::put('updateteacher/{teacher}', [AccountController::class, 'updateTeacher'])->name('updateteacher');
+    Route::put('updatestudent/{student}', [AccountController::class, 'updateStudent'])->name('update-student');
+    Route::put('updateteacher/{teacher}', [AccountController::class, 'updateTeacher'])->name('update-teacher');
 });
 Route::prefix('chat')->name('chat.')->middleware(['auth'])->group(function () {
     Route::get('/', [MessageController::class, 'index'])->name('index');
@@ -113,6 +116,11 @@ Route::prefix('superadmin')->name('superadmin.')->middleware(['auth', 'can:isSup
         Route::get('edit/{admin}', [SuperAdminAdmin::class, 'edit'])->name('edit');
         Route::put('update/{admin}', [SuperAdminAdmin::class, 'update'])->name('update');
         Route::delete('destroy/{admin}', [SuperAdminAdmin::class, 'destroy'])->name('destroy');
+
+        Route::get('/{admin}/permissions', [SuperAdminAdmin::class, 'permissions'])->name('permissions');
+        Route::post('/{admin}/permissions', [SuperAdminAdmin::class, 'permissionsStore'])->name('permissions-store');
+        // Route::delete('/{admin}/permissions/{permission}/delete', [SuperAdminAdmin::class, 'permissionsDestroy'])->name('permissions-destroy');
+        Route::delete('superadmin/admin/permissions/{permission}', [SuperAdminAdmin::class, 'permissionsDestroy'])->name('permissions-destroy')->where('permission', '[0-9]+');
     });
     Route::prefix('logviewer')->name('logs.')->group(function () {
         Route::get('/', [SuperAdminLogViewer::class, 'index'])->name('index');
@@ -123,6 +131,23 @@ Route::prefix('superadmin')->name('superadmin.')->middleware(['auth', 'can:isSup
     Route::prefix('foldertree')->name('foldertree.')->middleware(['auth'])->group(function () {
         Route::get('/', [SuperAdminTreeView::class, 'index'])->name('index');
     });
+    Route::prefix('routelist')->name('routelist.')->group(function () {
+        Route::get('/', [SuperAdminRouteList::class, 'index'])->name('index');
+    });
+    Route::prefix('performance')->name('performance.')->group(function () {
+        Route::get('/', [SuperAdminPerformance::class, 'index'])->name('index');
+    });
+    Route::prefix('database')->name('database.')->group(function () {
+        Route::get('/', [SuperAdminDatabase::class, 'index'])->name('index');
+        Route::get('/database', [SuperAdminDatabase::class, 'indexDatabase'])->name('index-database');
+        Route::get('/indexsql', [SuperAdminDatabase::class, 'indexSql'])->name('index-sql');
+        Route::post('/sql', [SuperAdminDatabase::class, 'sql'])->name('sql');
+        Route::get('/show/{tableName}', [SuperAdminDatabase::class, 'showTable'])->name('show');
+        Route::post('/store/{tableName}', [SuperAdminDatabase::class, 'store'])->name('store');
+        Route::put('/update/{tableName}/{id}', [SuperAdminDatabase::class, 'update'])->name('update');
+        Route::delete('/destroy/{tableName}/{id}', [SuperAdminDatabase::class, 'destroy'])->name('destroy');
+        Route::delete('/empty/{tableName}', [SuperAdminDatabase::class, 'empty'])->name('empty');
+    }); 
 });
 
 /**
@@ -132,82 +157,82 @@ Route::prefix('administrationadmin')->name('administrationadmin.')->middleware([
     Route::redirect('/', '/administrationadmin/home', 301);
     Route::get('/home', [AdministrationAdminHome::class, 'index'])->name('home');
 
-    Route::prefix('student')->name('student.')->group(function () {
+    Route::prefix('student')->name('student.')->middleware('permission:show_student')->group(function () {
         Route::get('/', [AdministrationAdminStudent::class, 'index'])->name('index');
-        Route::get('create', [AdministrationAdminStudent::class, 'create'])->name('create');
-        Route::post('store', [AdministrationAdminStudent::class, 'store'])->name('store');
-        Route::get('show/{student}', [AdministrationAdminStudent::class, 'show'])->name('show');
-        Route::get('edit/{student}', [AdministrationAdminStudent::class, 'edit'])->name('edit');
-        Route::put('update/{student}', [AdministrationAdminStudent::class, 'update'])->name('update');
-        Route::delete('destroy/{student}', [AdministrationAdminStudent::class, 'destroy'])->name('destroy');
+        Route::get('create', [AdministrationAdminStudent::class, 'create'])->middleware('permission:create_student')->name('create');
+        Route::post('store', [AdministrationAdminStudent::class, 'store'])->middleware('permission:create_student')->name('store');
+        Route::get('show/{student}', [AdministrationAdminStudent::class, 'show'])->middleware('permission:show_student')->name('show');
+        Route::get('edit/{student}', [AdministrationAdminStudent::class, 'edit'])->middleware('permission:edit_student')->name('edit');
+        Route::put('update/{student}', [AdministrationAdminStudent::class, 'update'])->middleware('permission:edit_student')->name('update');
+        Route::delete('destroy/{student}', [AdministrationAdminStudent::class, 'destroy'])->middleware('permission:delete_student')->name('destroy');
     });
-    Route::prefix('teacher')->name('teacher.')->group(function () {
+    Route::prefix('teacher')->name('teacher.')->middleware(['permission:show_teacher'])->group(function () {
         Route::get('/', [AdministrationAdminTeacher::class, 'index'])->name('index');
-        Route::get('create', [AdministrationAdminTeacher::class, 'create'])->name('create');
-        Route::post('store', [AdministrationAdminTeacher::class, 'store'])->name('store');
-        Route::get('show/{teacher}', [AdministrationAdminTeacher::class, 'show'])->name('show');
-        Route::get('edit/{teacher}', [AdministrationAdminTeacher::class, 'edit'])->name('edit');
-        Route::put('update/{teacher}', [AdministrationAdminTeacher::class, 'update'])->name('update');
-        Route::delete('destroy/{teacher}', [AdministrationAdminTeacher::class, 'destroy'])->name('destroy');
+        Route::get('create', [AdministrationAdminTeacher::class, 'create'])->middleware('permission:create_teacher')->name('create');
+        Route::post('store', [AdministrationAdminTeacher::class, 'store'])->middleware('permission:create_teacher')->name('store');
+        Route::get('show/{teacher}', [AdministrationAdminTeacher::class, 'show'])->middleware('permission:show_teacher')->name('show');
+        Route::get('edit/{teacher}', [AdministrationAdminTeacher::class, 'edit'])->middleware('permission:edit_teacher')->name('edit');
+        Route::put('update/{teacher}', [AdministrationAdminTeacher::class, 'update'])->middleware('permission:edit_teacher')->name('update');
+        Route::delete('destroy/{teacher}', [AdministrationAdminTeacher::class, 'destroy'])->middleware('permission:delete_teacher')->name('destroy');
     });
-    Route::prefix('class')->name('class.')->group(function () {
+    Route::prefix('class')->name('class.')->middleware(['permission:show_class'])->group(function () {
         Route::get('/', [AdministrationAdminClasses::class, 'index'])->name('index');
-        Route::get('create', [AdministrationAdminClasses::class, 'create'])->name('create');
-        Route::post('store', [AdministrationAdminClasses::class, 'store'])->name('store');
-        Route::get('show/{class}', [AdministrationAdminClasses::class, 'show'])->name('show');
-        Route::get('edit/{class}', [AdministrationAdminClasses::class, 'edit'])->name('edit');
-        Route::put('update/{class}', [AdministrationAdminClasses::class, 'update'])->name('update');
-        Route::delete('destroy/{class}', [AdministrationAdminClasses::class, 'destroy'])->name('destroy');
-        Route::get('list/{class}', [AdministrationAdminClasses::class, 'list'])->name('list');
-        Route::delete('list/deletestudent/{student}', [AdministrationAdminClasses::class, 'deleteStudentFromClass'])->name('delete-student-from-class');
-        Route::get('list/add-student/{class}', [AdministrationAdminClasses::class, 'addStudentToClassForm'])->name('add-student-to-class-form');
-        Route::post('list/add-student/{class}', [AdministrationAdminClasses::class, 'addStudentToClass'])->name('add-student-to-class');
-    });
-    Route::prefix('room')->name('room.')->group(function () {
-        Route::get('/', [AdministrationAdminRoom::class, 'index'])->name('index');
-        Route::get('create', [AdministrationAdminRoom::class, 'create'])->name('create');
-        Route::post('store', [AdministrationAdminRoom::class, 'store'])->name('store');
-        Route::get('show/{room}', [AdministrationAdminRoom::class, 'show'])->name('show');
-        Route::get('edit/{room}', [AdministrationAdminRoom::class, 'edit'])->name('edit');
-        Route::put('update/{room}', [AdministrationAdminRoom::class, 'update'])->name('update');
-        Route::delete('destroy/{room}', [AdministrationAdminRoom::class, 'destroy'])->name('destroy');
-        Route::get('list/{room}', [AdministrationAdminRoom::class, 'list'])->name('list');
-        Route::delete('list/deletestudent/{student}', [AdministrationAdminRoom::class, 'deleteStudentFromRoom'])->name('delete-student-from-room');
-        Route::get('list/addstudent/{room}', [AdministrationAdminRoom::class, 'addStudentToRoomForm'])->name('add-student-to-room-form');
-        Route::post('list/addstudent/{room}', [AdministrationAdminRoom::class, 'addStudentToRoom'])->name('add-student-to-room');
-    });
-    Route::prefix('studentpermit')->name('studentpermit.')->group(function () {
-        Route::get('/', [AdministrationAdminStudentPermit::class, 'index'])->name('index');
-        Route::get('create', [AdministrationAdminStudentPermit::class, 'create'])->name('create');
-        Route::post('store', [AdministrationAdminStudentPermit::class, 'store'])->name('store');
-        Route::get('show/{studentPermit}', [AdministrationAdminStudentPermit::class, 'show'])->name('show');
-        Route::get('edit/{studentPermit}', [AdministrationAdminStudentPermit::class, 'edit'])->name('edit');
-        Route::put('update/{studentPermit}', [AdministrationAdminStudentPermit::class, 'update'])->name('update');
-        Route::delete('destroy/{studentPermit}', [AdministrationAdminStudentPermit::class, 'destroy'])->name('destroy');
-    });
-    Route::prefix('announcement')->name('announcement.')->group(function () {
-        Route::get('/', [AdministrationAdminAnnouncement::class, 'index'])->name('index');
-        Route::get('create', [AdministrationAdminAnnouncement::class, 'create'])->name('create');
-        Route::post('store', [AdministrationAdminAnnouncement::class, 'store'])->name('store');
-        Route::get('show/{announcement}', [AdministrationAdminAnnouncement::class, 'show'])->name('show');
-        Route::get('edit/{announcement}', [AdministrationAdminAnnouncement::class, 'edit'])->name('edit');
-        Route::put('update/{announcement}', [AdministrationAdminAnnouncement::class, 'update'])->name('update');
-        Route::delete('destroy/{announcement}', [AdministrationAdminAnnouncement::class, 'destroy'])->name('destroy');
-    });
-    Route::prefix('studentregistrant')->name('studentregistrant.')->group(function () {
-        Route::get('/', [AdministrationAdminStudentRegistrant::class, 'index'])->name('index');
-        Route::get('show/{studentRegistrant}', [AdministrationAdminStudentRegistrant::class, 'show'])->name('show');
-        Route::put('approve/{studentRegistrant}', [AdministrationAdminStudentRegistrant::class, 'approve'])->name('approve');
-        Route::put('reject/{studentRegistrant}', [AdministrationAdminStudentRegistrant::class, 'reject'])->name('reject');
-        Route::post('sendnotification', [AdministrationAdminStudentRegistrant::class, 'sendNotification'])->name('send-notification');
-        Route::delete('destroy/{studentRegistrant}', [AdministrationAdminStudentRegistrant::class, 'destroy'])->name('destroy');
+        Route::get('create', [AdministrationAdminClasses::class, 'create'])->middleware('permission:create_class')->name('create');
+        Route::post('store', [AdministrationAdminClasses::class, 'store'])->middleware('permission:create_class')->name('store');
+        Route::get('show/{class}', [AdministrationAdminClasses::class, 'show'])->middleware('permission:show_class')->name('show');
+        Route::get('edit/{class}', [AdministrationAdminClasses::class, 'edit'])->middleware('permission:edit_class')->name('edit');
+        Route::put('update/{class}', [AdministrationAdminClasses::class, 'update'])->middleware('permission:edit_class')->name('update');
+        Route::delete('destroy/{class}', [AdministrationAdminClasses::class, 'destroy'])->middleware('permission:delete_class')->name('destroy');
+        Route::get('list/{class}', [AdministrationAdminClasses::class, 'list'])->middleware('permission:show_class')->name('list');
 
-        Route::get('indexuser', [AdministrationAdminStudentRegistrant::class, 'indexUser'])->name('index-user');
-        Route::get('createuser', [AdministrationAdminStudentRegistrant::class, 'createUser'])->name('create-user');
-        Route::post('storeuser', [AdministrationAdminStudentRegistrant::class, 'storeUser'])->name('store-user');
-        Route::get('edituser/{user}', [AdministrationAdminStudentRegistrant::class, 'editUser'])->name('edit-user');
-        Route::put('updateuser/{user}', [AdministrationAdminStudentRegistrant::class, 'updateUser'])->name('update-user');
-        Route::delete('destroyuser/{user}', [AdministrationAdminStudentRegistrant::class, 'destroyUser'])->name('destroy-user');
+        Route::delete('list/deletestudent/{student}', [AdministrationAdminClasses::class, 'deleteStudentFromClass'])->middleware('permission:delete_student_from_room')->name('delete-student-from-class');
+        Route::get('list/add-student/{class}', [AdministrationAdminClasses::class, 'addStudentToClassForm'])->middleware('permission:add_student_to_room')->name('add-student-to-class-form');
+        Route::post('list/add-student/{class}', [AdministrationAdminClasses::class, 'addStudentToClass'])->middleware('permission:add_student_to_room')->name('add-student-to-class');
+    });
+    Route::prefix('room')->name('room.')->middleware(['permission:show_room'])->group(function () {
+        Route::get('/', [AdministrationAdminRoom::class, 'index'])->name('index');
+        Route::get('create', [AdministrationAdminRoom::class, 'create'])->middleware('permission:create_room')->name('create');
+        Route::post('store', [AdministrationAdminRoom::class, 'store'])->middleware('permission:create_room')->name('store');
+        Route::get('show/{room}', [AdministrationAdminRoom::class, 'show'])->middleware('permission:show_room')->name('show');
+        Route::get('edit/{room}', [AdministrationAdminRoom::class, 'edit'])->middleware('permission:edit_room')->name('edit');
+        Route::put('update/{room}', [AdministrationAdminRoom::class, 'update'])->middleware('permission:edit_room')->name('update');
+        Route::delete('destroy/{room}', [AdministrationAdminRoom::class, 'destroy'])->middleware('permission:delete_room')->name('destroy');
+        Route::get('list/{room}', [AdministrationAdminRoom::class, 'list'])->middleware('permission:show_room')->name('list');
+        Route::delete('list/deletestudent/{student}', [AdministrationAdminRoom::class, 'deleteStudentFromRoom'])->middleware('permission:delete_student_from_room')->name('delete-student-from-room');
+        Route::get('list/addstudent/{room}', [AdministrationAdminRoom::class, 'addStudentToRoomForm'])->middleware('permission:add_student_to_room')->name('add-student-to-room-form');
+        Route::post('list/addstudent/{room}', [AdministrationAdminRoom::class, 'addStudentToRoom'])->middleware('permission:add_student_to_room')->name('add-student-to-room');
+    });
+    Route::prefix('studentpermit')->name('studentpermit.')->middleware(['permission:show_student_permit'])->group(function () {
+        Route::get('/', [AdministrationAdminStudentPermit::class, 'index'])->name('index');
+        Route::get('create', [AdministrationAdminStudentPermit::class, 'create'])->middleware('permission:create_student_permit')->name('create');
+        Route::post('store', [AdministrationAdminStudentPermit::class, 'store'])->middleware('permission:create_student_permit')->name('store');
+        Route::get('show/{studentPermit}', [AdministrationAdminStudentPermit::class, 'show'])->middleware('permission:show_student_permit')->name('show');
+        Route::get('edit/{studentPermit}', [AdministrationAdminStudentPermit::class, 'edit'])->middleware('permission:edit_student_permit')->name('edit');
+        Route::put('update/{studentPermit}', [AdministrationAdminStudentPermit::class, 'update'])->middleware('permission:edit_student_permit')->name('update');
+        Route::delete('destroy/{studentPermit}', [AdministrationAdminStudentPermit::class, 'destroy'])->middleware('permission:delete_student_permit')->name('destroy');
+    });
+    Route::prefix('announcement')->name('announcement.')->middleware(['permission:show_announcement'])->group(function () {
+        Route::get('/', [AdministrationAdminAnnouncement::class, 'index'])->name('index');
+        Route::get('create', [AdministrationAdminAnnouncement::class, 'create'])->middleware('permission:create_announcement')->name('create');
+        Route::post('store', [AdministrationAdminAnnouncement::class, 'store'])->middleware('permission:create_announcement')->name('store');
+        Route::get('show/{announcement}', [AdministrationAdminAnnouncement::class, 'show'])->middleware('permission:show_announcement')->name('show');
+        Route::get('edit/{announcement}', [AdministrationAdminAnnouncement::class, 'edit'])->middleware('permission:edit_announcement')->name('edit');
+        Route::put('update/{announcement}', [AdministrationAdminAnnouncement::class, 'update'])->middleware('permission:edit_announcement')->name('update');
+        Route::delete('destroy/{announcement}', [AdministrationAdminAnnouncement::class, 'destroy'])->middleware('permission:delete_announcement')->name('destroy');
+    });
+    Route::prefix('studentregistrant')->name('studentregistrant.')->middleware(['permission:show_student_registrant'])->group(function () {
+        Route::get('/', [AdministrationAdminStudentRegistrant::class, 'index'])->name('index');
+        Route::get('show/{studentRegistrant}', [AdministrationAdminStudentRegistrant::class, 'show'])->middleware('permission:show_student_registrant')->name('show');
+        Route::put('approve/{studentRegistrant}', [AdministrationAdminStudentRegistrant::class, 'approve'])->middleware('permission:edit_student_registrant')->name('approve');
+        Route::put('reject/{studentRegistrant}', [AdministrationAdminStudentRegistrant::class, 'reject'])->middleware('permission:edit_student_registrant')->name('reject');
+        Route::delete('destroy/{studentRegistrant}', [AdministrationAdminStudentRegistrant::class, 'destroy'])->middleware('permission:delete_student_registrant')->name('destroy');
+
+        Route::get('indexuser', [AdministrationAdminStudentRegistrant::class, 'indexUser'])->middleware('permission:show_student_registrant_user')->name('index-user');
+        Route::get('createuser', [AdministrationAdminStudentRegistrant::class, 'createUser'])->middleware('permission:create_student_registrant_user')->name('create-user');
+        Route::post('storeuser', [AdministrationAdminStudentRegistrant::class, 'storeUser'])->middleware('permission:create_student_registrant_user')->name('store-user');
+        Route::get('edituser/{user}', [AdministrationAdminStudentRegistrant::class, 'editUser'])->middleware('permission:edit_student_registrant_user')->name('edit-user');
+        Route::put('updateuser/{user}', [AdministrationAdminStudentRegistrant::class, 'updateUser'])->middleware('permission:edit_student_registrant_user')->name('update-user');
+        Route::delete('destroyuser/{user}', [AdministrationAdminStudentRegistrant::class, 'destroyUser'])->middleware('permission:delete_student_registrant_user')->name('destroy-user');
     });
 });
 

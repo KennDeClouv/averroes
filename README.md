@@ -19,7 +19,7 @@ Proyek ini adalah aplikasi berbasis Laravel yang bertujuan untuk mengelola siste
 Untuk menginstal proyek ini, ikuti langkah-langkah berikut:
 
 1. **Clone Repository**  
-   Pertama, clone repository ini ke mesin lokal Anda menggunakan perintah berikut:
+   Pertama, clone repository ini ke mesin lokal Kamu menggunakan perintah berikut:
 
     ```bash
     git clone https://github.com/KennDeClouv/averroes.git
@@ -33,14 +33,14 @@ Untuk menginstal proyek ini, ikuti langkah-langkah berikut:
     ```
 
 3. **Instalasi Dependensi**  
-   Pastikan Anda memiliki Composer dan Node.js terinstal. Kemudian, jalankan perintah berikut untuk menginstal dependensi PHP dan JavaScript:
+   Pastikan Kamu memiliki Composer dan Node.js terinstal. Kemudian, jalankan perintah berikut untuk menginstal dependensi PHP dan JavaScript:
 
     ```bash
     composer install
     ```
 
 4. **Konfigurasi Environment**  
-   Salin file `.env.example` menjadi `.env` dan sesuaikan konfigurasi sesuai kebutuhan Anda:
+   Salin file `.env.example` menjadi `.env` dan sesuaikan konfigurasi sesuai kebutuhan Kamu:
 
     ```bash
     cp .env.example .env
@@ -54,14 +54,14 @@ Untuk menginstal proyek ini, ikuti langkah-langkah berikut:
     ```
 
 6. **Migrasi Database**  
-   Jika Anda menggunakan database, jalankan migrasi untuk membuat tabel yang diperlukan:
+   Jika Kamu menggunakan database, jalankan migrasi untuk membuat tabel yang diperlukan:
 
     ```bash
     php artisan migrate --seed
     ```
 
 7. **Menjalankan Aplikasi**  
-   Setelah semua langkah di atas selesai, Anda dapat menjalankan aplikasi dengan perintah:
+   Setelah semua langkah di atas selesai, Kamu dapat menjalankan aplikasi dengan perintah:
     ```bash
     php artisan serve
     ```

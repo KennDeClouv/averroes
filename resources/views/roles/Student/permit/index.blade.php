@@ -57,7 +57,7 @@
                                             data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Ijin Santri"
                                             class="btn btn-warning"><i class="fa-solid fa-edit"></i></a>
                                     @endif
-                                    <x-delete :route="route('student.permit.destroy', $studentPermit->id)" :message="'Apakah anda yakin ingin menghapus ijin santri ini?'" :title="'Hapus Ijin Santri'"></x-delete>
+                                    <x-delete :route="route('student.permit.destroy', $studentPermit->id)" :message="'Apakah kamu yakin ingin menghapus ijin santri ini?'" :title="'Hapus Ijin Santri'"></x-delete>
                                 </td>
                             </tr>
                         @endforeach

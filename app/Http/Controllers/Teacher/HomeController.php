@@ -15,10 +15,14 @@ class HomeController extends Controller
     public function index()
     {
         $role = Auth::user()->Role;
-        $totalSantri = Student::count();
-        $totalSantriAktif = Student::where('status', 'Aktif')->count();
-        $totalSantriNonAktif = Student::where('status', 'Non Aktif')->count();
-        $totalUstadz = Teacher::count();
+        $totalSantriAktif = Student::where('is_graduate', false)
+            ->where('name', '!=', 'Super Admin')
+            ->count();
+        $totalSantriNonAktif = Student::where('is_graduate', true)
+            ->where('name', '!=', 'Super Admin')
+            ->count();
+        $totalSantri = Student::all()->where('name', '!=', 'Super Admin')->count();
+        $totalUstadz = Teacher::all()->where('name', '!=', 'Super Admin')->count();
         $totalIjin = StudentPermit::count();
 
         $startOfWeek = Carbon::now()->startOfWeek(-1);

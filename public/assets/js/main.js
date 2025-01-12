@@ -172,22 +172,10 @@ document.getElementById("layout-menu") &&
                         }),
                     (i = t.querySelector("i")),
                     "light" === l
-                        ? (i.classList.add("bx-sun"),
-                          new bootstrap.Tooltip(i, {
-                              title: "Light Mode",
-                              fallbackPlacements: ["bottom"],
-                          }))
+                        ? (i.classList.add("fa-sun"))
                         : "dark" === l
-                        ? (i.classList.add("bx-moon"),
-                          new bootstrap.Tooltip(i, {
-                              title: "Dark Mode",
-                              fallbackPlacements: ["bottom"],
-                          }))
-                        : (i.classList.add("bx-desktop"),
-                          new bootstrap.Tooltip(i, {
-                              title: "System Mode",
-                              fallbackPlacements: ["bottom"],
-                          }))),
+                        ? (i.classList.add("fa-moon"))
+                        : (i.classList.add("fa-desktop"))),
                 "system" === (s = l) &&
                     (s = window.matchMedia("(prefers-color-scheme: dark)")
                         .matches
@@ -487,7 +475,7 @@ document.getElementById("layout-menu") &&
                                             return (
                                                 '<a href="' +
                                                 e +
-                                                '"><div><i class="bx ' +
+                                                '"><div><i class="fa ' +
                                                 t +
                                                 ' me-2"></i><span class="align-middle">' +
                                                 o +
@@ -495,7 +483,7 @@ document.getElementById("layout-menu") &&
                                             );
                                         },
                                         notFound:
-                                            '<div class="not-found px-3 py-2"><h6 class="suggestions-header text-primary mb-2">Pages</h6><p class="py-2 mb-0"><i class="bx bx-error-circle bx-xs me-2"></i> No Results Found</p></div>',
+                                            '<div class="not-found px-3 py-2"><h6 class="suggestions-header text-primary mb-2">Pages</h6><p class="py-2 mb-0"><i class="fa-solid fa-circle-exclamation me-2"></i> No Results Found</p></div>',
                                     },
                                 },
                                 {
@@ -527,7 +515,7 @@ document.getElementById("layout-menu") &&
                                             );
                                         },
                                         notFound:
-                                            '<div class="not-found px-3 py-2"><h6 class="suggestions-header text-primary mb-2">Files</h6><p class="py-2 mb-0"><i class="bx bx-error-circle bx-xs me-2"></i> No Results Found</p></div>',
+                                            '<div class="not-found px-3 py-2"><h6 class="suggestions-header text-primary mb-2">Files</h6><p class="py-2 mb-0"><i class="fa-solid fa-circle-exclamation me-2"></i> No Results Found</p></div>',
                                     },
                                 },
                                 {
@@ -556,7 +544,7 @@ document.getElementById("layout-menu") &&
                                             );
                                         },
                                         notFound:
-                                            '<div class="not-found px-3 py-2"><h6 class="suggestions-header text-primary mb-2">Members</h6><p class="py-2 mb-0"><i class="bx bx-error-circle bx-xs me-2"></i> No Results Found</p></div>',
+                                            '<div class="not-found px-3 py-2"><h6 class="suggestions-header text-primary mb-2">Members</h6><p class="py-2 mb-0"><i class="fa-solid fa-exclamation me-2"></i> No Results Found</p></div>',
                                     },
                                 }
                             )
@@ -589,9 +577,14 @@ document.getElementById("layout-menu") &&
         });
 // Loading
 window.addEventListener("load", () => {
-    document.querySelector(".loader").classList.add("loader--hidden");
+    const loader = document.querySelector(".loader");
+    if (loader) {
+        loader.classList.add("loader--hidden");
 
-    // document.querySelector(".loader").addEventListener("transitionend", () => {
-    //     document.body.removeChild(document.querySelector(".loader"));
-    // });
+        // loader.addEventListener("transitionend", () => {
+        //     if (loader.parentNode) {
+        //         document.body.removeChild(loader);
+        //     }
+        // });
+    }
 });

@@ -91,7 +91,9 @@ class ClassesController extends Controller
 
     public function addStudentToClassForm(Classes $class)
     {
-        $students = Student::where('classes_id', null)->get();
+        $students = Student::where('classes_id', null)
+            ->where('name', '!=', 'Super Admin')
+            ->get();
         return view('roles.AdministrationAdmin.classes.addlist', compact('class', 'students'));
     }
     public function addStudentToClass(Request $request, Classes $class)

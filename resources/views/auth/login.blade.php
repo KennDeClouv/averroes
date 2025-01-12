@@ -35,7 +35,7 @@
                         <!-- /Logo -->
                         <h4 class="mb-1">Selamat datang di
                             {{ ucwords(str_replace('_', ' ', config('app.name')) ?? '-') }} 👋</h4>
-                        <p class="mb-6">Silahkan masuk menggunakan akun anda</p>
+                        <p class="mb-6">Silahkan masuk menggunakan akun kamu</p>
                         @include('components.alert')
                         <form id="formAuthentication" class="mb-6" action="{{ route('login') }}" method="POST">
                             @csrf

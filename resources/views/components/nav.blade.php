@@ -24,12 +24,12 @@
         </div>
         {{-- <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div> --}}
         <ul class="navbar-nav flex-row align-items-center ms-auto gap-2">
-            @if ($user->Role->code != 'student_registrant')
+            {{-- @if ($user->Role->code != 'student_registrant')
                 <a href="{{ route('chat.index') }}" class="nav-item nav-link cursor-pointer">
                     <i
                         class="fa-solid fa-message-lines fa-xl {{ request()->routeIs('chat.index') ? 'text-primary' : '' }}"></i>
                 </a>
-            @endif
+            @endif --}}
             <!-- Style Switcher -->
             <li class="nav-item dropdown-style-switcher dropdown me-2 me-xl-0">
                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
@@ -116,8 +116,8 @@
 
     function showLogoutConfirm() {
         Swal.fire({
-            title: 'Apakah anda yakin?',
-            text: "Anda akan keluar dari sistem!",
+            title: 'Apakah kamu yakin?',
+            text: "Kamu akan keluar dari sistem!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: 'var(--bs-primary)',
