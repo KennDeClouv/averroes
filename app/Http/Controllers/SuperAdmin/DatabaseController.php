@@ -133,7 +133,8 @@ class DatabaseController extends Controller
 
     public function index()
     {
-        $databases = count(DB::select('SHOW DATABASES'));
+        $databases = count(DB::select('SHOW TABLES'));
+        $databaseName = env('DB_DATABASE');
         $tables = collect(DB::select('SHOW TABLES'))->map(function ($table) {
             $tableName = array_values((array)$table)[0];
             $rowCount = DB::table($tableName)->count();
@@ -144,7 +145,7 @@ class DatabaseController extends Controller
                 'columns' => $columns,
             ];
         });
-        return view('roles.SuperAdmin.database.index', compact('databases', 'tables'));
+        return view('roles.SuperAdmin.database.index', compact('databases', 'tables','databaseName'));
     }
 
     public function indexSql()

@@ -58,6 +58,14 @@
         </div>
     </a>
 </li>
+<li class="menu-item {{ request()->routeIs('superadmin.system.*') ? 'open active' : '' }}">
+    <a href="{{ route('superadmin.system.index') }}" class="menu-link ">
+        <i class="menu-icon fa-solid fa-cogs fs-6"></i>
+        <div class="text-truncate">
+            System
+        </div>
+    </a>
+</li>
 <li class="menu-header small text-uppercase">
     <span class="menu-header-text">Menu setiap role</span>
 </li>
@@ -70,4 +78,3 @@
     </li>
     @include('components.sidebar.' . $role->code)
 @endforeach
-{{-- @include('components.sidebar.administration_admin') --}}

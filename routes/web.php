@@ -39,7 +39,7 @@ use Illuminate\Support\Facades\Route;
 
 // **Controllers**
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\MessageController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\SuperAdmin\HomeController as SuperAdminHome;
 use App\Http\Controllers\SuperAdmin\AdminController as SuperAdminAdmin;
@@ -47,6 +47,7 @@ use App\Http\Controllers\SuperAdmin\LogViewerController as SuperAdminLogViewer;
 use App\Http\Controllers\SuperAdmin\TreeViewController as SuperAdminTreeView;
 use App\Http\Controllers\SuperAdmin\RouteListController as SuperAdminRouteList;
 use App\Http\Controllers\SuperAdmin\PerformanceController as SuperAdminPerformance;
+use App\Http\Controllers\SuperAdmin\SystemController as SuperAdminSystem;
 use App\Http\Controllers\SuperAdmin\DatabaseController as SuperAdminDatabase;
 use App\Http\Controllers\AdministrationAdmin\HomeController as AdministrationAdminHome;
 use App\Http\Controllers\AdministrationAdmin\AnnouncementController as AdministrationAdminAnnouncement;
@@ -83,13 +84,13 @@ Route::prefix('account')->name('account.')->middleware(['auth'])->group(function
     Route::put('updateteacher/{teacher}', [AccountController::class, 'updateTeacher'])->name('update-teacher');
 });
 Route::prefix('chat')->name('chat.')->middleware(['auth'])->group(function () {
-    Route::get('/', [MessageController::class, 'index'])->name('index');
-    Route::get('contacts', [MessageController::class, 'contacts'])->name('contacts');
-    Route::post('send/', [MessageController::class, 'send'])->name('send');
-    Route::get('history/{recipientId}', [MessageController::class, 'history'])->name('history');
-    Route::post('read/', [MessageController::class, 'read'])->name('read');
-    Route::post('setstatus/{user}', [MessageController::class, 'setStatus'])->name('set-status');
-    Route::put('edituser/{user}', [MessageController::class, 'editUser'])->name('edit-user');
+    Route::get('/', [ChatController::class, 'index'])->name('index');
+    Route::get('contacts', [ChatController::class, 'contacts'])->name('contacts');
+    Route::post('send/', [ChatController::class, 'send'])->name('send');
+    Route::get('history/{recipientId}', [ChatController::class, 'history'])->name('history');
+    Route::post('read/', [ChatController::class, 'read'])->name('read');
+    Route::post('setstatus/{user}', [ChatController::class, 'setStatus'])->name('set-status');
+    Route::put('edituser/{user}', [ChatController::class, 'editUser'])->name('edit-user');
 });
 Route::prefix('kanban')->name('kanban.')->middleware(['auth'])->group(function () {
 
@@ -148,6 +149,11 @@ Route::prefix('superadmin')->name('superadmin.')->middleware(['auth', 'can:isSup
         Route::delete('/destroy/{tableName}/{id}', [SuperAdminDatabase::class, 'destroy'])->name('destroy');
         Route::delete('/empty/{tableName}', [SuperAdminDatabase::class, 'empty'])->name('empty');
     }); 
+
+    Route::prefix('system')->name('system.')->group(function () {
+        Route::get('/', [SuperAdminSystem::class, 'index'])->name('index');
+        Route::post('runcli', [SuperAdminSystem::class, 'runCLI'])->name('run-cli');
+    });
 });
 
 /**
