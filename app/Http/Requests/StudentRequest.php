@@ -55,10 +55,12 @@ class StudentRequest extends FormRequest
             'attachment_diploma' => 'nullable|file|mimes:pdf,jpg,png|max:5120',
             'attachment_father_identity_card' => 'nullable|file|mimes:pdf,jpg,png|max:5120',
             'attachment_mother_identity_card' => 'nullable|file|mimes:pdf,jpg,png|max:5120',
+            'uniform_size' => 'required|in:S,M,L,XL,2XL,3XL',
         ];
         if ($this->isMethod('put') || $this->isMethod('patch')) {
             $rules['name'] = 'sometimes|string|max:255';
             $rules['nisn'] = 'sometimes|unique:students,nisn,' . ($this->student?->id ?? 'NULL');
+            $rules['uniform_size'] = 'sometimes|in:S,M,L,XL,2XL,3XL';
         }
         return $rules;
     }
@@ -128,6 +130,8 @@ class StudentRequest extends FormRequest
             'attachment_mother_identity_card.file' => 'Lampiran KTP ibu harus berupa file',
             'attachment_mother_identity_card.mimes' => 'Lampiran KTP ibu harus berupa file pdf, png atau jpg',
             'attachment_mother_identity_card.max' => 'Lampiran KTP ibu tidak boleh lebih dari 5 mb',
+            'uniform_size.required' => 'Ukuran seragam santri wajib diisi',
+            'uniform_size.in' => 'Ukuran seragam harus berupa S, M, L, XL, 2XL, atau 3XL',
         ];
     }
 }

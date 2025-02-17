@@ -97,6 +97,7 @@ class StudentRegistrantController extends Controller
             "attachment_father_identity_card" => basename($studentRegistrant->getRawOriginal('attachment_father_identity_card')),
             "attachment_mother_identity_card" => basename($studentRegistrant->getRawOriginal('attachment_mother_identity_card')),
             "user_id" => $studentRegistrant->User->id,
+            "uniform_size" => $studentRegistrant->uniform_size,
         ]);
 
         // Prepare and send notification message

@@ -15,7 +15,7 @@ class StudentController extends Controller
 {
     public function index()
     {
-        $students = Student::all()->where('name', '!=', 'Super Admin')->where('is_graduate', false);
+        $students = Student::all()->where('is_graduate', false);
         return view('roles.AdministrationAdmin.student.index', compact('students'));
     }
 

@@ -194,6 +194,36 @@
                             @errorFeedback('student_status')
                         </div>
                         <div class="mb-3">
+                            <label class="form-label" for="uniform_size">Ukuran Seragam</label>
+                            <div class="row">
+                                <div class="col-12 col-md-8">
+                                    <select class="form-select select2 @error('uniform_size') is-invalid @enderror"
+                                        id="uniform_size" name="uniform_size">
+                                        <option value="" disabled selected>Pilih Ukuran Seragam</option>
+                                        <option value="S" {{ old('uniform_size') == 'S' ? 'selected' : '' }}>S
+                                        </option>
+                                        <option value="M" {{ old('uniform_size') == 'M' ? 'selected' : '' }}>M
+                                        </option>
+                                        <option value="L" {{ old('uniform_size') == 'L' ? 'selected' : '' }}>L
+                                        </option>
+                                        <option value="XL" {{ old('uniform_size') == 'XL' ? 'selected' : '' }}>XL
+                                        </option>
+                                        <option value="2XL" {{ old('uniform_size') == '2XL' ? 'selected' : '' }}>2XL
+                                        </option>
+                                        <option value="3XL" {{ old('uniform_size') == '3XL' ? 'selected' : '' }}>3XL
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <button type="button" class="btn btn-info w-100" data-bs-toggle="modal"
+                                        data-bs-target="#uniformSizeModal">
+                                        <i class="fa-solid fa-info-circle me-2"></i> Ukuran Seragam
+                                    </button>
+                                </div>
+                            </div>
+                            @errorFeedback('uniform_size')
+                        </div>
+                        <div class="mb-3">
                             <label for="quran_record_link" class="form-label">Rekaman Bacaan Al-Qur'an (Copy Link Youtube
                                 /
                                 Sosial Media) </label>
@@ -274,7 +304,8 @@
                 </div>
             @endif
             <div class="card card-border-shadow-primary mt-3">
-                <form action="{{ route('studentregistrant.update', $data->id ) }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('studentregistrant.update', $data->id) }}" method="post"
+                    enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="card-body">
@@ -412,6 +443,36 @@
                             </select>
                         </div>
                         <div class="mb-3">
+                            <label class="form-label" for="uniform_size">Ukuran Seragam</label>
+                            <div class="row">
+                                <div class="col-12 col-md-8">
+                                    <select class="form-select select2 select2-disabled @error('uniform_size') is-invalid @enderror"
+                                        id="uniform_size" name="uniform_size" disabled>
+                                        <option value="" disabled selected>Pilih Ukuran Seragam</option>
+                                        <option value="S" {{ $data->uniform_size == 'S' ? 'selected' : '' }}>S
+                                        </option>
+                                        <option value="M" {{ $data->uniform_size == 'M' ? 'selected' : '' }}>M
+                                        </option>
+                                        <option value="L" {{ $data->uniform_size == 'L' ? 'selected' : '' }}>L
+                                        </option>
+                                        <option value="XL" {{ $data->uniform_size == 'XL' ? 'selected' : '' }}>XL
+                                        </option>
+                                        <option value="2XL" {{ $data->uniform_size == '2XL' ? 'selected' : '' }}>2XL
+                                        </option>
+                                        <option value="3XL" {{ $data->uniform_size == '3XL' ? 'selected' : '' }}>3XL
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <button type="button" class="btn btn-info w-100" data-bs-toggle="modal"
+                                        data-bs-target="#uniformSizeModal">
+                                        <i class="fa-solid fa-info-circle me-2"></i> Ukuran Seragam
+                                    </button>
+                                </div>
+                            </div>
+                            @errorFeedback('uniform_size')
+                        </div>
+                        <div class="mb-3">
                             <label for="quran_record_link" class="form-label">Rekaman Bacaan Al-Qur'an (Copy Link Youtube
                                 /
                                 Sosial Media) </label>
@@ -444,8 +505,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="attachment_diploma">Lampiran Ijazah / SKL</label>
-                            <input type="file"
-                                class="form-control @error('attachment_diploma') is-invalid @enderror"
+                            <input type="file" class="form-control @error('attachment_diploma') is-invalid @enderror"
                                 id="attachment_diploma" name="attachment_diploma" disabled>
                             @errorFeedback('attachment_diploma')
                             @if ($data->attachment_diploma)
@@ -460,7 +520,8 @@
                                 id="attachment_father_identity_card" name="attachment_father_identity_card" disabled>
                             @errorFeedback('attachment_father_identity_card')
                             @if ($data->attachment_father_identity_card)
-                                <a href="{{ $data->attachment_father_identity_card }}" target="_blank">klik untuk melihat gambar</a>
+                                <a href="{{ $data->attachment_father_identity_card }}" target="_blank">klik untuk melihat
+                                    gambar</a>
                             @endif
                         </div>
                         <div class="mb-3">
@@ -470,7 +531,8 @@
                                 id="attachment_mother_identity_card" name="attachment_mother_identity_card" disabled>
                             @errorFeedback('attachment_mother_identity_card')
                             @if ($data->attachment_mother_identity_card)
-                                <a href="{{ $data->attachment_mother_identity_card }}" target="_blank">klik untuk melihat gambar</a>
+                                <a href="{{ $data->attachment_mother_identity_card }}" target="_blank">klik untuk melihat
+                                    gambar</a>
                             @endif
                         </div>
                         <div id="button-wrapper">
@@ -480,5 +542,23 @@
                 </form>
             </div>
         @endif
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="uniformSizeModal" tabindex="-1" aria-labelledby="uniformSizeModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="uniformSizeModalLabel">Ukuran Seragam</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="{{ asset('assets/img/uniform_size.jpg') }}" alt="Ukuran Seragam" class="img-fluid">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
