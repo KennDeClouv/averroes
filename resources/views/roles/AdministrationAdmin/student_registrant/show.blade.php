@@ -179,6 +179,14 @@
                         : <a href="{{ $studentRegistrant->quran_record_link ?? '-' }}" target="_blank">{{ $studentRegistrant->quran_record_link ?? '-' }}</a>
                     </div>
                 </div>
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <strong>Ukuran Seragam</strong>
+                    </div>
+                    <div class="col-md-8">
+                        : {{ $studentRegistrant->uniform_size ?? '-' }}
+                    </div>
+                </div>
                 @if ($studentRegistrant->attachment_family_register)
                     <div class="row mb-3">
                         <div class="col-md-4">

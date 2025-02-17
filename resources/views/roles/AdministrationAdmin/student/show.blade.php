@@ -198,6 +198,14 @@
                         : {{ $student->quran_memorization ?? '-' }}
                     </div>
                 </div>
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <strong>Ukuran Seragam</strong>
+                    </div>
+                    <div class="col-md-8">
+                        : {{ $student->uniform_size ?? '-' }}
+                    </div>
+                </div>
                 @if ($student->attachment_family_register)
                     <div class="row mb-3">
                         <div class="col-md-4">

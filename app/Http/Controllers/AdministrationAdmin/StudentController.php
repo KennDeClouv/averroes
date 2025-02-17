@@ -151,4 +151,11 @@ class StudentController extends Controller
         ]);
         return redirect()->route('administrationadmin.student.index')->with('success', 'Santri ' . $student->name . ' diluluskan!');
     }
+    public function undoGraduate(Student $student)
+    {
+        $student->update([
+            'is_graduate' => false,
+        ]);
+        return redirect()->route('administrationadmin.student.graduate.index')->with('success', 'Santri ' . $student->name . ' dibatalkan lulus!');
+    }
 }

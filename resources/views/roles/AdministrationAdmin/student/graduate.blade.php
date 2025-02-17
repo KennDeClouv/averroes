@@ -81,10 +81,20 @@
                                             <a href="{{ route('administrationadmin.student.edit', $student->id) }}"
                                                 data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Santri"
                                                 class="btn btn-warning "><i class="fa-solid fa-edit fs-6"></i></a>
+                                            <form
+                                                action="{{ route('administrationadmin.student.graduate.undo-graduate', $student->id) }}"
+                                                method="POST" class="d-inline">
+                                                @csrf
+                                                @method('PUT')
+                                                <button type="submit" data-bs-toggle="tooltip" data-bs-placement="top"
+                                                    title="Batalkan Lulus" class="btn btn-danger">
+                                                    <i class="fa-solid fa-graduation-cap fs-6"></i>
+                                                </button>
+                                            </form>
                                         @endif
                                         @if ($permissions->contains('delete_student'))
                                             <x-delete :route="route('administrationadmin.student.destroy', $student->id)" :message="'Apakah kamu yakin ingin menghapus data ' . $student->name . '?'" :title="'Hapus Santri'" />
-                                        @endif  
+                                        @endif
                                     </td>
                                 @endif
                             </tr>

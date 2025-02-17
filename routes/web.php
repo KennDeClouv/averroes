@@ -186,6 +186,7 @@ Route::prefix('administrationadmin')->name('administrationadmin.')->middleware([
         Route::prefix('graduate')->name('graduate.')->group(function () {
             Route::get('/', [AdministrationAdminStudent::class, 'graduateIndex'])->name('index');
             Route::put('{student}', [AdministrationAdminStudent::class, 'graduate'])->name('graduate');
+            Route::put('undo/{student}', [AdministrationAdminStudent::class, 'undoGraduate'])->name('undo-graduate');
         });
     });
     Route::prefix('teacher')->name('teacher.')->middleware(['permission:show_teacher'])->group(function () {
