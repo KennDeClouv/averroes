@@ -15,6 +15,10 @@
                 class="menu-item {{ request()->routeIs($rolePrefix . '.student.index', $rolePrefix . '.student.show', $rolePrefix . '.student.edit') ? 'active' : '' }}">
                 <a href="{{ route($rolePrefix . '.student.index') }}" class="menu-link">Data Santri</a>
             </li>
+            <li
+                class="menu-item {{ request()->routeIs($rolePrefix . '.student.graduate.index') ? 'active' : '' }}">
+                <a href="{{ route($rolePrefix . '.student.graduate.index') }}" class="menu-link">Santri Lulus</a>
+            </li>
         </ul>
     </li>
 @endif

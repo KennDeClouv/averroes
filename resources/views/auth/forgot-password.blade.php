@@ -1,8 +1,7 @@
 @extends('layouts.auth')
 
-@section('page-style')
-    <link rel="stylesheet" href="{{ asset('assets/vendor/css/pages/page-auth.css') }}">
-@endsection
+@section('title', 'Lupa Password')
+
 @section('page-script')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -20,7 +19,11 @@
         });
     </script>
 @endsection
-@section('title', 'Login')
+
+@section('page-style')
+    <link rel="stylesheet" href="{{ asset('assets/vendor/css/pages/page-auth.css') }}">
+@endsection
+
 
 @section('content')
     <div class="container-xxl">
@@ -37,44 +40,19 @@
                             </a>
                         </div>
                         <!-- /Logo -->
-                        <h4 class="mb-1">Selamat datang di
-                            {{ ucwords(str_replace('_', ' ', config('app.name')) ?? '-') }} 👋</h4>
-                        <p class="mb-6">Silahkan masuk menggunakan akun kamu</p>
+                        <h4 class="mb-1">Lupa Password 🔑</h4>
+                        <p class="mb-6">Silahkan masukkan email anda untuk mengatur ulang password</p>
                         @include('components.alert')
-                        <form id="formAuthentication" class="mb-6" action="{{ route('login') }}" method="POST">
+                        <form id="formAuthentication" class="mb-6" action="{{ route('password.email') }}" method="POST">
                             @csrf
                             <div class="mb-6">
-                                <label for="username" class="form-label">Username</label>
-                                <input type="text" class="form-control" id="username" name="username"
-                                    placeholder="Masukkan username" autofocus="on" value="{{ old('username') }}">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" name="email"
+                                    placeholder="Masukkan email" autofocus="on" value="{{ old('email') }}">
                             </div>
-                            <div class="mb-6 form-password-toggle">
-                                <label class="form-label" for="password">Password</label>
-                                <div class="input-group input-group-merge">
-                                    <input type="password" id="password" class="form-control" name="password"
-                                        placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                                        aria-describedby="password">
-                                    <span class="input-group-text cursor-pointer"><i class="fa fa-eye-slash"></i></span>
-                                </div>
-                            </div>
-                            <div class="mb-8">
-                                <div class="d-flex justify-content-between mt-8">
-                                    <div class="form-check mb-0 ms-2">
-                                        <input class="form-check-input" type="checkbox" id="remember-me" name="remember">
-                                        <label class="form-check-label" for="remember-me">
-                                            Ingat saya
-                                        </label>
-                                    </div>
-                                    {{-- <a href="{{ route('password.request') }}">
-                                        <span>Lupa password?</span>
-                                    </a> --}}
-                                </div>
-                            </div>
-                            <div class="mb-2">
-                                <button class="btn btn-primary d-grid w-100" type="submit">Login</button>
-                                {{-- <hr>
-                                <p class="text-center mt-2">Belum punya akun? <a href=""
-                                        class="text-center mt-2">Daftar</a></p> --}}
+                            <div class="mb-6">
+                                <button class="btn btn-primary d-grid w-100" type="submit">Kirim link reset
+                                    password</button>
                             </div>
                         </form>
                     </div>

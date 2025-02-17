@@ -20,7 +20,7 @@
 
 @if (session('success'))
     <script>
-        Swal.fire(getSwalOptions('success', 'Sukses!', '{{ session('success') }}'));
+        Swal.fire(getSwalOptions('success', 'Success!', '{{ session('success') }}'));
     </script>
 @elseif (session('error'))
     <script>
@@ -34,7 +34,7 @@
 @endif
 @if (session('warning'))
     <script>
-        Swal.fire(getSwalOptions('warning', 'Peringatan!', '{{ session('warning') }}'));
+        Swal.fire(getSwalOptions('warning', 'Warning!', '{{ session('warning') }}'));
     </script>
 @endif
 

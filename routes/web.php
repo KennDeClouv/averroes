@@ -39,6 +39,8 @@ use Illuminate\Support\Facades\Route;
 
 // **Controllers**
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\SuperAdmin\HomeController as SuperAdminHome;
@@ -73,6 +75,15 @@ Route::redirect('/', '/login');
 Route::get('/login', [LoginController::class, 'index'])->name('login.index');
 Route::post('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+Route::get('/forgot-password', [ForgotPasswordController::class, 'index'])->middleware('guest')->name('password.request');
+Route::post('/forgot-password', [ForgotPasswordController::class, 'email'])->middleware('guest')->name('password.email');
+Route::get('/reset-password/{token}', [ForgotPasswordController::class, 'reset'])->middleware('guest')->name('password.reset');
+Route::post('/reset-password', [ForgotPasswordController::class, 'update'])->middleware('guest')->name('password.update');
+
+Route::get('/email/verify', [EmailVerificationController::class, 'notice'])->middleware('auth')->name('verification.notice');
+Route::post('/email/verification-notification', [EmailVerificationController::class, 'resend', 'throttle:6,1'])->middleware('auth')->name('verification.send');
+Route::get('/email/verify/{id}/{hash}', [EmailVerificationController::class, 'verify'])->middleware('auth')->name('verification.verify');
 
 /**
  * **Common Routes**
@@ -148,7 +159,7 @@ Route::prefix('superadmin')->name('superadmin.')->middleware(['auth', 'can:isSup
         Route::put('/update/{tableName}/{id}', [SuperAdminDatabase::class, 'update'])->name('update');
         Route::delete('/destroy/{tableName}/{id}', [SuperAdminDatabase::class, 'destroy'])->name('destroy');
         Route::delete('/empty/{tableName}', [SuperAdminDatabase::class, 'empty'])->name('empty');
-    }); 
+    });
 
     Route::prefix('system')->name('system.')->group(function () {
         Route::get('/', [SuperAdminSystem::class, 'index'])->name('index');
@@ -171,6 +182,11 @@ Route::prefix('administrationadmin')->name('administrationadmin.')->middleware([
         Route::get('edit/{student}', [AdministrationAdminStudent::class, 'edit'])->middleware('permission:edit_student')->name('edit');
         Route::put('update/{student}', [AdministrationAdminStudent::class, 'update'])->middleware('permission:edit_student')->name('update');
         Route::delete('destroy/{student}', [AdministrationAdminStudent::class, 'destroy'])->middleware('permission:delete_student')->name('destroy');
+
+        Route::prefix('graduate')->name('graduate.')->group(function () {
+            Route::get('/', [AdministrationAdminStudent::class, 'graduateIndex'])->name('index');
+            Route::put('{student}', [AdministrationAdminStudent::class, 'graduate'])->name('graduate');
+        });
     });
     Route::prefix('teacher')->name('teacher.')->middleware(['permission:show_teacher'])->group(function () {
         Route::get('/', [AdministrationAdminTeacher::class, 'index'])->name('index');

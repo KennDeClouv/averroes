@@ -16,6 +16,14 @@
                 <h5 class="card-title">Detail Santri</h5>
                 <div class="row mb-3">
                     <div class="col-md-4">
+                        <strong>Username</strong>
+                    </div>
+                    <div class="col-md-8">
+                        : {{ $student->User->username ?? '-' }}
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-4">
                         <strong>Nama</strong>
                     </div>
                     <div class="col-md-8">
@@ -252,7 +260,7 @@
                                 class="btn btn-warning" data-bs-toggle="tooltip" data-bs-placement="top"
                                 title="Edit Santri"><i class="fa-solid fa-edit"></i></a>
                         @endif
-                        @if ($permissions->contains('destroy_student'))
+                        @if ($permissions->contains('delete_student'))
                             <x-delete :route="route('administrationadmin.student.destroy', $student->id)" :message="'Apakah kamu yakin ingin menghapus data ' . $student->name . '?'" :title="'Hapus Santri'" />
                         @endif
                     </div>

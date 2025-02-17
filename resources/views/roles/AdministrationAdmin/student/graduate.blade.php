@@ -42,15 +42,7 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <div class="card">
             <div class="card-header border-bottom d-flex justify-content-between align-items-center">
-                <h5 class="card-title">Data Santri</h5>
-            </div>
-            <div class="card-body pb-0 pt-4">
-                <div class="d-flex justify-content-end">
-                    @if ($permissions->contains('create_student'))
-                        <a href="{{ route('administrationadmin.student.create') }}" class="btn btn-primary mb-3"
-                            data-bs-toggle="tooltip" data-bs-placement="top" title="Tambah Santri">Tambah Santri</a>
-                    @endif
-                </div>
+                <h5 class="card-title">Santri Lulus</h5>
             </div>
             <div class="card-datatable table-responsive text-start text-nowrap">
                 <table class="table table-bordered" id="table">
@@ -59,7 +51,7 @@
                             <th>Id</th>
                             <th>Nama</th>
                             <th>NISN</th>
-                            <th>Kelas</th>
+                            {{-- <th>Kelas</th> --}}
                             @if (
                                 $permissions->contains('show_student') ||
                                     $permissions->contains('edit_student') ||
@@ -74,7 +66,7 @@
                                 <td>{{ $student->id }}</td>
                                 <td>{{ $student->name }}</td>
                                 <td>{{ $student->nisn }}</td>
-                                <td>{{ $student->Class->name ?? '-' }}</td>
+                                {{-- <td>{{ $student->Class->name ?? '-' }}</td> --}}
                                 @if (
                                     $permissions->contains('show_student') ||
                                         $permissions->contains('edit_student') ||
@@ -89,13 +81,6 @@
                                             <a href="{{ route('administrationadmin.student.edit', $student->id) }}"
                                                 data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Santri"
                                                 class="btn btn-warning "><i class="fa-solid fa-edit fs-6"></i></a>
-                                            <form action="{{ route('administrationadmin.student.graduate.graduate', $student->id) }}" method="POST" class="d-inline">
-                                                @csrf
-                                                @method('PUT')
-                                                <button type="submit" data-bs-toggle="tooltip" data-bs-placement="top" title="Luluskan Santri" class="btn btn-success">
-                                                    <i class="fa-solid fa-graduation-cap fs-6"></i>
-                                                </button>
-                                            </form>
                                         @endif
                                         @if ($permissions->contains('delete_student'))
                                             <x-delete :route="route('administrationadmin.student.destroy', $student->id)" :message="'Apakah kamu yakin ingin menghapus data ' . $student->name . '?'" :title="'Hapus Santri'" />

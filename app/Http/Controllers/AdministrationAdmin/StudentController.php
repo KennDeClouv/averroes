@@ -15,7 +15,7 @@ class StudentController extends Controller
 {
     public function index()
     {
-        $students = Student::all()->where('name', '!=', 'Super Admin');
+        $students = Student::all()->where('name', '!=', 'Super Admin')->where('is_graduate', false);
         return view('roles.AdministrationAdmin.student.index', compact('students'));
     }
 
@@ -135,5 +135,20 @@ class StudentController extends Controller
     {
         $student->User->delete();
         return redirect()->route('administrationadmin.student.index')->with('success', 'Data santri berhasil dihapus');
+    }
+
+
+    public function graduateIndex()
+    {
+        $students = Student::all()->where('is_graduate', true);
+        return view('roles.AdministrationAdmin.student.graduate', compact('students'));
+    }
+
+    public function graduate(Student $student)
+    {
+        $student->update([
+            'is_graduate' => true,
+        ]);
+        return redirect()->route('administrationadmin.student.index')->with('success', 'Santri ' . $student->name . ' diluluskan!');
     }
 }

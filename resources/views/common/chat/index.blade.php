@@ -2,10 +2,10 @@
 @section('title', 'Chat app')
 
 @section('page-script')
-    <script src="{{ asset('assets/js/app-chat.js') }}"></script>
-    <script src="{{ asset('assets/vendor/libs/bootstrap-maxlength/bootstrap-maxlength.js') }}"></script>
-    <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/laravel-echo/1.11.1/echo.iife.min.js"></script>
+<script src="{{ asset('assets/vendor/libs/bootstrap-maxlength/bootstrap-maxlength.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/laravel-echo@1.13.0/dist/echo.iife.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pusher-js@7.0.3/dist/web/pusher.min.js"></script>    
+{{-- <script type="module" src="{{ asset('assets/js/app-chat.js') }}"></script> --}}
     <script>
         window.userId = {{ Auth::user()->id }};
         document.addEventListener('keydown', function(event) {
@@ -20,6 +20,7 @@
         document.querySelector('#message-input').addEventListener("blur", function() {
             this.placeholder = "Tulis pesan (ctrl + enter)";
         });
+        
     </script>
 @endsection
 
