@@ -5,6 +5,23 @@
 @section('page-script')
     <script>
         $('.select2').select2();
+
+        function formatCurrency(input, type) {
+            let value = input.value.replace(/[^,\d]/g, '').toString();
+            let split = value.split(',');
+            let remainder = split[0].length % 3;
+            let currency = split[0].substring(0, remainder);
+            let thousands = split[0].substring(remainder).match(/\d{3}/gi);
+
+            if (thousands) {
+                let separator = remainder ? '.' : '';
+                currency += separator + thousands.join('.');
+            }
+
+            currency = split[1] !== undefined ? currency + ',' + split[1] : currency;
+            input.value = currency;
+            document.getElementById(type).value = currency.replace(/\./g, '');
+        }
     </script>
 @endsection
 
@@ -170,8 +187,14 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="father_income">Penghasilan Ayah</label>
-                                <input type="number" class="form-control @error('father_income') is-invalid @enderror"
-                                    id="father_income" name="father_income" placeholder="Penghasilan Ayah"
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text">Rp</span>
+                                    <input type="text" class="form-control @error('father_income') is-invalid @enderror"
+                                        placeholder="Penghasilan Ayah" value="{{ old('father_income', number_format($student->father_income, 0, ',', '.')) }}"
+                                        oninput="formatCurrency(this, 'father_income')">
+                                    @errorFeedback('father_income')
+                                </div>
+                                <input type="hidden" name="father_income" id="father_income"
                                     value="{{ old('father_income', $student->father_income) }}">
                                 @errorFeedback('father_income')
                             </div>
@@ -192,8 +215,14 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="mother_income">Penghasilan Ibu</label>
-                                <input type="number" class="form-control @error('mother_income') is-invalid @enderror"
-                                    id="mother_income" name="mother_income" placeholder="Penghasilan Ibu"
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text">Rp</span>
+                                    <input type="text" class="form-control @error('mother_income') is-invalid @enderror"
+                                        placeholder="Penghasilan Ibu" value="{{ old('mother_income', number_format($student->mother_income, 0, ',', '.')) }}"
+                                        oninput="formatCurrency(this, 'mother_income')">
+                                    @errorFeedback('mother_income')
+                                </div>
+                                <input type="hidden" name="mother_income" id="mother_income"
                                     value="{{ old('mother_income', $student->mother_income) }}">
                                 @errorFeedback('mother_income')
                             </div>

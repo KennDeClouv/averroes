@@ -19,6 +19,22 @@
             submitButton.textContent = 'Submit';
             document.querySelector('#button-wrapper').appendChild(submitButton);
         });
+        function formatCurrency(input, type) {
+            let value = input.value.replace(/[^,\d]/g, '').toString();
+            let split = value.split(',');
+            let remainder = split[0].length % 3;
+            let currency = split[0].substring(0, remainder);
+            let thousands = split[0].substring(remainder).match(/\d{3}/gi);
+
+            if (thousands) {
+                let separator = remainder ? '.' : '';
+                currency += separator + thousands.join('.');
+            }
+
+            currency = split[1] !== undefined ? currency + ',' + split[1] : currency;
+            input.value = currency;
+            document.getElementById(type).value = currency.replace(/\./g, '');
+        }
     </script>
 @endsection
 
@@ -148,10 +164,16 @@
                         </div>
                         <div class="mb-3">
                             <label for="father_income" class="form-label">Penghasilan Ayah</label>
-                            <input type="number" class="form-control @error('father_income') is-invalid @enderror"
-                                id="father_income" name="father_income" value="{{ old('father_income') }}">
-                            @errorFeedback('father_income')
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Rp</span>
+                                <input type="text" class="form-control @error('father_income') is-invalid @enderror"
+                                    placeholder="Penghasilan Ayah" value="{{ old('father_income') }}"
+                                    oninput="formatCurrency(this, 'father_income')">
+                                @errorFeedback('father_income')
+                            </div>
                         </div>
+                        <input type="hidden" name="father_income" id="father_income"
+                            value="{{ old('father_income') }}">
                         <div class="mb-3">
                             <label for="mother_name" class="form-label">Nama Ibu</label>
                             <input type="text" class="form-control @error('mother_name') is-invalid @enderror"
@@ -166,9 +188,15 @@
                         </div>
                         <div class="mb-3">
                             <label for="mother_income" class="form-label">Penghasilan Ibu</label>
-                            <input type="number" class="form-control @error('mother_income') is-invalid @enderror"
-                                id="mother_income" name="mother_income" value="{{ old('mother_income') }}">
-                            @errorFeedback('mother_income')
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Rp</span>
+                                <input type="text" class="form-control @error('mother_income') is-invalid @enderror"
+                                    placeholder="Penghasilan Ibu" value="{{ old('mother_income') }}"
+                                    oninput="formatCurrency(this, 'mother_income')">
+                                @errorFeedback('mother_income')
+                            </div>
+                            <input type="hidden" name="mother_income" id="mother_income"
+                                value="{{ old('mother_income') }}">
                         </div>
                         <div class="mb-3">
                             <label for="parent_whatsapp" class="form-label">WhatsApp Orang Tua</label>
@@ -401,9 +429,14 @@
                         </div>
                         <div class="mb-3">
                             <label for="father_income" class="form-label">Penghasilan Ayah</label>
-                            <input type="number" class="form-control @error('father_income') is-invalid @enderror"
-                                id="father_income" name="father_income" value="{{ $data->father_income }}" disabled>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Rp</span>
+                                <input type="text" class="form-control @error('father_income') is-invalid @enderror"
+                                    placeholder="Penghasilan Ayah" value="{{ number_format($data->father_income, 0, ',', '.') }}" oninput="formatCurrency(this, 'father_income')" disabled>
+                            </div>
                         </div>
+                        <input type="hidden" name="father_income" id="father_income"
+                            value="{{ $data->father_income }}">
                         <div class="mb-3">
                             <label for="mother_name" class="form-label">Nama Ibu</label>
                             <input type="text" class="form-control @error('mother_name') is-invalid @enderror"
@@ -417,9 +450,14 @@
                         </div>
                         <div class="mb-3">
                             <label for="mother_income" class="form-label">Penghasilan Ibu</label>
-                            <input type="number" class="form-control @error('mother_income') is-invalid @enderror"
-                                id="mother_income" name="mother_income" value="{{ $data->mother_income }}" disabled>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Rp</span>
+                                <input type="text" class="form-control @error('mother_income') is-invalid @enderror"
+                                    placeholder="Penghasilan Ibu" value="{{ number_format($data->mother_income, 0, ',', '.') }}" oninput="formatCurrency(this, 'mother_income')" disabled>
+                            </div>
                         </div>
+                        <input type="hidden" name="mother_income" id="mother_income"
+                            value="{{ $data->mother_income }}">
                         <div class="mb-3">
                             <label for="parent_whatsapp" class="form-label">WhatsApp Orang Tua</label>
                             <input type="text" class="form-control @error('parent_whatsapp') is-invalid @enderror"
