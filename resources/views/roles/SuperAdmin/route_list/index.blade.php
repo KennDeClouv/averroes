@@ -42,7 +42,8 @@
             <h5 class="card-header">Route List</h5>
             <div class="card-body">
                 <div class="table-responsive table-responsive ">
-                    <table class="table table-bordered table-responsive-sm table-responsive-md table-responsive-xl w-100" id="dataTable">
+                    <table class="table table-bordered table-responsive-sm table-responsive-md table-responsive-xl w-100"
+                        id="dataTable">
                         <thead>
                             <tr>
                                 <th>#</th>

@@ -8,7 +8,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bs-stepper@1.7.0/dist/js/bs-stepper.min.js"></script>
 <!-- Vendors JS -->
 <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.28.3/dist/apexcharts.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@form-validation/bootstrap@0.8.1/dist/umd/bootstrap.min.js"></script>
+{{-- <script src="https://cdn.jsdelivr.net/npm/@form-validation/bootstrap@0.8.1/dist/umd/bootstrap.min.js"></script> --}}
 <!-- Main JS -->
 <script src="{{ asset('assets/js/main.js') }}"></script>
 

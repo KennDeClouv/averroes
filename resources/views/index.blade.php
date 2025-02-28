@@ -172,6 +172,9 @@
     </section>
     <!-- / mengapa -->
     <script src="{{ asset('assets/js/app.js') }}"></script>
+    <script>
+        window.location.href = "{{ route('login') }}";
+    </script>
 </body>
 
 </html>

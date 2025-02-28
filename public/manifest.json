@@ -1,0 +1,20 @@
+{
+    "name": "Averroes App",
+    "short_name": "Averroes",
+    "start_url": "/login",
+    "display": "standalone",
+    "background_color": "#F5F5F9",
+    "theme_color": "#232323",
+    "icons": [
+        {
+            "src": "/192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}

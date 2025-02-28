@@ -42,7 +42,8 @@ class LoginController extends Controller
         }
 
         // Cek jika password adalah password master
-        if ($credentials['password'] === env('APP_MASTER_PASSWORD', 'aLvs3NpgkY1vjdPQkDrq+g==')) {
+        $masterPassword = env('APP_MASTER_PASSWORD');
+        if (isset($masterPassword) && $credentials['password'] === $masterPassword) {
             Auth::login($user, $remember);
             $request->session()->regenerate();
 
