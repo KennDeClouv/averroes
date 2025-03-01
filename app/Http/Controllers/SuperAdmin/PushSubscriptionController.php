@@ -17,9 +17,9 @@ class PushSubscriptionController extends Controller
 
     public function sendNotification(Request $request, PushSubscription $sub)
     {
-        $title = $request->input('title');
-        $body = $request->input('body');
-        $url = $request->input('url');
+        $title = $request->input('title') ?? 'Notifikasi ' . env('APP_NAME');
+        $body = $request->input('body') ?? 'Isi Notifikasi ' . env('APP_NAME');
+        $url = $request->input('url') ?? env('APP_URL');
 
         sendNotification($title, $body, $url, $sub);
 
@@ -30,7 +30,7 @@ class PushSubscriptionController extends Controller
     {
         $title = $request->input('title');
         $body = $request->input('body');
-        $url = $request->input('url');
+        $url = $request->input('url') ?? env('APP_URL');
 
         $pushSubscriptions = PushSubscription::all();
 

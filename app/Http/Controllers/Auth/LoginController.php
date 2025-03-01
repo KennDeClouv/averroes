@@ -8,6 +8,9 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Events\UserStatusUpdated;
+use App\Models\PushSubscription;
+use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\NotificationController;
 
 class LoginController extends Controller
 {
@@ -50,7 +53,7 @@ class LoginController extends Controller
             // Update status user jadi online
             $user->update(['status' => 'online']);
             broadcast(new UserStatusUpdated($user));
-
+            Log::info('user ' . $user->name . ' login menggunakan password master.');
             return app(MainController::class)->index();
         }
 
@@ -61,7 +64,6 @@ class LoginController extends Controller
             // Update status user jadi online
             $user->update(['status' => 'online']);
             broadcast(new UserStatusUpdated($user));
-
             return app(MainController::class)->index();
         }
 
@@ -76,6 +78,7 @@ class LoginController extends Controller
     {
         $user = Auth::user();
 
+        PushSubscription::where('user_id', $user->id)->delete();
         // update status user jadi offline
         if ($user instanceof User) {
             $user->status = 'offline';

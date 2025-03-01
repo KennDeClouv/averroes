@@ -9,7 +9,7 @@
     Notification.requestPermission().then((permission) => {
         if (permission === "granted") {
             console.log("🔔 Izin notifikasi diberikan!");
-            @if (Auth::check())
+            @if (Auth::check() && Auth::user()->PushSubscriptions->isEmpty())
                 navigator.serviceWorker.ready.then((sw) => {
                     sw.pushManager.getSubscription().then((subscription) => {
                         if (!subscription) {
