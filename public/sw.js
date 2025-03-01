@@ -58,7 +58,6 @@ self.addEventListener("fetch", (event) => {
 
 self.addEventListener("push", (event) => {
     notification = event.data.json();
-    // { "title":"Hi" , "body":"check this out" , "url":"/?message1"}
     event.waitUntil(
         self.registration.showNotification(notification.title, {
             body: notification.body,

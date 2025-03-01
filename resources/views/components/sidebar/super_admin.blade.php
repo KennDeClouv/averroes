@@ -66,6 +66,14 @@
         </div>
     </a>
 </li>
+<li class="menu-item {{ request()->routeIs('superadmin.notification.*') ? 'open active' : '' }}">
+    <a href="{{ route('superadmin.notification.index') }}" class="menu-link ">
+        <i class="menu-icon fa-solid fa-bell fs-6"></i>
+        <div class="text-truncate">
+            Notification
+        </div>
+    </a>
+</li>
 <li class="menu-header small text-uppercase">
     <span class="menu-header-text">Menu setiap role</span>
 </li>

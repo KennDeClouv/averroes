@@ -108,4 +108,8 @@ class User extends Authenticatable
     {
         return $this->hasOne(StudentRegistrant::class);
     }
+    public function PushSubscriptions()
+    {
+        return $this->hasMany(PushSubscription::class);
+    }
 }

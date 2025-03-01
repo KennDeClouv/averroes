@@ -8,8 +8,6 @@
     <meta charset="utf-8">
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-    @include('layouts.layout_partials.pwa')
-
     <title>@yield('title') | {{ ucwords(str_replace('_', ' ', config('app.name'))) }}</title>
     <link rel="icon" type="image/x-icon" href="{{ asset('averroes.svg') }}">
 
@@ -46,6 +44,7 @@
     <script src="{{ asset('assets/vendor/js/helpers.js') }}"></script>
     <script src="{{ asset('assets/vendor/js/template-customizer.js') }}"></script>
     <script src="{{ asset('assets/js/config.js') }}"></script>
+    @include('layouts.layout_partials.pwa')
 </head>
 
 <body class="vh-100 overflow-hidden">

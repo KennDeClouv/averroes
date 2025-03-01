@@ -4,6 +4,15 @@
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/pages/page-auth.css') }}">
 @endsection
 @section('page-script')
+    @if (request()->path() == 'login')
+        <script>
+            navigator.serviceWorker.getRegistrations().then((registrations) => {
+                registrations.forEach((reg) => reg.unregister());
+                console.log("✅ Service Worker dihapus di halaman login!");
+            });
+        </script>
+    @endif
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const bsPrimary = getComputedStyle(document.documentElement).getPropertyValue('--bs-primary').trim()

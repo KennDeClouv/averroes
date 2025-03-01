@@ -6,14 +6,10 @@
             .then((reg) => console.log("✅ Service Worker registered!", reg))
             .catch((err) => console.log("❌ Service Worker failed!", err));
     }
-</script>
-
-@if (Auth::check())
-    <script>
-        Notification.requestPermission().then((permission) => {
-            if (permission === "granted") {
-                console.log("🔔 Izin notifikasi diberikan!");
-
+    Notification.requestPermission().then((permission) => {
+        if (permission === "granted") {
+            console.log("🔔 Izin notifikasi diberikan!");
+            @if (Auth::check())
                 navigator.serviceWorker.ready.then((sw) => {
                     sw.pushManager.getSubscription().then((subscription) => {
                         if (!subscription) {
@@ -31,7 +27,8 @@
                                     }).then((res) => res.json())
                                     .then((data) => {
                                         console.log(
-                                            "🔔 Subscribed to push notifications!");
+                                            "🔔 Subscribed to push notifications!"
+                                        );
                                     })
                                     .catch((err) => {
                                         console.log(
@@ -44,9 +41,9 @@
                         }
                     });
                 });
-            } else {
-                console.log("❌ Izin notifikasi ditolak!");
-            }
-        });
-    </script>
-@endif
+            @endif
+        } else {
+            console.log("❌ Izin notifikasi ditolak!");
+        }
+    });
+</script>

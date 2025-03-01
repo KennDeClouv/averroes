@@ -17,57 +17,27 @@ class PushSubscriptionController extends Controller
 
     public function sendNotification(Request $request, PushSubscription $sub)
     {
-        $webPush = new WebPush([
-            'VAPID' => [
-                'publicKey' => env('VAPID_PUBLIC_KEY'),
-                'privateKey' => env('VAPID_PRIVATE_KEY'),
-                'subject' => env('APP_URL'),
-            ],
-        ]);
+        $title = $request->input('title');
+        $body = $request->input('body');
+        $url = $request->input('url');
 
-        // Convert PushSubscription to Minishlink\WebPush\Subscription
-        $subscriptionData = json_decode($sub->data, true);
-        $subscription = new \Minishlink\WebPush\Subscription(
-            $subscriptionData['endpoint'],
-            $subscriptionData['keys']['p256dh'],
-            $subscriptionData['keys']['auth']
-        );
+        sendNotification($title, $body, $url, $sub);
 
-        $result = $webPush->sendOneNotification(
-            $subscription,
-            json_encode($request->input())
-        );
-
-        return response()->json($result);
+        return back()->with('success', 'Notifikasi berhasil dikirim!😋');
     }
 
     public function sendNotificationToAll(Request $request)
     {
-        $webPush = new WebPush([
-            'VAPID' => [
-                'publicKey' => env('VAPID_PUBLIC_KEY'),
-                'privateKey' => env('VAPID_PRIVATE_KEY'),
-                'subject' => env('APP_URL'),
-            ],
-        ]);
+        $title = $request->input('title');
+        $body = $request->input('body');
+        $url = $request->input('url');
 
         $pushSubscriptions = PushSubscription::all();
 
         foreach ($pushSubscriptions as $sub) {
-            // Convert PushSubscription to Minishlink\WebPush\Subscription
-            $subscriptionData = json_decode($sub->data, true);
-            $subscription = new \Minishlink\WebPush\Subscription(
-                $subscriptionData['endpoint'],
-                $subscriptionData['keys']['p256dh'],
-                $subscriptionData['keys']['auth']
-            );
-
-            $result = $webPush->sendOneNotification(
-                $subscription,
-                json_encode($request->input())
-            );
+            sendNotification($title, $body, $url, $sub);
         }
 
-        return response()->json(['message' => 'Notifications sent to all subscribers.']);
+        return back()->with('success', 'Notifikasi berhasil dikirim!😋');
     }
 }
