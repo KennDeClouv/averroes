@@ -55,3 +55,19 @@ self.addEventListener("fetch", (event) => {
         );
     }
 });
+
+self.addEventListener("push", (event) => {
+    const data = event.data ? event.data.json() : {};
+    showNotification(data.title, data.body);
+});
+
+function showNotification(title, body) {
+    const options = {
+        body: body || "Ini contoh notifikasi dari PWA!",
+        icon: "/192.png",
+        // badge: "/192.png",
+        vibrate: [200, 100, 200],
+    };
+
+    self.registration.showNotification(title || "Hello, Kenn! 😋", options);
+}
