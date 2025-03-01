@@ -36,6 +36,8 @@
 
 // **Dependencies**
 use Illuminate\Support\Facades\Route;
+use App\Models\PushSubscription;
+use Illuminate\Http\Request;
 
 // **Controllers**
 use App\Http\Controllers\Auth\LoginController;
@@ -63,6 +65,7 @@ use App\Http\Controllers\Teacher\StudentPermitController as TeacherStudentPermit
 use App\Http\Controllers\AdministrationAdmin\TeacherController as AdministrationAdminTeacher;
 use App\Http\Controllers\AdministrationAdmin\StudentRegistrantController as AdministrationAdminStudentRegistrant;
 use App\Http\Controllers\StudentRegistrant\HomeController as StudentRegistrantHome;
+use App\Http\Controllers\SuperAdmin\PushSubscriptionController as SuperAdminPushSubscription;
 
 /**
  * **Root**
@@ -84,6 +87,13 @@ Route::post('/reset-password', [ForgotPasswordController::class, 'update'])->mid
 Route::get('/email/verify', [EmailVerificationController::class, 'notice'])->middleware('auth')->name('verification.notice');
 Route::post('/email/verification-notification', [EmailVerificationController::class, 'resend', 'throttle:6,1'])->middleware('auth')->name('verification.send');
 Route::get('/email/verify/{id}/{hash}', [EmailVerificationController::class, 'verify'])->middleware('auth')->name('verification.verify');
+
+Route::post('/api/subscribe', function (Request $request) {
+    PushSubscription::create([
+        'data' => $request->getContent()
+    ]);
+    return response()->json(['message' => 'Subscribed to push notifications!']);
+})->name('subscribe');
 
 /**
  * **Common Routes**
@@ -164,6 +174,12 @@ Route::prefix('superadmin')->name('superadmin.')->middleware(['auth', 'can:isSup
     Route::prefix('system')->name('system.')->group(function () {
         Route::get('/', [SuperAdminSystem::class, 'index'])->name('index');
         Route::post('runcli', [SuperAdminSystem::class, 'runCLI'])->name('run-cli');
+    });
+
+    Route::prefix('notification')->name('notification.')->group(function () {
+        Route::get('/', [SuperAdminPushSubscription::class, 'index'])->name('index');
+        Route::post('send/{sub}', [SuperAdminPushSubscription::class, 'sendNotification'])->name('send');
+        Route::post('send-all', [SuperAdminPushSubscription::class, 'sendNotificationToAll'])->name('send-all');
     });
 });
 

@@ -57,17 +57,19 @@ self.addEventListener("fetch", (event) => {
 });
 
 self.addEventListener("push", (event) => {
-    const data = event.data ? event.data.json() : {};
-    showNotification(data.title, data.body);
+    notification = event.data.json();
+    // { "title":"Hi" , "body":"check this out" , "url":"/?message1"}
+    event.waitUntil(
+        self.registration.showNotification(notification.title, {
+            body: notification.body,
+            icon: "/192.png",
+            data: {
+                notifURL: notification.url,
+            },
+        })
+    );
 });
 
-function showNotification(title, body) {
-    const options = {
-        body: body || "Ini contoh notifikasi dari PWA!",
-        icon: "/192.png",
-        // badge: "/192.png",
-        vibrate: [200, 100, 200],
-    };
-
-    self.registration.showNotification(title || "Hello, Kenn! 😋", options);
-}
+self.addEventListener("notificationclick", (event) => {
+    event.waitUntil(clients.openWindow(event.notification.data.notifURL));
+});
