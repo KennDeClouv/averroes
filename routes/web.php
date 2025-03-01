@@ -89,7 +89,9 @@ Route::post('/email/verification-notification', [EmailVerificationController::cl
 Route::get('/email/verify/{id}/{hash}', [EmailVerificationController::class, 'verify'])->middleware('auth')->name('verification.verify');
 
 Route::post('/api/subscribe', function (Request $request) {
+    $user = auth()->user();
     PushSubscription::create([
+        'user_id' => $user->id,
         'data' => $request->getContent()
     ]);
     return response()->json(['message' => 'Subscribed to push notifications!']);
