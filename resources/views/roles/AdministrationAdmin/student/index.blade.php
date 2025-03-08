@@ -98,8 +98,8 @@
                                             </form>
                                         @endif
                                         @if ($permissions->contains('delete_student'))
-                                            <x-delete :route="route('administrationadmin.student.destroy', $student->id)" :message="'Apakah kamu yakin ingin menghapus data ' . $student->name . '?'" :title="'Hapus Santri'" />
-                                        @endif  
+                                            <x-delete :route="route('administrationadmin.student.destroy', $student->id)" :message="'Apakah kamu yakin ingin menghapus data santri ini?'" :title="'Hapus Santri'" />
+                                        @endif
                                     </td>
                                 @endif
                             </tr>

@@ -69,9 +69,7 @@
                                             <x-delete :route="route(
                                                 'administrationadmin.room.delete-student-from-room',
                                                 $student->id,
-                                            )" :message="'Apakah kamu yakin ingin menghapus santri ' .
-                                                $student->name .
-                                                ' dari kamar ini?'" :title="'Hapus Santri dari Kamar'" />
+                                            )" :message="'Apakah kamu yakin ingin menghapus santri dari kamar ini?'" :title="'Hapus Santri dari Kamar'" />
                                         @endif
                                     </td>
                                 @endif

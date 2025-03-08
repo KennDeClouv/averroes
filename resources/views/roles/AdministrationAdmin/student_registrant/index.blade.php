@@ -109,9 +109,7 @@
                                             <x-delete :route="route(
                                                 'administrationadmin.studentregistrant.destroy',
                                                 $studentRegistrant->id,
-                                            )" :message="'Apakah kamu yakin ingin menghapus data calon santri ' .
-                                                $studentRegistrant->name .
-                                                '?'" :title="'Hapus Data Calon Santri'" />
+                                            )" :message="'Apakah kamu yakin ingin menghapus data calon santri ini?'" :title="'Hapus Data Calon Santri'" />
                                         @endif
                                     </td>
                                 @endif

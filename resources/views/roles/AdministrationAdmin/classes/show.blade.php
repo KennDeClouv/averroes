@@ -42,7 +42,7 @@
                                     class="fa-solid fa-edit"></i></a>
                         @endif
                         @if ($permissions->contains('delete_class'))
-                            <x-delete :route="route('administrationadmin.class.destroy', $class->id)" :message="'Apakah kamu yakin ingin menghapus data ' . $class->name . '?'" :title="'Hapus Kelas'" />
+                            <x-delete :route="route('administrationadmin.class.destroy', $class->id)" :message="'Apakah kamu yakin ingin menghapus data kelas ini?'" :title="'Hapus Kelas'" />
                         @endif
                     </div>
                 </div>

@@ -64,7 +64,7 @@
                                             class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top"
                                             title="Santri Kamar"><i class="fa-solid fa-users"></i></a>
                                         @if ($permissions->contains('delete_room'))
-                                            <x-delete :route="route('administrationadmin.room.destroy', $room->id)" :message="'Apakah kamu yakin ingin menghapus data ' . $room->name . '?'" :title="'Hapus Kamar'" />
+                                            <x-delete :route="route('administrationadmin.room.destroy', $room->id)" :message="'Apakah kamu yakin ingin menghapus data kamar ini?'" :title="'Hapus Kamar'" />
                                         @endif
                                     </td>
                                 @endif

@@ -64,7 +64,7 @@
                                             class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top"
                                             title="Santri Kelas"><i class="fa-solid fa-users"></i></a>
                                         @if ($permissions->contains('delete_class'))
-                                            <x-delete :route="route('administrationadmin.class.destroy', $class->id)" :message="'Apakah kamu yakin ingin menghapus data ' . $class->name . '?'" :title="'Hapus Kelas'" />
+                                            <x-delete :route="route('administrationadmin.class.destroy', $class->id)" :message="'Apakah kamu yakin ingin menghapus data kelas ini?'" :title="'Hapus Kelas'" />
                                         @endif
                                     </td>
                                 @endif

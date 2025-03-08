@@ -114,7 +114,7 @@
                                     class="fa-solid fa-edit"></i></a>
                         @endif
                         @if ($permissions->contains('delete_teacher'))
-                            <x-delete :route="route('administrationadmin.teacher.destroy', $teacher->id)" :message="'Apakah kamu yakin ingin menghapus data ' . $teacher->name . '?'" :title="'Hapus Ustadz'" />
+                            <x-delete :route="route('administrationadmin.teacher.destroy', $teacher->id)" :message="'Apakah kamu yakin ingin menghapus data ustadz ini?'" :title="'Hapus Ustadz'" />
                         @endif
                     </div>
                 </div>
